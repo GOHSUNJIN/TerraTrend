@@ -240,7 +240,22 @@
 
   // ---------- Bottom bar: hide on scroll ----------
   let lastScrollY = window.scrollY;
+  let barIsHovering = false;
   const maxScrollForBar = document.body.scrollHeight - window.innerHeight;
+
+  // Hover dimming: dim when mouse leaves bar, restore when re-entering
+  if (bottomBar) {
+    bottomBar.addEventListener("mouseenter", () => {
+      barIsHovering = true;
+      // Ensure full opacity when hovering
+      bottomBar.classList.add("active");
+      bottomBar.style.opacity = "";
+      bottomBar.style.pointerEvents = ""
+    });
+    bottomBar.addEventListener("mouseleave", () => {
+      barIsHovering = false;
+    });
+  }
 
   window.addEventListener("scroll", () => {
     const currentScrollY = window.scrollY;
@@ -248,11 +263,16 @@
     const hasScrolledPastGlobe = currentScrollY > window.innerHeight;
 
     if (bottomBar) {
-      if (isScrollingDown && hasScrolledPastGlobe) {
-        // Hide the bar when scrolling down past the globe view
+      if (!barIsHovering && isScrollingDown && hasScrolledPastGlobe) {
+        // Hide the bar when scrolling down past the globe view (only if not hovering)
         bottomBar.classList.remove("active");
         bottomBar.style.opacity = "0";
         bottomBar.style.pointerEvents = "none";
+      } else if (barIsHovering) {
+        // Keep bar fully visible when hovering, even while scrolling
+        bottomBar.classList.add("active");
+        bottomBar.style.opacity = "";
+        bottomBar.style.pointerEvents = ""
       } else if (!isScrollingDown) {
         // Show the bar when scrolling up (or at top of page)
         bottomBar.classList.add("active");
