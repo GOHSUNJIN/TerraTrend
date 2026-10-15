@@ -283,13 +283,11 @@ body {
   z-index: 40;
   height: var(--appbar-h);
   background: linear-gradient(to bottom, rgba(2, 4, 9, 0.85), rgba(2, 4, 9, 0));
-  border-bottom: 1px solid transparent;
   transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
 }
 .site-header.scrolled {
   backdrop-filter: blur(14px);
   background: rgba(2, 4, 9, 0.8);
-  border-bottom-color: var(--line);
 }
 .header-inner {
   max-width: 1400px;
