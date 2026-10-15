@@ -238,6 +238,31 @@
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
+  // ---------- Bottom bar: hide on scroll ----------
+  let lastScrollY = window.scrollY;
+  const maxScrollForBar = document.body.scrollHeight - window.innerHeight;
+
+  window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+    const isScrollingDown = currentScrollY > lastScrollY;
+    const hasScrolledPastGlobe = currentScrollY > window.innerHeight;
+
+    if (bottomBar) {
+      if (isScrollingDown && hasScrolledPastGlobe) {
+        // Hide the bar when scrolling down past the globe view
+        bottomBar.classList.remove("active");
+        bottomBar.style.opacity = "0";
+        bottomBar.style.pointerEvents = "none";
+      } else if (!isScrollingDown) {
+        // Show the bar when scrolling up (or at top of page)
+        bottomBar.classList.add("active");
+        bottomBar.style.opacity = ""
+        bottomBar.style.pointerEvents = ""
+      }
+    }
+    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+  }, { passive: true });
+
   // ---------- Build hotspot cards grid ----------
   const grid = document.getElementById("hotspot-grid");
   if (grid && typeof HOTSPOTS !== "undefined") {
