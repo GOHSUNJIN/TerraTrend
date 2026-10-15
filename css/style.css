@@ -662,6 +662,18 @@ body {
   pointer-events: none;
   transition: opacity 0.2s, transform 0.2s;
 }
+/* On narrow screens, tooltip appears above the bar (avoids off-screen at viewport bottom) */
+@media (max-width: 760px) {
+  .bar-dot::after {
+    bottom: auto;
+    top: calc(100% + 10px);
+  }
+  .bar-dot:hover::after {
+    top: calc(100% + 10px);
+    bottom: auto;
+    transform: translateX(-50%) translateY(4px);
+  }
+}
 .bar-dot:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 .bar-hint {
   font-size: 0.58rem;
