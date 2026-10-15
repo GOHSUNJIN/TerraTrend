@@ -898,7 +898,7 @@ body {
 /* ---------- Footer ---------- */
 .site-footer {
   border-top: 1px solid var(--line);
-  padding: 34px 28px;
+  padding: 34px 28px 80px 28px;
   text-align: center;
   color: var(--muted);
   font-size: 0.84rem;
