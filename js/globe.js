@@ -170,7 +170,6 @@
   // ---------- Pinned hotspot markers ----------
   const markerHitTargets = [];
   const markerGlows = [];
-  const markerLabels = [];
 
   // Canvas-text label sprite that floats above a marker
   function makeLabelSprite(text, hexColor) {
@@ -264,12 +263,6 @@
       hit.userData.hotspotIndex = i;
       anchor.add(hit);
       markerHitTargets.push(hit);
-
-      // name label floating above the dot
-      const label = makeLabelSprite(spot.name, spot.color);
-      label.position.set(0, 0.2, 0);
-      anchor.add(label);
-      markerLabels.push({ sprite: label, base: pos.clone() });
 
       globeGroup.add(anchor);
     });
@@ -585,18 +578,7 @@
     markerGlows.forEach(({ sprite, phase }, i) => {
       const pulse = 1 + Math.sin(t * 2.4 + phase) * 0.18;
       const boost = i === hoveredIndex ? 1.45 : 1;
-      sprite.scale.setScalar(0.34 * pulse * boost);
-    });
-
-    // labels: fade when their point rotates to the back of the globe
-    markerLabels.forEach(({ sprite, base }) => {
-      const world = base.clone().applyMatrix4(globeGroup.matrixWorld);
-      // fraction in [-1, 1]: 1 = facing camera, -1 = hidden behind globe
-      const toward = (world.z - globeGroup.position.z) / (GLOBE_RADIUS * globeGroup.scale.x) || 0;
-      const vis = THREE.MathUtils.clamp((toward + 0.25) / 0.5, 0, 1);
-      sprite.material.opacity = vis * 0.96;
-      sprite.visible = vis > 0.02;
-    });
+      sprite.scale.setScalar(0.34 * pulse * boost);    });
 
     updatePings(performance.now());
     updateHover();
