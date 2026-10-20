@@ -8,6 +8,8 @@ TerraTrend lets you explore key environmental trends — sea level rise, ice she
 
 ## Screenshots
 
+### Web
+
 <p align="center">
   <img src="docs/screenshots/splash.png" alt="Liquid-launch splash screen" width="45%" />
   <img src="docs/screenshots/globe.png" alt="Interactive 3D globe" width="45%" />
@@ -15,6 +17,9 @@ TerraTrend lets you explore key environmental trends — sea level rise, ice she
 <p align="center">
   <img src="docs/screenshots/case-files.png" alt="Case-file hotspot cards" width="70%" />
 </p>
+
+### Mobile
+
 <p align="center">
   <img src="docs/screenshots/mobile-globe.png" alt="Mobile layout" width="22%" />
 </p>
