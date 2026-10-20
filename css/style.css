@@ -372,8 +372,12 @@ body {
   top: 0; left: 0; right: 0;
   z-index: 40;
   height: var(--appbar-h);
-  background: linear-gradient(to bottom, rgba(5, 5, 15, 0.88), rgba(5, 5, 15, 0));
-  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+  /* dark plate behind the nav so it reads over the bright Earth edge */
+  background: linear-gradient(to bottom, rgba(4, 6, 14, 0.92) 0%, rgba(4, 6, 14, 0.82) 70%, rgba(4, 6, 14, 0));
+  border-bottom: none;
+  box-shadow: inset 0 -1px 0 rgba(148, 163, 255, 0.08);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s, box-shadow 0.3s;
 }
 .site-header.scrolled {
   backdrop-filter: blur(16px);
@@ -901,6 +905,21 @@ body {
 .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
 
 /* editorial section header: index number + rule */
+/* soft dark plate behind headings so they stay legible over the starfield */
+.section-head,
+.section-lede {
+  position: relative;
+}
+.section-head::before,
+.section-lede::before {
+  content: "";
+  position: absolute;
+  inset: -22px -30px -26px -30px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(75% 100% at 30% 40%, rgba(4, 6, 14, 0.82), rgba(4, 6, 14, 0.55) 55%, transparent 100%);
+  border-radius: 30px;
+}
 .section-head {
   display: flex;
   align-items: flex-start;
@@ -1114,6 +1133,8 @@ body {
 .step:hover { border-color: var(--line-bright); box-shadow: var(--glow-border); }
 .step:hover::before { opacity: 1; }
 .step.revealed { opacity: 1; transform: translateY(0); }
+/* strengthen card plate so step text stays readable over starfield */
+.step { background: linear-gradient(180deg, rgba(9, 10, 24, 0.82), rgba(10, 11, 26, 0.62)); }
 .step-num {
   display: inline-flex;
   align-items: center;
