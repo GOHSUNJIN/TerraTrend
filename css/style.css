@@ -1059,6 +1059,29 @@ body {
   border: 1px solid color-mix(in srgb, var(--glow, #8b7cff) 32%, transparent);
   box-shadow: 0 0 22px -6px color-mix(in srgb, var(--glow, #8b7cff) 55%, transparent);
 }
+
+/* trend name pill */
+.trend-pill {
+  position: absolute;
+  top: -40px; right: 50%;
+  transform: translateX(50%);
+  background: #111a2e;
+  border: 1px solid color-mix(in srgb, #f5a623 40%, transparent);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 0 20px -10px #f5a623;
+}
+.trend-pill .subscript {
+  font-size: 0.7em;
+  font-family: var(--font-mono);
+  color: #fff;
+  margin-left: 2px;
+}
 .hotspot-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
 .card-tag { color: var(--muted); font-size: 0.84rem; line-height: 1.5; margin-bottom: 14px; min-height: 2.4em; }
 .card-rate {

@@ -290,11 +290,21 @@
       const card = document.createElement("button");
       // bento rhythm: last card spans full row as the feature tile
       card.className = "hotspot-card" + (i === HOTSPOTS.length - 1 ? " wide" : "");
-      card.innerHTML = `
+      const labelMap = {
+    co2: 'CO₂ <span class="subscript">Accumulation</span>',
+    sealevel: 'GMSL <span class="subscript">Rise</span>',
+    greenlandice: 'Ice <span class="subscript">Mass</span>',
+    tempanomaly: 'Temp <span class="subscript">Anomaly</span>',
+    wildfire: 'Fire <span class="subscript">Index</span>',
+    groundwater: 'Water <span class="subscript">Storage</span>'
+  };
+  const pillContent = labelMap[spot.id] || `${spot.name}`;
+  card.innerHTML = `
         <span class="card-glow" style="--glow:${hex(spot.color)}"></span>
         <span class="card-icon">${spot.icon}</span>
         <h3>${spot.name}</h3>
         <p class="card-tag">${spot.tagline}</p>
+        <div class="trend-pill">${pillContent}</div>
         <canvas class="card-spark" width="252" height="34" aria-hidden="true"></canvas>
         <span class="card-rate">${trendArrow(spot.trend)} ${shortRate(spot.rate)}</span>
         <span class="card-cta">View on globe →</span>
