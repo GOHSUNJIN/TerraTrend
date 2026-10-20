@@ -499,7 +499,20 @@
     flagUserActivity();
   }
 
-  window.TerraTrendGlobe = { selectHotspot, flyTo };
+  function projectToScreen(lat, lon) {
+    const v = latLonToVec3(lat, lon, GLOBE_RADIUS);
+    // globeGroup world matrix (includes rotation, tilt, scale, position)
+    globeGroup.updateMatrixWorld();
+    v.applyMatrix4(globeGroup.matrixWorld);
+    const ndc = v.clone().project(camera);
+    return {
+      x: (ndc.x * 0.5 + 0.5) * window.innerWidth,
+      y: (-ndc.y * 0.5 + 0.5) * window.innerHeight,
+      facing: ndc.z < 1 && v.clone().sub(camera.position).dot(v.clone().normalize()) < 0 ? "front" : "back"
+    }; // "front" = hemisphere toward the camera
+  }
+
+  window.TerraTrendGlobe = { selectHotspot, flyTo, projectToScreen };
 
   // ---------- Responsive layout ----------
   function resize() {

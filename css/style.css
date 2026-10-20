@@ -132,7 +132,10 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  /* z 0 (not -1): at -1 the <body> paints ABOVE the canvas and swallows every
+     click — the marker clicks never reached the globe. Content layers below
+     carry z-index 1 so they still stack over the globe. */
+  z-index: 0;
   cursor: grab;
 }
 #globe-canvas.grabbing { cursor: grabbing; }
@@ -442,11 +445,15 @@ body {
 }
 
 /* ---------- Fullscreen app view ---------- */
-.app-view { height: 100vh; min-height: 620px; position: relative; }
+/* The fixed 3D canvas lives BEHIND this section (z-index -1), so the wrappers
+   must not swallow pointer events — pass them through to the globe canvas.
+   Interactive children (info panel) re-enable events explicitly below. */
+.app-view { height: 100vh; min-height: 620px; position: relative; pointer-events: none; }
 
 .globe-stage {
   position: absolute;
   inset: 0;
+  pointer-events: none;
 }
 
 .scene-copy {
@@ -542,6 +549,9 @@ body {
   max-height: calc(100vh - var(--appbar-h) - var(--bar-h) - 60px);
   overflow-y: auto;
 }
+/* panel lives inside the pass-through app view — re-enable interaction */
+.info-panel.visible,
+.info-panel.hidden { pointer-events: auto; }
 /* gradient hairline along the panel's top */
 .info-panel::before {
   content: "";
@@ -856,7 +866,13 @@ body {
 @keyframes tickerScroll { to { transform: translateX(-50%); } }
 
 /* ---------- Sections below the app ---------- */
-.section { padding: var(--space-6) 0 96px; position: relative; }
+/* z 1 keeps page content stacking above the fixed z-0 globe canvas;
+   aurora/starfield stays behind it on .space-bg (z -2) */
+.section,
+.ticker,
+.site-footer { position: relative; z-index: 1; }
+.space-bg { z-index: -2; }
+.section { padding: var(--space-6) 0 96px; }
 .section.alt {
   background:
     linear-gradient(180deg, rgba(20, 16, 46, 0.6), rgba(8, 8, 22, 0.75)),
