@@ -361,6 +361,8 @@
   // ---------- Raycasting: hover + click ----------
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2(-10, -10);
+  // eased camera parallax state: x/y current, tx/ty target
+  const parallax = { x: 0, y: 0, tx: 0, ty: 0 };
   let hoveredIndex = -1;
   let downAt = 0;
   let downX = 0;
@@ -376,6 +378,9 @@
     const rect = canvas.getBoundingClientRect();
     pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    // subtle camera parallax target — makes the scene feel more 3D
+    parallax.tx = pointer.x * 0.26;
+    parallax.ty = pointer.y * 0.16;
   });
 
   canvas.addEventListener("click", (e) => {
@@ -525,6 +530,10 @@
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
+    // frame-rate-independent smoothing: ~1 at 60fps, larger arcs on slow frames
+    const dt = Math.min(Math.max(t - (animate.lastT || t), 0), 0.05);
+    animate.lastT = t;
+    const s = dt * 60;
 
     if (!userInteracting && !dragState.active) {
       globeGroup.rotation.y += AUTO_SPIN;
@@ -533,13 +542,32 @@
       dragState.velX *= 0.94;
     }
 
-    if (flyTo.targetY !== undefined && !dragState.active) {
-      globeGroup.rotation.y += (flyTo.targetY - globeGroup.rotation.y) * 0.06;
-      targetRotationX += (flyTo.targetX - targetRotationX) * 0.06;
+    // vertical drag inertia keeps easing after release, like the horizontal spin
+    if (!dragState.active) {
+      dragState.velY *= 0.94;
+      if (Math.abs(dragState.velY) > 0.0002) {
+        targetRotationX = THREE.MathUtils.clamp(
+          targetRotationX + dragState.velY * 0.4,
+          -MAX_TILT,
+          MAX_TILT
+        );
+      }
     }
 
-    globeGroup.rotation.x += (targetRotationX - globeGroup.rotation.x) * 0.08;
+    if (flyTo.targetY !== undefined && !dragState.active) {
+      globeGroup.rotation.y += (flyTo.targetY - globeGroup.rotation.y) * Math.min(1, 0.06 * s);
+      targetRotationX += (flyTo.targetX - targetRotationX) * Math.min(1, 0.06 * s);
+    }
+
+    globeGroup.rotation.x += (targetRotationX - globeGroup.rotation.x) * Math.min(1, 0.08 * s);
     globeGroup.position.y += Math.sin(t * 0.6) * 0.0006;
+
+    // eased camera drift: parallax toward the pointer, framed on the globe
+    parallax.x += (parallax.tx - parallax.x) * Math.min(1, 0.035 * s);
+    parallax.y += (parallax.ty - parallax.y) * Math.min(1, 0.035 * s);
+    camera.position.x = parallax.x;
+    camera.position.y = parallax.y;
+    camera.lookAt(globeGroup.position);
 
     markerGlows.forEach(({ sprite, phase }, i) => {
       const pulse = 1 + Math.sin(t * 2.4 + phase) * 0.18;
