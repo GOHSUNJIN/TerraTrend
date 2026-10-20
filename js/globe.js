@@ -30,7 +30,7 @@
   const keyLight = new THREE.DirectionalLight(0xffffff, 2.1);
   keyLight.position.set(-4, 2.2, 4.5);
   scene.add(keyLight);
-  const rimLight = new THREE.DirectionalLight(0x5f7cff, 0.9);
+  const rimLight = new THREE.DirectionalLight(0x8b7cff, 0.95);
   rimLight.position.set(5, -2, -3);
   scene.add(rimLight);
 
@@ -132,7 +132,7 @@
           varying vec3 vNormal;
           void main() {
             float intensity = pow(0.62 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.5);
-            vec3 glow = mix(vec3(0.18, 0.45, 0.95), vec3(0.35, 0.75, 1.0), intensity);
+            vec3 glow = mix(vec3(0.55, 0.42, 1.0), vec3(0.13, 0.85, 0.93), intensity);
             gl_FragColor = vec4(glow, 1.0) * intensity * 1.4;
           }
         `

@@ -29,8 +29,9 @@ TerraTrend lets you explore key environmental trends — sea level rise, ice she
 
 - Three.js r160 for 3D globe rendering
 - NASA Earth system open data (GRACE-FO, Jason-3, Sentinel-6, OCO-2, MODIS, NOAA)
-- Dark glass UI with NASA Eyes-inspired aesthetic
-- Fully responsive from 320px to 1440px+
+- **Dark neon-glow design**: animated aurora background, gradient glass panels, spotlight hover cards, conic-gradient LAUNCH button, and a looping neon marquee ticker
+- Neon palette: electric violet + cyan + hot pink on near-black, with gradient text headlines
+- Fully responsive from 320px to 1440px+; honors `prefers-reduced-motion`
 
 ## Setup
 

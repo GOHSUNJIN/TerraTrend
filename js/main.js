@@ -55,7 +55,7 @@
   // ---------- Interactive mini chart ----------
   const chartCanvas = document.getElementById("panel-chart");
   const chartTip = document.getElementById("chart-tip");
-  let chartState = { pts: [], cfg: null, color: "#6fb4ff" };
+  let chartState = { pts: [], cfg: null, color: "#22e0ee" };
 
   function fmtVal(v) {
     const a = Math.abs(v);
@@ -310,6 +310,12 @@
           if (window.TerraTrendUI) window.TerraTrendUI.openPanel(spot);
         }, 650);
       });
+      // mouse-follow neon spotlight inside the card
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        card.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
       grid.appendChild(card);
     });
   }
@@ -417,6 +423,22 @@
   }
   if (prevBtn) prevBtn.addEventListener("click", () => showCase(panelIndex - 1));
   if (nextBtn) nextBtn.addEventListener("click", () => showCase(panelIndex + 1));
+
+  // ---------- Neon marquee ticker ----------
+  const tickerTrack = document.getElementById("ticker-track");
+  if (tickerTrack && typeof HOTSPOTS !== "undefined") {
+    const items = HOTSPOTS.map((spot) => {
+      const dir = spot.trend === "up" ? "▲" : spot.trend === "down" ? "▼" : "◇";
+      const dirClass = spot.trend === "down" ? "down" : "up";
+      return `<span class="ticker-item">${spot.icon} ${spot.name.toUpperCase()} <b class="${dirClass}">${dir} ${shortRate(spot.rate).toUpperCase()}</b></span>`;
+    });
+    // two identical halves → translateX(-50%) loops seamlessly
+    const half = document.createElement("div");
+    half.className = "ticker-half";
+    half.innerHTML = items.join("");
+    tickerTrack.appendChild(half.cloneNode(true));
+    tickerTrack.appendChild(half.cloneNode(true));
+  }
 
   // ---------- Reveal-on-scroll for sections ----------
   const revealEls = document.querySelectorAll(".step, .hotspot-card, .about-facts div");
