@@ -6,6 +6,19 @@ An interactive 3D Earth visualization revealing significant trends in NASA Earth
 
 TerraTrend lets you explore key environmental trends — sea level rise, ice sheet loss, CO₂ accumulation, global temperature anomalies, wildfire intensity, and groundwater decline — pinned to real-world locations on a globe. Each "case file" provides what's changing, where, how fast, and whether the trend is statistically significant.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/splash.png" alt="Liquid-launch splash screen" width="45%" />
+  <img src="docs/screenshots/globe.png" alt="Interactive 3D globe" width="45%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/case-files.png" alt="Case-file hotspot cards" width="70%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/mobile-globe.png" alt="Mobile layout" width="22%" />
+</p>
+
 ## Data Themes
 
 | Theme | Icon | Trend Direction | Key Metric |
