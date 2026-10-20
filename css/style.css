@@ -456,6 +456,20 @@ body {
   pointer-events: none;
 }
 
+/* dark scrim above the globe so text/UI stays legible.
+   Sits over the canvas (z 0) but below scene copy / panel / rails (z 5+);
+   pointer-events none keeps all globe interaction working. */
+.globe-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(4, 6, 14, 0.62) 0%, rgba(4, 6, 14, 0.34) 34%, transparent 58%),
+    linear-gradient(to bottom, rgba(4, 6, 14, 0.5) 0%, transparent 22%, transparent 70%, rgba(4, 6, 14, 0.45) 100%);
+}
+
 .scene-copy {
   position: absolute;
   top: calc(var(--appbar-h) + 34px);
@@ -693,9 +707,11 @@ body {
 
 /* ---------- Vertical side rail (circular tool buttons) ---------- */
 .side-rail {
-  position: fixed;
+  position: absolute;
   right: 26px;
-  top: 50%;
+  /* absolute against the document at first-viewport center: sits in the
+     globe view on load, and scrolls away with it instead of following */
+  top: 50vh;
   transform: translateY(-50%);
   z-index: 40;
   display: flex;
@@ -726,6 +742,8 @@ body {
 }
 /* nudge rail left when info panel is open, to avoid overlap */
 .side-rail.shifted { right: 400px; }
+/* rail children must opt back in — app view passes events through to the globe */
+.rail-btn { pointer-events: auto; }
 
 /* ---------- Bottom control bar ---------- */
 .bottom-bar {
