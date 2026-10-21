@@ -66,3 +66,5 @@ npm run dev
 ## License
 
 NASA Space Apps Challenge 2026 — built with curiosity by **The Data Detectives**
+
+**Live Demo**: https://terratrend.vercel.app
