@@ -307,6 +307,9 @@
         <div class="trend-pill">${pillContent}</div>
         <canvas class="card-spark" width="252" height="34" aria-hidden="true"></canvas>
         <span class="card-rate">${trendArrow(spot.trend)} ${shortRate(spot.rate)}</span>
+        <figure class="card-photo">
+          <img src="${spot.image}" alt="${spot.imageAlt}" loading="lazy" decoding="async" onerror="this.closest('.card-photo').classList.add('no-img')" />
+        </figure>
         <span class="card-cta">View on globe →</span>
       `;
       const spark = card.querySelector(".card-spark");

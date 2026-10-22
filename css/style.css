@@ -1166,6 +1166,30 @@ body {
   margin-bottom: 14px;
   text-shadow: 0 0 10px color-mix(in srgb, var(--glow, #8b7cff) 55%, transparent);
 }
+/* case-file photo: real NASA imagery below each trend rate line */
+.card-photo {
+  margin: 0 0 14px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--glow, #8b7cff) 22%, transparent);
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+}
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.03);
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+.hotspot-card:hover .card-photo img {
+  transform: scale(1.05);
+  filter: saturate(1.15) contrast(1.05);
+}
+/* hide the slot entirely if imagery ever fails to load */
+.card-photo.no-img { display: none; }
 .card-cta {
   display: block;
   color: var(--accent-2);

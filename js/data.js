@@ -19,11 +19,11 @@ const HOTSPOTS = [
     significance: "Yes — >99% confidence over the satellite record",
     significanceTone: "high",
     description:
-      "Satellite altimeters have tracked sea surface height since 1993. The rate has roughly doubled from the 20th-century average, driven by thermal expansion and meltwater from land ice. Some Pacific islands see 2–3× the global average.",
-    source: "NASA/CNES Jason-3, Sentinel-6 Michael Freilich",
-    trend: "up"
-  },
-  {
+      "Satellite altimeters have tracked sea surface height since 1993. The rate has roughly doubled from the 20th-century average, driven by thermal expansion and meltwater from land ice. Some Pacific islands see 2–3× the global average.",    source: "NASA/CNES Jason-3, Sentinel-6 Michael Freilich",
+    trend: "up",
+    image: "https://images-assets.nasa.gov/image/PIA25775/PIA25775~medium.jpg",
+    imageAlt: "Satellite record of global sea level rise, 1993-2024"
+  },{
     id: "greenland-ice",
     name: "Greenland Ice Loss",
     icon: "🧊",
@@ -37,11 +37,11 @@ const HOTSPOTS = [
     significance: "Yes — GRACE & GRACE-FO agree across 20+ years",
     significanceTone: "high",
     description:
-      "The GRACE missions weigh the ice sheet by measuring tiny changes in Earth's gravity field. Greenland's mass loss has accelerated since the early 2000s and is now a leading contributor to sea level rise.",
-    source: "NASA GRACE / GRACE Follow-On",
-    trend: "down"
-  },
-  {
+      "The GRACE missions weigh the ice sheet by measuring tiny changes in Earth's gravity field. Greenland's mass loss has accelerated since the early 2000s and is now a leading contributor to sea level rise.",    source: "NASA GRACE / GRACE Follow-On",
+    trend: "down",
+    image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e002041/GSFC_20171208_Archive_e002041~small.jpg",
+    imageAlt: "Giant ice island calving off Petermann Glacier, Greenland"
+  },{
     id: "co2",
     name: "CO₂ Accumulation",
     icon: "🏭",
@@ -55,11 +55,11 @@ const HOTSPOTS = [
     significance: "Yes — continuous record since 1958 (Keeling Curve)",
     significanceTone: "high",
     description:
-      "OCO-2 maps CO₂ from space while Mauna Loa provides the longest continuous record. The annual growth rate has climbed from ~0.8 ppm/yr in the 1960s to well over 2 ppm/yr today.",
-    source: "NASA OCO-2 · NOAA Global Monitoring Lab",
-    trend: "up"
-  },
-  {
+      "OCO-2 maps CO₂ from space while Mauna Loa provides the longest continuous record. The annual growth rate has climbed from ~0.8 ppm/yr in the 1960s to well over 2 ppm/yr today.",    source: "NASA OCO-2 · NOAA Global Monitoring Lab",
+    trend: "up",
+    image: "https://images-assets.nasa.gov/image/PIA23781/PIA23781~small.jpg",
+    imageAlt: "OCO-2 measurements of atmospheric carbon dioxide"
+  },{
     id: "temp-anomaly",
     name: "Warming Anomaly",
     icon: "🌡️",
@@ -73,11 +73,11 @@ const HOTSPOTS = [
     significance: "Yes — far outside natural variability",
     significanceTone: "high",
     description:
-      "The Arctic warms several times faster than the global average — the same process can push one region's trend up faster than another's, exactly the kind of contrast the challenge asks detectives to spot.",
-    source: "NASA GISS GISTEMP v4 · NOAA",
-    trend: "up"
-  },
-  {
+      "The Arctic warms several times faster than the global average — the same process can push one region's trend up faster than another's, exactly the kind of contrast the challenge asks detectives to spot.",    source: "NASA GISS GISTEMP v4 · NOAA",
+    trend: "up",
+    image: "https://images-assets.nasa.gov/image/PIA24139/PIA24139~small.jpg",
+    imageAlt: "Global temperature anomalies measured by AIRS"
+  },{
     id: "wildfire",
     name: "Wildfire Intensity",
     icon: "🔥",
@@ -91,11 +91,11 @@ const HOTSPOTS = [
     significance: "Mixed — rising in some regions, declining in others",
     significanceTone: "mixed",
     description:
-      "MODIS and VIIRS detect every fire on Earth daily. Burned area is falling in African savannas while extreme fire behavior rises in forests — the same process, opposite regional trends.",
-    source: "NASA MODIS / VIIRS active fire products",
-    trend: "mixed"
-  },
-  {
+      "MODIS and VIIRS detect every fire on Earth daily. Burned area is falling in African savannas while extreme fire behavior rises in forests — the same process, opposite regional trends.",    source: "NASA MODIS / VIIRS active fire products",
+    trend: "mixed",
+    image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001621/GSFC_20171208_Archive_e001621~small.jpg",
+    imageAlt: "NASA satellite view of the Mustang Complex Fires"
+  },{
     id: "groundwater",
     name: "Groundwater Decline",
     icon: "💧",
@@ -111,6 +111,8 @@ const HOTSPOTS = [
     description:
       "GRACE-FO senses water moving through the ground. Some of Earth's largest aquifers show sustained decline — a falling trend invisible at the surface but unmistakable from orbit.",
     source: "NASA GRACE-FO terrestrial water storage",
-    trend: "down"
+    trend: "down",
+    image: "https://images-assets.nasa.gov/image/PIA20206/PIA20206~small.jpg",
+    imageAlt: "GRACE map of cumulative groundwater losses in India"
   }
 ];
