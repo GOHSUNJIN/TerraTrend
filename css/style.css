@@ -4,6 +4,30 @@
    spotlight cards, glowing hero & splash
    ============================================================ */
 
+/* Self-hosted fonts (faster than fonts.googleapis.com: same-origin,
+   cacheable with the site, preloaded and font-display swap) */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/SpaceGrotesk-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-500-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #05050f;
   --panel: rgba(13, 15, 34, 0.6);
@@ -328,8 +352,7 @@ body {
   inset: -2px;
   z-index: -1;
   border-radius: inherit;
-  background: conic-gradient(from 0deg, var(--grad-a), var(--grad-b), var(--grad-c), var(--grad-a));
-  animation: conicSpin 3.4s linear infinite;
+  background: linear-gradient(105deg, var(--grad-a), var(--grad-b), var(--grad-c));
   filter: blur(0.5px);
 }
 .launch-btn::after {
@@ -339,12 +362,10 @@ body {
   z-index: -2;
   border-radius: inherit;
   background: inherit;
-  background: conic-gradient(from 0deg, var(--grad-a), var(--grad-b), var(--grad-c), var(--grad-a));
+  background: linear-gradient(105deg, var(--grad-a), var(--grad-b), var(--grad-c));
   filter: blur(22px);
   opacity: 0.55;
-  animation: conicSpin 3.4s linear infinite;
 }
-@keyframes conicSpin { to { transform: rotate(1turn); } }
 .launch-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 50px rgba(139, 124, 255, 0.35); }
 .launch-ring {
   width: 10px;
@@ -1185,6 +1206,7 @@ body {
   animation: conicSpin 5s linear infinite;
   opacity: 0.85;
 }
+@keyframes conicSpin { to { transform: rotate(1turn); } }
 .step h3 { font-size: 1.02rem; margin-bottom: 8px; }
 .step p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
 

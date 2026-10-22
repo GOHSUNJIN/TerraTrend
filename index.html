@@ -6,9 +6,19 @@
   <title>TerraTrend — Earth System Trend Detective | NASA Space Apps 2026</title>
   <meta name="description" content="An interactive 3D Earth revealing significant trends in NASA Earth system data — sea level, ice, CO2, temperature, wildfire, and more." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Self-hosted fonts: preload so the splash paints with real fonts,
+       no render-blocking requests to fonts.googleapis.com -->
+  <link rel="preload" href="fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/IBMPlexMono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/IBMPlexMono-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Warm up the third-party hosts the page needs (DNS + TLS) before
+       the deferred scripts/assets request them -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://embed.tawk.to" />
+  <!-- Start fetching the large Earth texture immediately, in parallel
+       with parsing, so it is already in cache when Three.js asks for it -->
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-blue-marble.jpg" fetchpriority="low" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -222,11 +232,12 @@
     </p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/regions.js"></script>
-  <script src="js/globe.js"></script>
-  <script src="js/main.js"></script>
+  <!-- All scripts deferred: the page paints first, then these run in order -->
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/regions.js"></script>
+  <script defer src="js/globe.js"></script>
+  <script defer src="js/main.js"></script>
   <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
