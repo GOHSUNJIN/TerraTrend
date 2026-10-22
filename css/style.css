@@ -839,14 +839,16 @@ body {
 .bottom-bar {
   position: fixed;
   left: 22px;
-  bottom: 22px;
-  transform: none;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
   z-index: 40;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 18px;
-  height: var(--bar-h);
-  padding: 0 24px;
+  gap: 14px;
+  height: auto;
+  padding: 16px 12px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -859,25 +861,29 @@ body {
   transition: opacity 0.5s ease 0.25s;
   max-width: calc(100vw - 32px);
 }
-/* gradient hairline above the bar */
+/* gradient hairline down the left edge of the vertical bar */
 .bottom-bar::before {
   content: "";
   position: absolute;
-  top: 0; left: 10%; right: 10%;
-  height: 1px;
+  left: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  height: auto;
   background: var(--gradient-line);
   opacity: 0.75;
   border-radius: 1px;
 }
 .bottom-bar.active { opacity: 1; pointer-events: auto; }
+/* vertical pill: label & hint read bottom-to-top along the bar */
 .bar-label {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.24em;
   color: var(--muted);
   white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
-.bar-dots { display: flex; align-items: center; gap: 10px; }
+.bar-dots { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .bar-dot {
   width: 30px;
   height: 30px;
@@ -895,9 +901,10 @@ body {
 .bar-dot::after {
   content: attr(data-name);
   position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
+  top: 50%;
+  bottom: auto;
+  left: calc(100% + 10px);
+  transform: translateY(-50%) translateX(-4px);
   background: var(--panel-solid);
   border: 1px solid var(--line-bright);
   color: var(--text);
@@ -911,24 +918,19 @@ body {
   pointer-events: none;
   transition: opacity 0.2s, transform 0.2s;
 }
-/* On narrow screens, tooltip appears above the bar (avoids off-screen at viewport bottom) */
-@media (max-width: 760px) {
-  .bar-dot::after {
-    bottom: auto;
-    top: calc(100% + 10px);
-  }
-  .bar-dot:hover::after {
-    top: calc(100% + 10px);
-    bottom: auto;
-    transform: translateX(-50%) translateY(4px);
-  }
-}
-.bar-dot:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* tooltips now sit to the right of each dot, next to the vertical bar */
+.bar-dot:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
 .bar-hint {
   font-size: 0.58rem;
   letter-spacing: 0.2em;
   color: #64699b;
   white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+/* short screens: drop the vertical hint so the bar never overflows */
+@media (max-height: 760px) {
+  .bar-hint { display: none; }
 }
 .mono { font-family: var(--font-mono); }
 
@@ -1415,7 +1417,7 @@ body {
   .section { padding: 76px 0; }
   .scene-copy h2 { font-size: 1.3rem; }
   .bar-hint { display: none; }
-  .bottom-bar { gap: 12px; padding: 0 14px; height: 62px; bottom: 14px; left: 14px; }
+  .bottom-bar { gap: 12px; padding: 12px 10px; height: auto; top: 50%; bottom: auto; left: 10px; }
   .bar-dot { width: 34px; height: 34px; }
   .side-rail { right: 14px; gap: 10px; }
   .rail-btn { width: 42px; height: 42px; font-size: 0.95rem; }
