@@ -294,8 +294,8 @@
   if (grid && typeof HOTSPOTS !== "undefined") {
     HOTSPOTS.forEach((spot, i) => {
       const card = document.createElement("button");
-      // bento rhythm: last card spans full row as the feature tile
-      card.className = "hotspot-card" + (i === HOTSPOTS.length - 1 ? " wide" : "");
+      // every case card is a uniform grid cell
+      card.className = "hotspot-card";
       const labelMap = {
     co2: 'CO₂ <span class="subscript">Accumulation</span>',
     sealevel: 'GMSL <span class="subscript">Rise</span>',
