@@ -371,6 +371,22 @@
           : "sig-mixed");
       els.desc.textContent = spot.description;
       els.source.textContent = "DATA: " + spot.source;
+      // case-file photo (same NASA imagery as the hotspot card)
+      const photoFig = document.getElementById("panel-photo");
+      const photoImg = document.getElementById("panel-photo-img");
+      if (photoFig && photoImg) {
+        if (spot.image) {
+          photoImg.onerror = () => { photoFig.hidden = true; };
+          photoImg.onload = () => { photoFig.hidden = false; };
+          photoImg.alt = spot.imageAlt || spot.name;
+          photoImg.src = spot.image; // hidden until it actually loads
+        } else {
+          photoFig.hidden = true;
+          photoImg.onerror = null;
+          photoImg.onload = null;
+          photoImg.removeAttribute("src");
+        }
+      }
       els.coords.textContent = coords || "PINNED HOTSPOT";
       panel.classList.remove("hidden");
       panel.classList.add("visible");

@@ -674,6 +674,22 @@ body {
   margin-bottom: 8px;
 }
 .panel-close:hover { color: #fff; border-color: var(--line-bright); background: var(--accent-soft); }
+/* case-file photo at the top of the info panel */
+.panel-photo {
+  margin: 2px 0 12px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line-bright);
+  background: rgba(255, 255, 255, 0.03);
+}
+.panel-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05) contrast(1.03);
+}
 .info-panel h3 { font-size: 1.12rem; margin-bottom: 4px; }
 .panel-tagline { color: var(--muted); font-size: 0.84rem; margin-bottom: 14px; }
 .panel-body {
