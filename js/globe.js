@@ -10,9 +10,79 @@
 (function () {
   "use strict";
 
-  // ---------- Basic setup ----------
+  // ---------- Graceful degradation ----------
+  // A missing WebGL context (hardware acceleration off, GPU blocklisted,
+  // remote desktop) or a blocked 3D library used to throw and leave the
+  // canvas black with no explanation. Detect both and show a friendly
+  // overlay instead of failing silently.
+  function showGlobeFallback(title, body) {
+    if (document.getElementById("globe-fallback")) return;
+    const box = document.createElement("div");
+    box.id = "globe-fallback";
+    box.className = "globe-fallback";
+    box.innerHTML =
+      "<div class='globe-fallback-card'>" +
+      "<h3>" + title + "</h3>" +
+      "<p>" + body + "</p>" +
+      "<button type='button' id='globe-retry' class='btn-ghost'>RETRY SCAN</button>" +
+      "</div>";
+    box.querySelector("#globe-retry").addEventListener("click", () => window.location.reload());
+    const stage = document.querySelector(".globe-stage");
+    (stage || document.body).appendChild(box);
+  }
+
+  function webglSupported() {
+    try {
+      const probe = document.createElement("canvas");
+      return !!(
+        probe.getContext("webgl2") ||
+        probe.getContext("webgl") ||
+        probe.getContext("experimental-webgl")
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
   const canvas = document.getElementById("globe-canvas");
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+
+  if (typeof THREE === "undefined") {
+    showGlobeFallback(
+      "3D LIBRARY FAILED TO LOAD",
+      "A browser extension, ad blocker, or network filter may have blocked the Three.js file. Disable it for this site and reload."
+    );
+    return;
+  }
+  if (!webglSupported()) {
+    showGlobeFallback(
+      "WEBGL IS UNAVAILABLE ON THIS BROWSER",
+      "This site spins a live 3D Earth, which needs WebGL. If it is disabled, turn on hardware / GPU acceleration in your browser settings (Chrome: Settings → System) and reload — or try a different browser."
+    );
+    return;
+  }
+
+  // ---------- Basic setup ----------
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch (err) {
+    showGlobeFallback(
+      "GRAPHICS CONTEXT FAILED TO START",
+      "Your browser opened, but the 3D engine could not start here — often due to limited graphics memory or an old graphics driver. Try enabling hardware acceleration or updating Chrome/Edge/Firefox/Safari."
+    );
+    return;
+  }
+
+  // Interrupted GPU contexts (tab throttling, driver resets) otherwise just
+  // freeze the globe — surface it and offer a reload instead.
+  canvas.addEventListener("webglcontextlost", function (e) {
+    e.preventDefault();
+    showGlobeFallback(
+      "3D VIEW WAS INTERRUPTED",
+      "Your GPU context was reset (often by power saving or a driver update). Reload the page to bring the Earth back."
+    );
+  });
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const scene = new THREE.Scene();

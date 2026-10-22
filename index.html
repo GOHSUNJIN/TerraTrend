@@ -233,7 +233,8 @@
   </footer>
 
   <!-- All scripts deferred: the page paints first, then these run in order -->
-  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <!-- Three.js is self-hosted (js/vendor) so ad-blockers and filtered networks can never block it -->
+  <script defer src="js/vendor/three.min.js"></script>
   <script defer src="js/data.js"></script>
   <script defer src="js/regions.js"></script>
   <script defer src="js/globe.js"></script>
