@@ -243,7 +243,6 @@
 
   // ---------- Side rail ----------
   const railBtns = [
-    { id: "rail-casefiles", target: "#hotspots" },
     { id: "rail-mission", target: "#detective" },
     { id: "rail-about", target: "#about" }
   ];
