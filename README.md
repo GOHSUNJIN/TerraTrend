@@ -45,22 +45,25 @@ TerraTrend lets you explore key environmental trends — sea level rise, ice she
 
 ## Technology
 
-- Three.js r160 for 3D globe rendering
+- Three.js r160 for 3D globe rendering (self-hosted in `js/vendor/` so network filters and ad-blockers can't block it)
+- **Graceful 3D fallbacks**: if WebGL is unavailable, GPU acceleration is off, or the graphics context is lost, a friendly overlay explains the problem with a retry button instead of a blank canvas
 - NASA Earth system open data (GRACE-FO, Jason-3, Sentinel-6, OCO-2, MODIS, NOAA)
-- **Dark neon-glow design**: animated aurora background, gradient glass panels, spotlight hover cards, conic-gradient LAUNCH button, and a looping neon marquee ticker
+- **NASA imagery**: each case file pairs its trend data with a public-domain NASA photo (hotspot cards and the info panel), lazy-loaded so the first paint stays fast
+- **Fast first load**: self-hosted preloaded woff2 fonts, deferred scripts, and the Earth texture preloaded in the head
+- **Dark neon-glow design**: animated aurora background, gradient glass panels, spotlight hover cards, a glowing LAUNCH button, and a looping neon marquee ticker
 - Neon palette: electric violet + cyan + hot pink on near-black, with gradient text headlines
 - Fully responsive from 320px to 1440px+; honors `prefers-reduced-motion`
 
 ## Setup
 
+No build step or dependencies — the site is fully static (deployed on Vercel, which serves it as-is):
+
 ```bash
-# Install dependencies (if needed)
-npm install
+# Serve locally from the project root, e.g.
+python3 -m http.server 8090
+# then open http://localhost:8090
 
-# Start development server
-npm run dev
-
-# Or open index.html in a modern browser
+# Or simply open index.html in a modern browser
 ```
 
 ## License
