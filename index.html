@@ -57,8 +57,8 @@
         <span class="logo-mark">◎</span> TERRA<span>TREND</span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="#detective">The Mission</a>
-        <a href="#about">About</a>
+        <a href="#" id="nav-mission">The Mission</a>
+        <a href="#" id="nav-about">About</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
     </div>
@@ -115,6 +115,7 @@
     <!-- Vertical circular side rail sits inside the globe section so it
          scrolls away with it (was fixed-follow before) -->
     <div class="side-rail" aria-label="App tools">
+      <button class="rail-btn" id="rail-method" title="How we catch a trend" aria-label="The Detective's Method">!</button>
       <button class="rail-btn" id="rail-mission" title="The Mission" aria-label="The Mission">📖</button>
       <button class="rail-btn" id="rail-about" title="About" aria-label="About">ⓘ</button>
       <button class="rail-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
@@ -137,71 +138,71 @@
     </div>
   </div>
 
-  <!-- ===== The Detective's Method ===== -->
-  <section class="section alt" id="detective">
-    <div class="section-inner">
-      <div class="section-head">
-        <span class="section-index mono">01</span>
-        <div>
-          <p class="kicker">// THE DETECTIVE'S METHOD</p>
-          <h2>How we catch a trend</h2>
-        </div>
+  <!-- ===== The Detective's Method (popup) ===== -->
+  <div class="method-modal" id="method-modal" hidden>
+    <div class="method-backdrop" data-method-close></div>
+    <div class="method-card" role="dialog" aria-modal="true" aria-labelledby="method-title">
+      <div class="panel-head">
+        <p class="panel-kicker">// THE DETECTIVE'S METHOD</p>
+        <button class="panel-close" id="method-close" aria-label="Close">×</button>
       </div>
+      <h3 id="method-title">How we <span class="accent">catch a trend</span></h3>
       <div class="steps">
-        <div class="step">
+        <div class="step revealed">
           <div class="step-num">01</div>
           <h3>Find the variable</h3>
           <p>Pull variables measured by NASA missions or produced by NASA models — sea surface height, ice mass, CO₂, temperature anomalies, fire radiative power.</p>
         </div>
-        <div class="step">
+        <div class="step revealed">
           <div class="step-num">02</div>
           <h3>Watch it over time</h3>
           <p>Visualize decades of measurements as time series so any consistent direction — up, down, thinning, intensifying — becomes visible.</p>
         </div>
-        <div class="step">
+        <div class="step revealed">
           <div class="step-num">03</div>
           <h3>Test for significance</h3>
           <p>A trend is only real if it's <em>significant</em>. We check confidence, magnitude, and whether the same process pushes different regions in opposite directions.</p>
         </div>
-        <div class="step">
+        <div class="step revealed">
           <div class="step-num">04</div>
           <h3>Tell the story</h3>
           <p>Pin every confirmed trend to the exact place on Earth where it happens — this page <em>is</em> the detective's evidence board.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ===== About / footer ===== -->
-  <section class="section" id="about">
-    <div class="section-inner about-grid">
-      <div>
-        <div class="section-head">
-          <span class="section-index mono">02</span>
-          <div>
-            <p class="kicker">// ABOUT THE PROJECT</p>
-            <h2>Built for the 2026 NASA Space Apps Challenge</h2>
-          </div>
-        </div>
-        <p>
-          This landing page is the public face of our hackathon project. It uses
-          NASA open data themes — sea level rise, land & sea ice loss, CO₂ growth,
-          global temperature, wildfire activity, and groundwater decline — rendered
-          as an interactive 3D Earth you can spin and investigate.
-        </p>
-        <p class="mono-note">
-          Data themes are illustrative of NASA Earth observations (GRACE-FO, Jason-3,
-          Sentinel-6, OCO-2, MODIS, NOAA global temperature records).
-        </p>
+  <!-- ===== About (popup) ===== -->
+  <div class="method-modal" id="about-modal" hidden>
+    <div class="method-backdrop" data-method-close></div>
+    <div class="method-card" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <div class="panel-head">
+        <p class="panel-kicker">// ABOUT THE PROJECT</p>
+        <button class="panel-close" id="about-close" aria-label="Close">×</button>
       </div>
-      <div class="about-facts">
-        <div><strong>Event</strong><span>2026 NASA Space Apps Challenge</span></div>
-        <div><strong>Challenge</strong><span>Be An Earth System Trend Detective!</span></div>
-        <div><strong>Difficulty</strong><span>Advanced · Earth Science</span></div>
-        <div><strong>Questions</strong><span>What · Where · How much · Significant</span></div>
+      <h3 id="about-title">Built for the <span class="accent">2026 NASA Space Apps Challenge</span></h3>
+      <div class="about-grid">
+        <div>
+          <p>
+            This landing page is the public face of our hackathon project. It uses
+            NASA open data themes — sea level rise, land & sea ice loss, CO₂ growth,
+            global temperature, wildfire activity, and groundwater decline — rendered
+            as an interactive 3D Earth you can spin and investigate.
+          </p>
+          <p class="mono-note">
+            Data themes are illustrative of NASA Earth observations (GRACE-FO, Jason-3,
+            Sentinel-6, OCO-2, MODIS, NOAA global temperature records).
+          </p>
+        </div>
+        <div class="about-facts">
+          <div><strong>Event</strong><span>2026 NASA Space Apps Challenge</span></div>
+          <div><strong>Challenge</strong><span>Be An Earth System Trend Detective!</span></div>
+          <div><strong>Difficulty</strong><span>Advanced · Earth Science</span></div>
+          <div><strong>Questions</strong><span>What · Where · How much · Significant</span></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <footer class="site-footer">
     <p>TerraTrend — a NASA Space Apps 2026 project. Data themes inspired by NASA Earth science missions.</p>

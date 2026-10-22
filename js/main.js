@@ -241,19 +241,36 @@
     });
   }
 
-  // ---------- Side rail ----------
-  const railBtns = [
-    { id: "rail-mission", target: "#detective" },
-    { id: "rail-about", target: "#about" }
-  ];
-  railBtns.forEach(({ id, target }) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const el = document.querySelector(target);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+  // ---------- Popup modals (method + about) ----------
+  function setupModal(modalId, openers) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    const open = () => {
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+    };
+    const close = () => {
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+    };
+    openers.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("click", (e) => { e.preventDefault(); open(); });
     });
-  });
+    // backdrop click and the × button both close
+    modal.querySelectorAll("[data-method-close]").forEach((el) =>
+      el.addEventListener("click", close)
+    );
+    const closeBtn = modal.querySelector(".panel-close");
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    // Escape closes every open modal
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.hidden) close();
+    });
+    return { open, close };
+  }
+  setupModal("method-modal", ["rail-method", "rail-mission", "nav-mission"]);
+  setupModal("about-modal", ["rail-about", "nav-about"]);
 
   const fsBtn = document.getElementById("rail-fullscreen");
   if (fsBtn) {

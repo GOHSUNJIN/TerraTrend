@@ -1387,6 +1387,46 @@ body.scrolled-globe .bar-toggle { opacity: 0 !important; pointer-events: none !i
 .about-facts strong { color: var(--dim); font-weight: 500; font-size: 0.72rem; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.14em; }
 .about-facts span { font-size: 0.85rem; line-height: 1.45; }
 
+/* ---------- Popup modals (method + about) ---------- */
+.method-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+}
+.method-modal[hidden] { display: none; }
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.method-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 4, 12, 0.72);
+  backdrop-filter: blur(6px);
+}
+.method-card {
+  position: relative;
+  margin: auto; /* centers vertically even when content is shorter than viewport */
+  max-width: 860px;
+  width: 100%;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--panel-solid);
+  border: 1px solid var(--line-bright);
+  border-radius: 20px;
+  padding: 30px 34px 34px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 70px -30px rgba(139, 124, 255, 0.55);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.method-card h3 { font-size: 1.35rem; margin-bottom: 4px; }
+.method-card .panel-head { margin-bottom: 14px; }
+body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
+
 /* ---------- Footer ---------- */
 .site-footer {
   border-top: 1px solid var(--line);
