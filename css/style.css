@@ -903,6 +903,9 @@ body {
 }
 /* while the bar is open, the toggle stands down (the bar covers its spot) */
 body.bar-open .bar-toggle { opacity: 0; pointer-events: none; }
+/* once scrolled away from the globe view, both the bar and the toggle hide */
+body.scrolled-globe .bottom-bar,
+body.scrolled-globe .bar-toggle { opacity: 0 !important; pointer-events: none !important; }
 
 /* vertical pill: label & hint read bottom-to-top along the bar */
 .bar-label {

@@ -280,6 +280,13 @@
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
+  // ---------- Case-file bar & toggle: only visible in the globe view ----------
+  function updateBarViewport() {
+    document.body.classList.toggle("scrolled-globe", window.scrollY > window.innerHeight * 0.6);
+  }
+  window.addEventListener("scroll", updateBarViewport, { passive: true });
+  updateBarViewport();
+
   // ---------- Bottom bar: hide on scroll ----------
   // (replaced by the auto-hide + toggle logic above)
 
