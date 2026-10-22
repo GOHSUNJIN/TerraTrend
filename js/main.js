@@ -218,9 +218,8 @@
       splash.classList.add("dismissed");
       document.body.classList.add("app-armed");
       if (sideRail) sideRail.classList.add("active");
-      // bar shows briefly after launch, then retires behind the toggle button
+      // the bar stays tucked away — only the toggle button shows
       if (barToggle) barToggle.classList.add("active");
-      showBar();
     });
   }
 
