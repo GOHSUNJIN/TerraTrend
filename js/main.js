@@ -174,12 +174,53 @@
   const sideRail = document.querySelector(".side-rail");
   const bottomBar = document.querySelector(".bottom-bar");
 
+  // ---------- Bottom bar: auto-hide + fixed toggle button ----------
+  const barToggle = document.getElementById("bar-toggle");
+  const BAR_HIDE_DELAY = 4500;
+  let barHideTimer = null;
+
+  function showBar() {
+    if (!bottomBar) return;
+    bottomBar.classList.add("active");
+    bottomBar.style.opacity = "";
+    bottomBar.style.pointerEvents = "";
+    document.body.classList.add("bar-open");
+    resetBarTimer();
+  }
+  function hideBar() {
+    if (!bottomBar) return;
+    bottomBar.classList.remove("active");
+    bottomBar.style.opacity = "0";
+    bottomBar.style.pointerEvents = "none";
+    document.body.classList.remove("bar-open");
+    clearTimeout(barHideTimer);
+  }
+  function resetBarTimer() {
+    clearTimeout(barHideTimer);
+    barHideTimer = setTimeout(hideBar, BAR_HIDE_DELAY);
+  }
+  if (bottomBar) {
+    // stay open while the pointer or keyboard focus is inside the bar
+    bottomBar.addEventListener("mouseenter", () => clearTimeout(barHideTimer));
+    bottomBar.addEventListener("mouseleave", resetBarTimer);
+    bottomBar.addEventListener("focusin", () => clearTimeout(barHideTimer));
+    bottomBar.addEventListener("focusout", resetBarTimer);
+  }
+  if (barToggle) {
+    barToggle.addEventListener("click", () => {
+      if (bottomBar.classList.contains("active")) hideBar();
+      else showBar();
+    });
+  }
+
   if (launchBtn) {
     launchBtn.addEventListener("click", () => {
       splash.classList.add("dismissed");
       document.body.classList.add("app-armed");
       if (sideRail) sideRail.classList.add("active");
-      if (bottomBar) bottomBar.classList.add("active");
+      // bar shows briefly after launch, then retires behind the toggle button
+      if (barToggle) barToggle.classList.add("active");
+      showBar();
     });
   }
 
@@ -195,6 +236,7 @@
       dot.addEventListener("click", () => {
         flyToHotspot(spot);
         window.TerraTrendUI.openPanel(spot);
+        hideBar(); // a case file was picked — the bar is no longer in use
       });
       dotWrap.appendChild(dot);
     });
@@ -239,49 +281,7 @@
   updateHeader();
 
   // ---------- Bottom bar: hide on scroll ----------
-  let lastScrollY = window.scrollY;
-  let barIsHovering = false;
-  const maxScrollForBar = document.body.scrollHeight - window.innerHeight;
-
-  // Hover dimming: dim when mouse leaves bar, restore when re-entering
-  if (bottomBar) {
-    bottomBar.addEventListener("mouseenter", () => {
-      barIsHovering = true;
-      // Ensure full opacity when hovering
-      bottomBar.classList.add("active");
-      bottomBar.style.opacity = "";
-      bottomBar.style.pointerEvents = ""
-    });
-    bottomBar.addEventListener("mouseleave", () => {
-      barIsHovering = false;
-    });
-  }
-
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-    const isScrollingDown = currentScrollY > lastScrollY;
-    const hasScrolledPastGlobe = currentScrollY > window.innerHeight;
-
-    if (bottomBar) {
-      if (!barIsHovering && isScrollingDown && hasScrolledPastGlobe) {
-        // Hide the bar when scrolling down past the globe view (only if not hovering)
-        bottomBar.classList.remove("active");
-        bottomBar.style.opacity = "0";
-        bottomBar.style.pointerEvents = "none";
-      } else if (barIsHovering) {
-        // Keep bar fully visible when hovering, even while scrolling
-        bottomBar.classList.add("active");
-        bottomBar.style.opacity = "";
-        bottomBar.style.pointerEvents = ""
-      } else if (!isScrollingDown) {
-        // Show the bar when scrolling up (or at top of page)
-        bottomBar.classList.add("active");
-        bottomBar.style.opacity = ""
-        bottomBar.style.pointerEvents = ""
-      }
-    }
-    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
-  }, { passive: true });
+  // (replaced by the auto-hide + toggle logic above)
 
   // ---------- Build hotspot cards grid ----------
   const grid = document.getElementById("hotspot-grid");
