@@ -44,9 +44,9 @@
         and open the trend files hidden in the data.
       </p>
       <button class="launch-btn" id="launch-btn" type="button">
-        <span class="launch-ring"></span> LAUNCH
+        <span class="launch-ring"></span> Launch the globe
       </button>
-      <p class="splash-hint">Best experienced with mouse or touch · WebGL required</p>
+      <p class="splash-hint">Best with mouse or touch · WebGL required</p>
     </div>
   </div>
 
@@ -84,7 +84,7 @@
       <div id="info-panel" class="info-panel hidden" role="dialog" aria-modal="false" aria-label="Trend details">
         <div class="panel-head">
           <p class="panel-kicker" id="panel-kicker">TREND FILE</p>
-          <button class="panel-close" id="panel-close" aria-label="Close">×</button>
+          <button class="panel-close" id="panel-close" aria-label="Close trend details">×</button>
         </div>
         <figure class="panel-photo" id="panel-photo" hidden>
           <img id="panel-photo-img" alt="" loading="lazy" decoding="async" onerror="if(this.closest('.panel-photo'))this.closest('.panel-photo').hidden=true" />
@@ -94,15 +94,15 @@
         <p class="panel-desc" id="panel-desc"></p>
         <p class="panel-source" id="panel-source"></p>
         <div class="panel-body">
-          <div class="panel-row"><span>Scan location</span><strong id="panel-coords" class="mono">—</strong></div>
-          <div class="panel-row"><span>What is changing</span><strong id="panel-what">—</strong></div>
-          <div class="panel-row"><span>Where it's changing</span><strong id="panel-where">—</strong></div>
-          <div class="panel-row"><span>How much / rate</span><strong id="panel-rate">—</strong></div>
-          <div class="panel-row"><span>Significant?</span><strong id="panel-sig" class="sig">—</strong></div>
+          <div class="panel-row"><span id="panel-label-coords">Scan location</span><strong id="panel-coords" class="mono">—</strong></div>
+          <div class="panel-row"><span id="panel-label-what">What is changing</span><strong id="panel-what">—</strong></div>
+          <div class="panel-row"><span id="panel-label-where">Where it is changing</span><strong id="panel-where">—</strong></div>
+          <div class="panel-row"><span id="panel-label-rate">How much / rate</span><strong id="panel-rate">—</strong></div>
+          <div class="panel-row"><span id="panel-label-sig">Significant?</span><strong id="panel-sig" class="sig">—</strong></div>
         </div>
         <div class="panel-chart-wrap">
-          <p class="panel-chart-title mono">TREND SERIES</p>
-          <canvas id="panel-chart" width="316" height="110" aria-label="Trend time series chart" role="img"></canvas>
+          <p class="panel-chart-title mono">Trend series</p>
+          <canvas id="panel-chart" width="316" height="110" aria-label="Trend time series chart. Shows the selected variable's value over a 26-year period." role="img"></canvas>
           <div class="chart-tip mono" id="chart-tip" hidden></div>
         </div>
         <div class="panel-nav">
@@ -115,8 +115,8 @@
     <!-- Vertical circular side rail sits inside the globe section so it
          scrolls away with it (was fixed-follow before) -->
     <div class="side-rail" aria-label="App tools">
-      <button class="rail-btn" id="rail-method" title="How we catch a trend" aria-label="The Detective's Method">?</button>
-      <button class="rail-btn" id="rail-mission" title="The Mission" aria-label="The Mission">📖</button>
+      <button class="rail-btn" id="rail-method" title="How we catch a trend" aria-label="The Detective's Method">!</button>
+      <button class="rail-btn" id="rail-mission" title="The Mission" aria-label="The Mission">🖽</button>
       <button class="rail-btn" id="rail-about" title="About" aria-label="About">?</button>
       <button class="rail-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
     </div>
@@ -126,10 +126,11 @@
   <div class="bottom-bar" aria-label="Case file quick selector">
     <span class="bar-label">CASE FILES</span>
     <div class="bar-dots" id="bar-dots"><!-- dots injected by JS --></div>
-    <span class="bar-hint mono">CLICK ANYWHERE ON EARTH TO SCAN</span>
+    <span class="bar-hint mono">Click anywhere on the globe to scan</span>
   </div>
   <!-- Fixed button that brings the case-file bar back after it auto-hides -->
   <button class="bar-toggle" id="bar-toggle" type="button" aria-label="Show case file selector" aria-expanded="false">◎</button>
+
 
   <!-- ===== Neon marquee ticker ===== -->
   <div class="ticker" aria-hidden="true">
@@ -151,7 +152,7 @@
         <div class="step revealed">
           <div class="step-num">01</div>
           <h3>Find the variable</h3>
-          <p>Pull variables measured by NASA missions or produced by NASA models — sea surface height, ice mass, CO₂, temperature anomalies, fire radiative power.</p>
+          <p>Pull variables measured by NASA missions or produced by NASA models — sea surface height, ice mass, carbon dioxide, temperature anomalies, and fire radiative power.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">02</div>
@@ -185,9 +186,9 @@
         <div>
           <p>
             This landing page is the public face of our hackathon project. It uses
-            NASA open data themes — sea level rise, land & sea ice loss, CO₂ growth,
-            global temperature, wildfire activity, and groundwater decline — rendered
-            as an interactive 3D Earth you can spin and investigate.
+            NASA open data themes — sea level rise, land and sea ice loss, carbon
+            dioxide growth, global temperature, wildfire activity, and groundwater
+            decline — rendered as an interactive 3D Earth you can spin and investigate.
           </p>
           <p class="mono-note">
             Data themes are illustrative of NASA Earth observations (GRACE-FO, Jason-3,

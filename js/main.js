@@ -305,7 +305,10 @@
   // ---------- Bottom bar: hide on scroll ----------
   // (replaced by the auto-hide + toggle logic above)
 
-  // ---------- Build hotspot cards grid ----------
+// ---------- Hotspot cards are disabled: the TREND FILES section
+  // was removed from the page in the last edit, so there is no
+  // #hotspot-grid container to mount cards into. Trends are not rendered.
+  // (kept in the file only so nothing else references a missing #hotspot-grid)
   const grid = document.getElementById("hotspot-grid");
   if (grid && typeof HOTSPOTS !== "undefined") {
     HOTSPOTS.forEach((spot, i) => {
