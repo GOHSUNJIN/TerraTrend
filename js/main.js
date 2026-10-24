@@ -95,8 +95,7 @@
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
         `<span class="pill-name">${spot.name}</span>` +
-        `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
-        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
+        `<span class="pill-right"><canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas><span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span></span>`;
       pill.addEventListener("click", () => {
         tourIndex = i;
         activatePill(spot, i);
