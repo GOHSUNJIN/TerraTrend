@@ -2,5 +2,5 @@ node_modules/
 .DS_Store
 *.log
 skills-lock.json
-*.png
+/*.png
 package-lock.json
