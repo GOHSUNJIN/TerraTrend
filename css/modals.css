@@ -161,8 +161,32 @@
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .method-card h3 { font-size: 1.35rem; margin-bottom: 4px; }
-.method-card .panel-head { margin-bottom: 14px; }
+.method-card .panel-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-right: 40px;
+}
+.method-card .panel-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: rgba(0, 0, 0, 0.2);
+}
 body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
+
+/* source links inside about modal */
+.mono-note a, .about-facts a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(34, 224, 238, 0.35);
+  text-underline-offset: 2px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.mono-note a:hover, .about-facts a:hover {
+  color: var(--accent-2);
+  text-decoration-color: var(--accent-2);
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {

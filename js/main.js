@@ -244,7 +244,7 @@
       if (els.whyMattersText && spot.whyItMatters) els.whyMattersText.textContent = spot.whyItMatters;
       if (els.what)  els.what.textContent  = spot.what  || "";
       if (els.where) els.where.textContent = spot.where || "";
-      if (els.whatWhere) els.whatWhere.hidden = !spot.what && !spot.where;
+      if (els.whatWhere) els.whatWhere.hidden = true;
       if (els.photo && els.photoWrap) {
         if (spot.image) {
           els.photo.src = spot.image;
