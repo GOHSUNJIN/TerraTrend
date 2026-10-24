@@ -46,7 +46,7 @@
 }
 .var-pill {
   display: grid;
-  grid-template-columns: 28px 1fr 44px 20px;
+  grid-template-columns: 28px 1fr 20px;
   column-gap: 8px;
   align-items: center;
   padding: 9px 12px;
@@ -95,17 +95,9 @@
   min-width: 0;
   padding-right: 8px;
 }
-.pill-spark {
-  width: 44px;
-  height: 18px;
-  opacity: 0.6;
-  border-radius: 3px;
-  transition: opacity 0.2s;
-  justify-self: center;
-}
-.var-pill:hover .pill-spark,
-.var-pill.active .pill-spark { opacity: 1; }
+.pill-spark { display: none; }
 .pill-arrow {
+  grid-column: 3;
   font-size: 0.6rem;
   width: 20px;
   height: 20px;
