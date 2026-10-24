@@ -187,23 +187,78 @@
   margin: 0;
 }
 
-/* Responsive: stack splash layout on small screens */
+/* ── Mobile splash: centered full-screen layout ────────────── */
 @media (max-width: 700px) {
-  /* Contain everything — no horizontal bleed */
-  .splash-inner { padding: 24px 20px; overflow: hidden; }
-  .splash-topbar { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 22px; }
-  /* Tag text has wide letter-spacing that overflows narrow screens — hide it */
+  .splash-inner {
+    padding: 0 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100dvh;
+    min-height: 100vh;
+    gap: 0;
+  }
+
+  /* Hide desktop top-bar — header logo already identifies the brand */
+  .splash-topbar  { display: none; }
+  .splash-rule    { display: none; }
+
+  /* Orbital: centered, prominent */
+  .splash-hero {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  .splash-orbital { width: 140px; height: 140px; }
+
+  /* Title: centered, scales cleanly */
+  .splash-title {
+    font-size: clamp(2.4rem, 13vw, 5rem);
+    text-align: center;
+    filter: drop-shadow(0 0 56px rgba(139, 124, 255, 0.4));
+  }
+
+  /* Bottom: centered column */
+  .splash-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    width: 100%;
+  }
+  .splash-lede {
+    text-align: center;
+    font-size: 0.9rem;
+    max-width: 30ch;
+    color: var(--text-secondary);
+    opacity: 0.9;
+  }
+  .splash-cta {
+    align-items: center;
+    gap: 10px;
+  }
+  .launch-btn {
+    height: 58px;
+    padding: 0 48px;
+    font-size: 0.92rem;
+    letter-spacing: 0.16em;
+  }
+
+  /* Event tag below button instead of overflowing header */
+  .splash-hint {
+    display: block;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    opacity: 0.45;
+    text-align: center;
+    color: var(--text-tertiary);
+  }
   .splash-topbar-tag { display: none; }
-  .splash-hero { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
-  .splash-orbital { width: 88px; height: 88px; }
-  /* Pure vw scaling — no rem minimum that forces large size on small phones */
-  .splash-title { font-size: clamp(2rem, 12vw, 5rem); }
-  .splash-rule { margin-bottom: 20px; }
-  .splash-bottom { flex-direction: column; gap: 20px; }
-  .splash-cta { align-items: flex-start; }
-  /* Hint text has wide letter-spacing that overflows — hide on mobile */
-  .splash-hint { display: none; }
-  .launch-btn { height: 54px; padding: 0 36px; font-size: 0.88rem; }
 }
 
 /* LAUNCH button */

@@ -399,7 +399,18 @@
   .header-tools { gap: 4px; }
   .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
 
-  .auto-tour-btn { bottom: 40px; font-size: 0.56rem; padding: 6px 14px; }
+  /* Auto-tour moves to top-right so it doesn't conflict with the bottom dock */
+  .auto-tour-btn {
+    bottom: auto;
+    top: calc(var(--appbar-h) + 10px);
+    left: auto;
+    right: 12px;
+    transform: none;
+    font-size: 0.56rem;
+    padding: 6px 14px;
+  }
+  /* Raise toast above the bottom pill dock (~68px tall) */
+  .complete-toast { bottom: 82px; }
 }
 
 @media (max-width: 500px) { .complete-toast { white-space: normal; max-width: calc(100vw - 32px); } }
