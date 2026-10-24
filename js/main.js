@@ -33,6 +33,7 @@
   // ---------- Chart ----------
   const chartTitleEl = document.getElementById("chart-title");
   const exploredSet = new Set();
+  let completionShown = false;
 
   function showCompletionToast() {
     if (document.getElementById("complete-toast")) return;
@@ -372,7 +373,7 @@
           if (exploredSet.size === HOTSPOTS.length) {
             counter.classList.add("all-explored");
             counter.textContent = "◎ ALL";
-            showCompletionToast();
+            if (!completionShown) { completionShown = true; showCompletionToast(); }
           }
         }
         const barFill = document.getElementById("explore-bar-fill");
