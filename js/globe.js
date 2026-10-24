@@ -252,33 +252,71 @@
   const markerGlows = [];
 
   // Canvas-text label sprite that floats above a marker
-  function makeLabelSprite(text, hexColor) {
-    const pad = 18;
-    const font = "600 44px Space Grotesk, system-ui, sans-serif";
+  function makeLabelSprite(text, hexColor, icon) {
+    const col = "#" + hexColor.toString(16).padStart(6, "0");
+    const fullText = icon ? icon + "  " + text : text;
+
+    const padX = 30;
+    const font = "600 64px 'Space Grotesk', system-ui, sans-serif";
     const measure = document.createElement("canvas").getContext("2d");
     measure.font = font;
-    const textW = measure.measureText(text).width;
+    const textW = measure.measureText(fullText).width;
 
+    const W = Math.ceil(textW + padX * 2);
+    const H = 120;
     const c = document.createElement("canvas");
-    c.width = Math.ceil(textW + pad * 2);
-    c.height = 76;
+    c.width = W;
+    c.height = H;
     const ctx = c.getContext("2d");
+    const r = H / 2;
 
-    // pill backdrop for legibility over the Earth texture
+    // outer glow ring
+    ctx.save();
+    ctx.shadowColor = col;
+    ctx.shadowBlur = 32;
     ctx.beginPath();
-    const r = c.height / 2 - 6;
-    ctx.roundRect(4, 4, c.width - 8, c.height - 8, r);
-    ctx.fillStyle = "rgba(4,7,15,0.72)";
+    ctx.roundRect(4, 4, W - 8, H - 8, r - 4);
+    ctx.strokeStyle = col + "44";
+    ctx.lineWidth = 10;
+    ctx.stroke();
+    ctx.restore();
+
+    // dark glass background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, "rgba(10, 12, 32, 0.93)");
+    bg.addColorStop(1, "rgba(4, 6, 18, 0.90)");
+    ctx.beginPath();
+    ctx.roundRect(6, 6, W - 12, H - 12, r - 6);
+    ctx.fillStyle = bg;
     ctx.fill();
-    ctx.strokeStyle = "#" + hexColor.toString(16).padStart(6, "0") + "cc";
+
+    // colored border
+    ctx.beginPath();
+    ctx.roundRect(6, 6, W - 12, H - 12, r - 6);
+    ctx.strokeStyle = col + "cc";
     ctx.lineWidth = 3;
     ctx.stroke();
 
+    // top hairline accent (gradient shimmer)
+    const accent = ctx.createLinearGradient(W * 0.12, 0, W * 0.88, 0);
+    accent.addColorStop(0,   col + "00");
+    accent.addColorStop(0.5, col + "ff");
+    accent.addColorStop(1,   col + "00");
+    ctx.beginPath();
+    ctx.roundRect(6, 6, W - 12, H - 12, r - 6);
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // text with color glow
     ctx.font = font;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#e9f0fc";
-    ctx.fillText(text, c.width / 2, c.height / 2 + 2);
+    ctx.shadowColor = col;
+    ctx.shadowBlur = 18;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(fullText, W / 2, H / 2 + 2);
+    ctx.shadowBlur = 0;
 
     const tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
@@ -288,11 +326,11 @@
         map: tex,
         transparent: true,
         depthWrite: false,
-        depthTest: true   // globe mesh occludes labels on the back hemisphere
+        depthTest: true   // globe mesh occludes labels behind the globe
       })
     );
     const labelWorldH = 0.14;
-    sprite.scale.set((labelWorldH * c.width) / c.height, labelWorldH, 1);
+    sprite.scale.set((labelWorldH * W) / H, labelWorldH, 1);
     return sprite;
   }
 
@@ -344,7 +382,7 @@
       markerHitTargets.push(hit);
 
       // Label floats above the dot; depthTest:true occludes it when behind the globe
-      const label = makeLabelSprite(spot.name, spot.color);
+      const label = makeLabelSprite(spot.name, spot.color, spot.icon);
       label.position.copy(pos.clone().normalize().multiplyScalar(0.40));
       anchor.add(label);
 

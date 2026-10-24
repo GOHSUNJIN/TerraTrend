@@ -56,7 +56,6 @@
           tourIndex = Math.max(0, HOTSPOTS.indexOf(firstSpot));
           flyToHotspot(firstSpot);
           window.TerraTrendUI.openPanel(firstSpot);
-          startTour();
         }
       }, 1800);
     });
@@ -66,7 +65,6 @@
   const pillWrap = document.getElementById("var-selector-pills");
   let activeHotspotId = null;
   let tourIndex = 0;
-  let tourTimer = null;
 
   if (pillWrap && typeof HOTSPOTS !== "undefined") {
     HOTSPOTS.forEach((spot, i) => {
@@ -79,11 +77,8 @@
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
         `<span class="pill-name">${spot.name}</span>` +
-        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>` +
-        `<span class="pill-bottom">` +
-          `<span class="pill-rate">${shortRate(spot.rate)}</span>` +
-          `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
-        `</span>`;
+        `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
+        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
         tourIndex = i;
         activatePill(spot, i);
@@ -104,21 +99,6 @@
       }).catch(() => {});
     });
   }
-
-  // ---------- Auto-tour ----------
-  function startTour() {
-    clearTimeout(tourTimer);
-    tourTimer = setTimeout(advanceTour, 8000);
-  }
-  function advanceTour() {
-    if (typeof HOTSPOTS === "undefined" || !HOTSPOTS.length) return;
-    tourIndex = (tourIndex + 1) % HOTSPOTS.length;
-    const spot = HOTSPOTS[tourIndex];
-    flyToHotspot(spot);
-    window.TerraTrendUI.openPanel(spot);
-    startTour();
-  }
-  document.addEventListener("pointerdown", startTour);
 
   function activatePill(spot, idx) {
     activeHotspotId = spot.id;
@@ -284,7 +264,11 @@
         } else {
           els.rate.textContent = spot.rate;
         }
-        els.source.textContent = "DATA: " + data.source;
+        if (spot.sourceUrl) {
+          els.source.innerHTML = `DATA: <a href="${spot.sourceUrl}" target="_blank" rel="noopener noreferrer">${data.source}</a>`;
+        } else {
+          els.source.textContent = "DATA: " + data.source;
+        }
         setDataBadge(data.isLive, data.source);
         renderMK(data.mkResult, col);
         if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend series";
@@ -321,7 +305,11 @@
         });
       } else {
         els.rate.textContent   = spot.rate;
-        els.source.textContent = "DATA: " + spot.source;
+        if (spot.sourceUrl) {
+          els.source.innerHTML = `DATA: <a href="${spot.sourceUrl}" target="_blank" rel="noopener noreferrer">${spot.source}</a>`;
+        } else {
+          els.source.textContent = "DATA: " + spot.source;
+        }
       }
     },
 

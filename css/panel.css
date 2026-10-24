@@ -302,6 +302,15 @@
 /* ── Description · source · mission ─────────────────────── */
 .panel-desc   { font-size: 0.81rem; color: var(--text-secondary); line-height: 1.68; }
 .panel-source { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--accent); opacity: 0.8; word-break: break-word; line-height: 1.6; }
+.panel-source a {
+  color: var(--accent-2);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(34, 224, 238, 0.35);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.panel-source a:hover { color: #fff; border-color: var(--accent-2); }
+.panel-source a::after { content: " ↗"; font-size: 0.5rem; opacity: 0.7; }
 .mission-tag  { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-tertiary); line-height: 1.45; }
 
 /* ── Navigation bar (pinned to bottom) ───────────────────── */

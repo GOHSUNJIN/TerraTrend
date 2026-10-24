@@ -21,6 +21,7 @@ const HOTSPOTS = [
     description:
       "Satellite altimeters have tracked sea surface height since 1993. The rate has roughly doubled from the 20th-century average, driven by thermal expansion and meltwater from land ice. Some Pacific islands see 2-3x the global average.",
     source: "NASA/CNES Jason-3, Sentinel-6 Michael Freilich",
+    sourceUrl: "https://sealevel.jpl.nasa.gov/",
     trend: "up",
     keyFinding: "The global ocean has risen ≈ 83 mm since 1993, a pace roughly double the 20th-century average and still accelerating.",
     whyItMatters: "Every centimetre pushes storm surge further inland. A 1 m rise by 2100 (a mid-range projection) would permanently flood the homes of 150 million people and cost trillions in infrastructure.",
@@ -43,6 +44,7 @@ const HOTSPOTS = [
     description:
       "The GRACE missions weigh the ice sheet by measuring tiny changes in Earth's gravity field. Greenland's mass loss has accelerated since the early 2000s and is now a leading contributor to sea level rise.",
     source: "NASA GRACE / GRACE Follow-On",
+    sourceUrl: "https://gracefo.jpl.nasa.gov/",
     trend: "down",
     keyFinding: "Greenland has lost more than 3,100 Gt of ice since 2002, enough to fill Lake Superior three times over.",
     whyItMatters: "Every 360 Gt of meltwater raises global sea level by about 1 mm. Greenland is now the single largest contributor to sea-level rise, outpacing even thermal expansion of the warming ocean.",
@@ -65,6 +67,7 @@ const HOTSPOTS = [
     description:
       "OCO-2 maps CO₂ from space while Mauna Loa provides the longest continuous record. The annual growth rate has climbed from ~0.8 ppm/yr in the 1960s to well over 2 ppm/yr today.",
     source: "NASA OCO-2 · NOAA Global Monitoring Lab",
+    sourceUrl: "https://gml.noaa.gov/ccgg/trends/",
     trend: "up",
     keyFinding: "Atmospheric CO₂ reached 421 ppm in 2023, a concentration not seen on Earth in at least 3 million years.",
     whyItMatters: "CO₂ traps outgoing infrared radiation, creating the energy imbalance that drives every other trend on this globe. The current growth rate is three times faster than in the 1960s and CO₂ persists in the atmosphere for centuries.",
@@ -87,6 +90,7 @@ const HOTSPOTS = [
     description:
       "The Arctic warms several times faster than the global average. The same process can push one region's trend up faster than another's, exactly the kind of contrast the challenge asks detectives to spot.",
     source: "NASA GISS GISTEMP v4 · NOAA",
+    sourceUrl: "https://data.giss.nasa.gov/gistemp/",
     trend: "up",
     keyFinding: "2023 was 1.17 °C above the 1951-1980 average, the warmest year in the instrument record, which now stretches back to the 1880s.",
     whyItMatters: "The Paris Agreement target of 1.5 °C is now years, not decades, away. Beyond it, coral bleaching, permafrost thaw and ice-sheet instability accelerate sharply and some effects become locked in for centuries.",
@@ -109,6 +113,7 @@ const HOTSPOTS = [
     description:
       "MODIS and VIIRS detect every fire on Earth daily. Burned area is falling in African savannas while extreme fire behavior rises in forests, the same process with opposite regional trends.",
     source: "NASA MODIS / VIIRS active fire products",
+    sourceUrl: "https://firms.modaps.eosdis.nasa.gov/",
     trend: "mixed",
     keyFinding: "The 2019 Amazon fire season produced a Fire Radiative Power index 95% above the 2000 baseline, the highest single-year value in the record.",
     whyItMatters: "Wildfires release decades of stored carbon in days, blanket cities in toxic smoke and create a feedback: burned land absorbs more heat, drying vegetation further and raising risk for the next season.",
@@ -131,6 +136,7 @@ const HOTSPOTS = [
     description:
       "GRACE-FO senses water moving through the ground. Some of Earth's largest aquifers show sustained decline, a falling trend invisible at the surface but unmistakable from orbit.",
     source: "NASA GRACE-FO terrestrial water storage",
+    sourceUrl: "https://gracefo.jpl.nasa.gov/",
     trend: "down",
     keyFinding: "NW India's aquifer has lost the equivalent of 35.9 cm of water depth since 2002, about 60 km³ extracted faster than rainfall can replenish it.",
     whyItMatters: "This aquifer irrigates 20% of India's wheat and rice. When aquifers run dry, crop failures and mass displacement follow, a slow-motion crisis invisible at the surface but unmistakable from orbit.",
@@ -153,6 +159,7 @@ const HOTSPOTS = [
     description:
       "Passive microwave sensors on NASA satellites have tracked sea-ice extent since 1979. September 2012 set the all-time record minimum of 3.41 million km²; low-extent years now cluster firmly in the 2000s-2020s. The loss is not noise; it is a clear, accelerating trend.",
     source: "NASA NSIDC · AMSR-E (Aqua) · AMSR2 (GCOM-W)",
+    sourceUrl: "https://nsidc.org/data/seaice_index",
     trend: "down",
     keyFinding: "Arctic summer sea ice has shrunk by ≈ 3.6 million km² since 1979, an area larger than India gone from the map each September.",
     whyItMatters: "Sea ice reflects 80% of sunlight back to space. As it disappears, dark ocean water absorbs that heat instead, a feedback that makes the Arctic warm 4x faster than the global average and disrupts mid-latitude weather patterns.",
@@ -173,6 +180,7 @@ const HOTSPOTS = [
     description:
       "The Argo float network, over 4,000 robotic probes drifting at depth worldwide, measures ocean temperature continuously. Heat content has risen in every decade of the record, absorbing energy that would otherwise accelerate surface warming far more rapidly.",
     source: "NOAA NCEI Ocean Heat Content / Argo Float Network / NASA Aquarius",
+    sourceUrl: "https://www.ncei.noaa.gov/products/climate-change/ocean-heat-content",
     trend: "up",
     keyFinding: "The upper ocean has absorbed an extra 41 ZJ since 1993, roughly equivalent to five Hiroshima-scale detonations per second for 30 continuous years.",
     whyItMatters: "A warmer ocean fuels more intense hurricanes, bleaches coral reefs and melts ice shelves from below. It is also a heat time-bomb: energy stored today commits future generations to further warming, even if all emissions stopped tomorrow.",

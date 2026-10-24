@@ -122,10 +122,6 @@
 }
 .about-facts strong { color: var(--dim); font-weight: 500; font-size: 0.72rem; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.14em; }
 .about-facts span { font-size: 0.85rem; line-height: 1.45; }
-.about-fact-team { grid-column: 1 / -1; background: rgba(34, 224, 238, 0.05) !important; border-color: rgba(34, 224, 238, 0.18) !important; }
-.about-fact-team strong { color: var(--accent-2) !important; }
-.about-fact-team span { color: #fff; font-weight: 500; }
-
 /* ---------- Popup modals (method + about) ---------- */
 .method-modal {
   position: fixed;
