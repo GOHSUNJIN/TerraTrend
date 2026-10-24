@@ -1,0 +1,19 @@
+{
+  "unit": "ppm",
+  "label": "CO₂ (ppm)",
+  "source": "NOAA Global Monitoring Laboratory – Mauna Loa Observatory",
+  "series": [
+    {"year":2000,"value":369.52},{"year":2001,"value":371.13},
+    {"year":2002,"value":373.22},{"year":2003,"value":375.77},
+    {"year":2004,"value":377.49},{"year":2005,"value":379.80},
+    {"year":2006,"value":381.90},{"year":2007,"value":383.76},
+    {"year":2008,"value":385.59},{"year":2009,"value":387.37},
+    {"year":2010,"value":389.85},{"year":2011,"value":391.63},
+    {"year":2012,"value":393.82},{"year":2013,"value":396.48},
+    {"year":2014,"value":398.61},{"year":2015,"value":400.83},
+    {"year":2016,"value":404.21},{"year":2017,"value":406.53},
+    {"year":2018,"value":408.52},{"year":2019,"value":411.43},
+    {"year":2020,"value":414.24},{"year":2021,"value":416.45},
+    {"year":2022,"value":418.56},{"year":2023,"value":421.08}
+  ]
+}

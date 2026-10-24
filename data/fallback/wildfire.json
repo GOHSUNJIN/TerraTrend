@@ -1,0 +1,19 @@
+{
+  "unit": "index",
+  "label": "Fire Radiative Power index",
+  "source": "NASA MODIS / VIIRS Active Fire Products (Amazon & boreal regions)",
+  "series": [
+    {"year":2000,"value":100},{"year":2001,"value":108},
+    {"year":2002,"value":120},{"year":2003,"value":138},
+    {"year":2004,"value":145},{"year":2005,"value":162},
+    {"year":2006,"value":130},{"year":2007,"value":145},
+    {"year":2008,"value":112},{"year":2009,"value":125},
+    {"year":2010,"value":170},{"year":2011,"value":118},
+    {"year":2012,"value":140},{"year":2013,"value":128},
+    {"year":2014,"value":135},{"year":2015,"value":175},
+    {"year":2016,"value":148},{"year":2017,"value":155},
+    {"year":2018,"value":142},{"year":2019,"value":195},
+    {"year":2020,"value":168},{"year":2021,"value":178},
+    {"year":2022,"value":162},{"year":2023,"value":185}
+  ]
+}

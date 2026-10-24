@@ -4,32 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TerraTrend — Earth System Trend Detective | NASA Space Apps 2026</title>
-  <meta name="description" content="An interactive 3D Earth revealing significant trends in NASA Earth system data — sea level, ice, CO2, temperature, wildfire, and more." />
+  <meta name="description" content="Select Earth science variables measured by NASA missions, visualise how they change over time, and determine what is changing, where, how much, and if it is statistically significant." />
 
-  <!-- Self-hosted fonts: preload so the splash paints with real fonts,
-       no render-blocking requests to fonts.googleapis.com -->
   <link rel="preload" href="fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/IBMPlexMono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/IBMPlexMono-500-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-  <!-- Warm up the third-party hosts the page needs (DNS + TLS) before
-       the deferred scripts/assets request them -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <!-- Start fetching the large Earth texture immediately, in parallel
-       with parsing, so it is already in cache when Three.js asks for it -->
+  <link rel="preconnect" href="https://power.larc.nasa.gov" crossorigin />
   <link rel="preload" as="image" href="https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-blue-marble.jpg" fetchpriority="low" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- ===== Canvas for the 3D Earth (fixed fullscreen, like NASA Eyes) ===== -->
   <canvas id="globe-canvas"></canvas>
   <div class="space-bg" aria-hidden="true">
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
   </div>
 
-  <!-- ===== Splash screen (NASA Eyes style LAUNCH gate) ===== -->
+  <!-- ===== Splash ===== -->
   <div class="splash" id="splash" role="dialog" aria-label="TerraTrend introduction">
     <div class="splash-inner">
       <div class="splash-logo-wrap">
@@ -40,17 +34,17 @@
       <p class="splash-kicker">A 3D INTERACTIVE EARTH · NASA SPACE APPS 2026</p>
       <h1 class="splash-title">TERRA<span>TREND</span></h1>
       <p class="splash-lede">
-        Fly around a living Earth scanned by NASA missions. Spin it, click it,
-        and open the trend files hidden in the data.
+        Select a variable. Spin the globe. Discover where Earth is changing —
+        and whether scientists would call it <em>significant</em>.
       </p>
       <button class="launch-btn" id="launch-btn" type="button">
         <span class="launch-ring"></span> Launch the globe
       </button>
-      <p class="splash-hint">Best with mouse or touch · WebGL required</p>
+      <p class="splash-hint">Works without WebGL · Mouse, touch &amp; keyboard supported</p>
     </div>
   </div>
 
-  <!-- ===== Slim app bar ===== -->
+  <!-- ===== App bar ===== -->
   <header class="site-header" id="top">
     <div class="header-inner">
       <a class="logo" href="#globe-section">
@@ -64,14 +58,23 @@
     </div>
   </header>
 
-  <!-- ===== Fullscreen 3D app view ===== -->
+  <!-- ===== Globe section ===== -->
   <section class="app-view" id="globe-section">
     <div class="globe-stage">
-      <!-- Eyebrow text floats over the scene -->
+
+      <!-- Scene copy -->
       <div class="scene-copy">
         <p class="kicker">// EARTH SYSTEM · TREND DETECTIVE</p>
         <h2>Be an <span class="accent">Earth System</span> Trend Detective</h2>
-        <p class="scene-sub">Spin the globe. Open a case file. Follow the data.</p>
+        <p class="scene-sub">Select a variable. Spin the globe. Follow the data.</p>
+      </div>
+
+      <!-- Variable selector -->
+      <div class="var-selector" id="var-selector" aria-label="Select Earth science variable" hidden>
+        <p class="var-selector-label mono">SELECT VARIABLE</p>
+        <div class="var-selector-pills" id="var-selector-pills" role="listbox" aria-label="Earth science variables">
+          <!-- pills injected by JS -->
+        </div>
       </div>
 
       <!-- Scroll cue -->
@@ -80,31 +83,75 @@
         <span class="scroll-cue-track"><span class="scroll-cue-thumb"></span></span>
       </div>
 
-      <!-- Info panel (NASA Eyes style, right side) -->
+      <!-- Info panel -->
       <div id="info-panel" class="info-panel hidden" role="dialog" aria-modal="false" aria-label="Trend details">
         <div class="panel-head">
-          <p class="panel-kicker" id="panel-kicker">TREND FILE</p>
+          <div class="panel-head-left">
+            <p class="panel-kicker" id="panel-kicker">TREND FILE</p>
+            <!-- Data source badge -->
+            <span class="data-badge" id="data-badge" hidden>
+              <span class="data-badge-dot"></span>
+              <span class="data-badge-label" id="data-badge-label">LOADING</span>
+            </span>
+          </div>
           <button class="panel-close" id="panel-close" aria-label="Close trend details">×</button>
         </div>
+
         <figure class="panel-photo" id="panel-photo" hidden>
-          <img id="panel-photo-img" alt="" loading="lazy" decoding="async" onerror="if(this.closest('.panel-photo'))this.closest('.panel-photo').hidden=true" />
+          <img id="panel-photo-img" alt="" loading="lazy" decoding="async"
+               onerror="if(this.closest('.panel-photo'))this.closest('.panel-photo').hidden=true" />
         </figure>
+
         <h3 id="panel-title">—</h3>
         <p class="panel-tagline" id="panel-tagline"></p>
-        <p class="panel-desc" id="panel-desc"></p>
-        <p class="panel-source" id="panel-source"></p>
+
         <div class="panel-body">
-          <div class="panel-row"><span id="panel-label-coords">Scan location</span><strong id="panel-coords" class="mono">—</strong></div>
-          <div class="panel-row"><span id="panel-label-what">What is changing</span><strong id="panel-what">—</strong></div>
-          <div class="panel-row"><span id="panel-label-where">Where it is changing</span><strong id="panel-where">—</strong></div>
-          <div class="panel-row"><span id="panel-label-rate">How much / rate</span><strong id="panel-rate">—</strong></div>
-          <div class="panel-row"><span id="panel-label-sig">Significant?</span><strong id="panel-sig" class="sig">—</strong></div>
+          <div class="panel-row">
+            <span>Scan location</span>
+            <strong id="panel-coords" class="mono">—</strong>
+          </div>
+          <div class="panel-row">
+            <span>What is changing</span>
+            <strong id="panel-what">—</strong>
+          </div>
+          <div class="panel-row">
+            <span>Where</span>
+            <strong id="panel-where">—</strong>
+          </div>
+          <div class="panel-row">
+            <span>Rate (Sen's slope)</span>
+            <strong id="panel-rate" class="mono">—</strong>
+          </div>
         </div>
+
+        <!-- Mann-Kendall significance block -->
+        <div class="mk-block" id="mk-block" hidden>
+          <div class="mk-header">
+            <span class="mk-title mono">MANN-KENDALL TEST</span>
+            <span class="mk-badge" id="mk-badge">—</span>
+          </div>
+          <div class="mk-grid">
+            <div class="mk-cell"><span>Trend direction</span><strong id="mk-trend">—</strong></div>
+            <div class="mk-cell"><span>S statistic</span><strong id="mk-s" class="mono">—</strong></div>
+            <div class="mk-cell"><span>Z score</span><strong id="mk-z" class="mono">—</strong></div>
+            <div class="mk-cell"><span>p-value</span><strong id="mk-p" class="mono">—</strong></div>
+            <div class="mk-cell"><span>Confidence</span><strong id="mk-conf">—</strong></div>
+            <div class="mk-cell"><span>Significant?</span><strong id="mk-sig" class="sig">—</strong></div>
+          </div>
+        </div>
+
+        <p class="panel-desc" id="panel-desc"></p>
+        <p class="panel-source mono" id="panel-source"></p>
+
         <div class="panel-chart-wrap">
-          <p class="panel-chart-title mono">Trend series</p>
-          <canvas id="panel-chart" width="316" height="110" aria-label="Trend time series chart. Shows the selected variable's value over a 26-year period." role="img"></canvas>
+          <div class="chart-header">
+            <p class="panel-chart-title mono" id="chart-title">Trend series</p>
+          </div>
+          <canvas id="panel-chart" width="316" height="120"
+            aria-label="Trend time series chart" role="img"></canvas>
           <div class="chart-tip mono" id="chart-tip" hidden></div>
         </div>
+
         <div class="panel-nav">
           <button class="panel-nav-btn" id="panel-prev" aria-label="Previous case file">←</button>
           <span class="panel-nav-count mono" id="panel-nav-count">1 / 6</span>
@@ -112,34 +159,30 @@
         </div>
       </div>
 
-    <!-- Vertical circular side rail sits inside the globe section so it
-         scrolls away with it (was fixed-follow before) -->
-    <div class="side-rail" aria-label="App tools">
-      <button class="rail-btn" id="rail-method" title="How we catch a trend" aria-label="The Detective's Method">!</button>
-      <button class="rail-btn" id="rail-mission" title="The Mission" aria-label="The Mission">🖽</button>
-      <button class="rail-btn" id="rail-about" title="About" aria-label="About">?</button>
-      <button class="rail-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+      <!-- Side rail -->
+      <div class="side-rail" aria-label="App tools">
+        <button class="rail-btn" id="rail-method" title="How we catch a trend" aria-label="The Detective's Method">?</button>
+        <button class="rail-btn" id="rail-mission" title="The Mission" aria-label="The Mission">⬡</button>
+        <button class="rail-btn" id="rail-about" title="About" aria-label="About">ℹ</button>
+        <button class="rail-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+      </div>
     </div>
   </section>
 
-  <!-- ===== Bottom control bar: hotspot quick selector ===== -->
+  <!-- ===== Bottom bar ===== -->
   <div class="bottom-bar" aria-label="Case file quick selector">
     <span class="bar-label">CASE FILES</span>
-    <div class="bar-dots" id="bar-dots"><!-- dots injected by JS --></div>
+    <div class="bar-dots" id="bar-dots"></div>
     <span class="bar-hint mono">Click anywhere on the globe to scan</span>
   </div>
-  <!-- Fixed button that brings the case-file bar back after it auto-hides -->
   <button class="bar-toggle" id="bar-toggle" type="button" aria-label="Show case file selector" aria-expanded="false">◎</button>
 
-
-  <!-- ===== Neon marquee ticker ===== -->
+  <!-- ===== Ticker ===== -->
   <div class="ticker" aria-hidden="true">
-    <div class="ticker-track" id="ticker-track">
-      <!-- filled by JS (duplicated for a seamless loop) -->
-    </div>
+    <div class="ticker-track" id="ticker-track"></div>
   </div>
 
-  <!-- ===== The Detective's Method (popup) ===== -->
+  <!-- ===== Method modal ===== -->
   <div class="method-modal" id="method-modal" hidden>
     <div class="method-backdrop" data-method-close></div>
     <div class="method-card" role="dialog" aria-modal="true" aria-labelledby="method-title">
@@ -151,29 +194,29 @@
       <div class="steps">
         <div class="step revealed">
           <div class="step-num">01</div>
-          <h3>Find the variable</h3>
-          <p>Pull variables measured by NASA missions or produced by NASA models — sea surface height, ice mass, carbon dioxide, temperature anomalies, and fire radiative power.</p>
+          <h3>Select the variable</h3>
+          <p>Choose from variables measured by NASA missions or produced by Earth science models — CO₂, sea level, ice mass, temperature, fire, or groundwater.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">02</div>
-          <h3>Watch it over time</h3>
-          <p>Visualize decades of measurements as time series so any consistent direction — up, down, thinning, intensifying — becomes visible.</p>
+          <h3>Fetch the data</h3>
+          <p>We pull live data from NASA POWER and NOAA APIs where available. When APIs are offline, curated real-measurement archives are served instead — always clearly labelled.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">03</div>
           <h3>Test for significance</h3>
-          <p>A trend is only real if it's <em>significant</em>. We check confidence, magnitude, and whether the same process pushes different regions in opposite directions.</p>
+          <p>The Mann-Kendall test — the non-parametric method Earth scientists use — computes S, Z, a p-value, and Sen's slope. A trend is reported <em>significant</em> only when p&nbsp;&lt;&nbsp;0.05.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">04</div>
-          <h3>Tell the story</h3>
-          <p>Pin every confirmed trend to the exact place on Earth where it happens — this page <em>is</em> the detective's evidence board.</p>
+          <h3>Pin it to Earth</h3>
+          <p>Every confirmed trend is anchored to the exact place where it occurs. Click anywhere on the globe to surface the regional trend at that coordinate.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== About (popup) ===== -->
+  <!-- ===== About modal ===== -->
   <div class="method-modal" id="about-modal" hidden>
     <div class="method-backdrop" data-method-close></div>
     <div class="method-card" role="dialog" aria-modal="true" aria-labelledby="about-title">
@@ -185,38 +228,36 @@
       <div class="about-grid">
         <div>
           <p>
-            This landing page is the public face of our hackathon project. It uses
-            NASA open data themes — sea level rise, land and sea ice loss, carbon
-            dioxide growth, global temperature, wildfire activity, and groundwater
-            decline — rendered as an interactive 3D Earth you can spin and investigate.
+            TerraTrend is an interactive Earth science tool that selects variables from NASA missions,
+            visualises how they change over time, runs the Mann-Kendall statistical significance test,
+            and pins every confirmed trend to the location on Earth where it is measured.
           </p>
           <p class="mono-note">
-            Data themes are illustrative of NASA Earth observations (GRACE-FO, Jason-3,
-            Sentinel-6, OCO-2, MODIS, NOAA global temperature records).
+            Live data: NASA POWER API · NOAA GML Mauna Loa.
+            Archival data: GRACE-FO, Jason-3 / Sentinel-6, MODIS / VIIRS, GISTEMP v4.
           </p>
         </div>
         <div class="about-facts">
           <div><strong>Event</strong><span>2026 NASA Space Apps Challenge</span></div>
           <div><strong>Challenge</strong><span>Be An Earth System Trend Detective!</span></div>
-          <div><strong>Difficulty</strong><span>Advanced · Earth Science</span></div>
-          <div><strong>Questions</strong><span>What · Where · How much · Significant</span></div>
+          <div><strong>Stat method</strong><span>Mann-Kendall + Sen's slope</span></div>
+          <div><strong>Questions</strong><span>What · Where · How much · Significant?</span></div>
         </div>
       </div>
     </div>
   </div>
 
   <footer class="site-footer">
-    <p>TerraTrend — a NASA Space Apps 2026 project. Data themes inspired by NASA Earth science missions.</p>
-    <p class="mono-note">
-      Not affiliated with NASA. Built with curiosity by our hackathon team.
-    </p>
+    <p>TerraTrend — a NASA Space Apps 2026 project. Real data from NASA and NOAA Earth science missions.</p>
+    <p class="mono-note">Not affiliated with NASA. Built with curiosity by our hackathon team.</p>
   </footer>
 
-  <!-- All scripts deferred: the page paints first, then these run in order -->
-  <!-- Three.js is self-hosted (js/vendor) so ad-blockers and filtered networks can never block it -->
   <script defer src="js/vendor/three.min.js"></script>
   <script defer src="js/data.js"></script>
   <script defer src="js/regions.js"></script>
+  <script defer src="js/mann-kendall.js"></script>
+  <script defer src="js/nasa-data.js"></script>
+  <script defer src="js/globe-2d.js"></script>
   <script defer src="js/globe.js"></script>
   <script defer src="js/main.js"></script>
 </body>

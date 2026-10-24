@@ -46,18 +46,31 @@
 
   const canvas = document.getElementById("globe-canvas");
 
-  if (typeof THREE === "undefined") {
-    showGlobeFallback(
-      "3D LIBRARY FAILED TO LOAD",
-      "A browser extension, ad blocker, or network filter may have blocked the Three.js file. Disable it for this site and reload."
+  /* ---- Route to 2D canvas fallback if WebGL is unavailable ---- */
+  function startFallback2D() {
+    if (typeof Globe2D === "undefined") return;
+    document.body.classList.add("globe-2d-mode");
+    Globe2D.init(
+      canvas,
+      typeof HOTSPOTS !== "undefined" ? HOTSPOTS : [],
+      function onHotspot(idx) {
+        const spot = HOTSPOTS[idx];
+        if (spot && window.TerraTrendUI) window.TerraTrendUI.openPanel(spot);
+      },
+      function onSurface(lat, lon) {
+        if (typeof findRegionForPoint !== "undefined" && window.TerraTrendUI) {
+          const region = findRegionForPoint(lat, lon);
+          if (region) {
+            const coords = lat.toFixed(2) + "°, " + lon.toFixed(2) + "°";
+            window.TerraTrendUI.openPanel(region, coords);
+          }
+        }
+      }
     );
-    return;
   }
-  if (!webglSupported()) {
-    showGlobeFallback(
-      "WEBGL IS UNAVAILABLE ON THIS BROWSER",
-      "This site spins a live 3D Earth, which needs WebGL. If it is disabled, turn on hardware / GPU acceleration in your browser settings (Chrome: Settings → System) and reload — or try a different browser."
-    );
+
+  if (typeof THREE === "undefined" || !webglSupported()) {
+    startFallback2D();
     return;
   }
 
@@ -66,10 +79,7 @@
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   } catch (err) {
-    showGlobeFallback(
-      "GRAPHICS CONTEXT FAILED TO START",
-      "Your browser opened, but the 3D engine could not start here — often due to limited graphics memory or an old graphics driver. Try enabling hardware acceleration or updating Chrome/Edge/Firefox/Safari."
-    );
+    startFallback2D();
     return;
   }
 
@@ -77,10 +87,7 @@
   // freeze the globe — surface it and offer a reload instead.
   canvas.addEventListener("webglcontextlost", function (e) {
     e.preventDefault();
-    showGlobeFallback(
-      "3D VIEW WAS INTERRUPTED",
-      "Your GPU context was reset (often by power saving or a driver update). Reload the page to bring the Earth back."
-    );
+    startFallback2D();
   });
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
