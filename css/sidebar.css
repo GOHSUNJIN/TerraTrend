@@ -46,7 +46,7 @@
 }
 .var-pill {
   display: grid;
-  grid-template-columns: 28px 1fr 44px 16px;
+  grid-template-columns: 28px 1fr 44px 20px;
   grid-template-rows: auto;
   column-gap: 8px;
   align-items: center;
@@ -109,9 +109,12 @@
 .var-pill.active .pill-spark { opacity: 1; }
 .pill-arrow {
   grid-column: 4;
-  font-size: 0.58rem;
-  width: 16px;
-  text-align: center;
+  font-size: 0.6rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   justify-self: center;
 }
 .pill-arrow.up    { color: var(--signal-warm); text-shadow: 0 0 8px rgba(255, 138, 92, 0.6); }

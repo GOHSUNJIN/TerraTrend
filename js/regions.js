@@ -222,6 +222,98 @@ const REGION_ZONES = [
     source: "NASA ICESat-2 · GRACE-FO · HIMAP"
   },
 
+  // ---------- MORE LAND REGIONS ----------
+  {
+    id: "lake-chad",
+    name: "Lake Chad Collapse",
+    icon: "🏜️",
+    bounds: [9, 16, 12, 24],
+    color: 0xd4a94a,
+    what: "Lake surface area & basin water storage",
+    where: "Lake Chad Basin — Chad, Niger, Nigeria, Cameroon",
+    rate: "Surface area fell from 25,000 km² to ~1,500 km² since 1963",
+    significance: "YES; one of the most dramatic land-change signals in satellite history",
+    tone: "yes",
+    description:
+      "NASA Landsat watched Lake Chad shrink to less than 10% of its 1960s size in real time. Climate variability and massive upstream irrigation diversions have together nearly erased a lake that once supported 30 million people, turning its exposed bed into a dust-blowing salt flat.",
+    source: "NASA Landsat · MODIS · GRACE-FO"
+  },
+  {
+    id: "andes-glaciers",
+    name: "Andes Tropical Glaciers",
+    icon: "⛰️",
+    bounds: [-18, 5, -80, -64],
+    color: 0xb0d4ff,
+    what: "Tropical glacier mass & extent",
+    where: "Peru, Bolivia & Ecuador — Quelccaya, Huascarán, Chacaltaya",
+    rate: "30-50% ice volume lost since 1980; Chacaltaya glacier vanished 2009",
+    significance: "YES; fastest-disappearing glaciers on Earth by area fraction",
+    tone: "yes",
+    description:
+      "The Andes hold over 99% of the world's tropical glaciers, and NASA ICESat-2 surveys show them in near-freefall. Bolivia's Chacaltaya glacier, once a ski resort, vanished entirely in 2009. These glaciers regulate dry-season water for millions; when they disappear, the dry season has no buffer.",
+    source: "NASA ICESat-2 · GRACE-FO · Landsat"
+  },
+  {
+    id: "alaska-glaciers",
+    name: "Alaska Glacier Retreat",
+    icon: "🌨️",
+    bounds: [55, 72, -170, -130],
+    color: 0x88aaff,
+    what: "Glacier mass balance & permafrost thaw",
+    where: "Gulf of Alaska, Juneau Icefield, Brooks Range",
+    rate: "≈ −75 Gt/yr; Columbia Glacier retreated 20 km in 30 years",
+    significance: "YES; continuous loss trend since at least 1980",
+    tone: "yes",
+    description:
+      "Alaska's glaciers, tracked by GRACE-FO and NASA Operation IceBridge airborne surveys, are losing ice faster per unit area than almost anywhere outside Greenland. Meanwhile permafrost thaw is buckling roads, tilting forests and releasing ancient carbon that has been frozen since the last ice age.",
+    source: "NASA GRACE-FO · Operation IceBridge · MODIS"
+  },
+  {
+    id: "aral-sea",
+    name: "Aral Sea Disappearance",
+    icon: "🌊",
+    bounds: [42, 47, 55, 62],
+    color: 0xd4a94a,
+    what: "Lake surface area & regional salinity",
+    where: "Kazakhstan / Uzbekistan border",
+    rate: "Over 90% of water volume lost since 1960",
+    significance: "YES; the largest man-made environmental disaster ever recorded from space",
+    tone: "yes",
+    description:
+      "Soviet-era irrigation canals diverted the Amu Darya and Syr Darya rivers away from the Aral Sea, and NASA Landsat documented the result decade by decade: one of the world's four largest lakes reduced to a series of toxic, hyper-saline remnants. The exposed lake bed is now a salt desert spreading dust across Central Asia.",
+    source: "NASA Landsat · MODIS"
+  },
+  {
+    id: "bay-of-bengal",
+    name: "Bay of Bengal Cyclones",
+    icon: "🌀",
+    bounds: [5, 25, 75, 100],
+    color: 0x5f8cff,
+    what: "Sea surface temperature & cyclone rapid intensification",
+    where: "Bay of Bengal — Bangladesh, India & Myanmar coasts",
+    rate: "SST +0.5 °C since 1980; rapid intensification events increasing",
+    significance: "YES; warming clear; link to storm intensification significant",
+    tone: "yes",
+    description:
+      "The Bay of Bengal is one of the world's most deadly tropical cyclone basins, and a warmer sea surface gives storms more energy. NASA GPM measures rainfall inside cyclones in real time while MODIS tracks the warm core. Cyclone Fani (2019) and Amphan (2020) both rapidly intensified over anomalously warm water before making landfall.",
+    source: "NASA GPM · MODIS SST · Jason-3"
+  },
+  {
+    id: "scandinavia-ice",
+    name: "Svalbard & Nordic Ice",
+    icon: "🏔️",
+    bounds: [58, 82, 5, 35],
+    color: 0xa0d8ef,
+    what: "Fjord glacier mass & sea ice extent",
+    where: "Norway, Svalbard & the Barents Sea",
+    rate: "Most Norwegian glaciers retreating 10–50 m/yr; Svalbard warming 5x global average",
+    significance: "YES; consistent retreat and record sea ice losses",
+    tone: "yes",
+    description:
+      "Svalbard is warming faster than almost anywhere else on Earth — measurable rainfall now falls there in January, once unthinkable. NASA Landsat and ICESat-2 show glacier fronts retreating year on year while Barents Sea ice-free summers grow longer each decade, opening Arctic shipping routes that didn't exist a generation ago.",
+    source: "NASA Landsat · ICESat-2 · NSIDC"
+  },
+
   // ---------- OCEAN ZONES ----------
   {
     id: "west-pacific-sea-level",

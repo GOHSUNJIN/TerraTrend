@@ -69,10 +69,11 @@
       setTimeout(() => {
         if (typeof HOTSPOTS !== "undefined" && HOTSPOTS.length) {
           const urlSpot = getSpotFromURL();
-          const firstSpot = urlSpot || HOTSPOTS[0];
-          tourIndex = Math.max(0, HOTSPOTS.indexOf(firstSpot));
-          flyToHotspot(firstSpot);
-          window.TerraTrendUI.openPanel(firstSpot);
+          if (urlSpot) {
+            tourIndex = Math.max(0, HOTSPOTS.indexOf(urlSpot));
+            flyToHotspot(urlSpot);
+            window.TerraTrendUI.openPanel(urlSpot);
+          }
         }
       }, 1800);
       setTimeout(showOnboardingHint, 2800);
@@ -154,10 +155,16 @@
     });
   }
 
-  // ---------- Header scroll state ----------
+  // ---------- Header scroll state + chatbot fade ----------
   const header = document.querySelector(".site-header");
+  const siteFooter = document.querySelector(".site-footer");
   window.addEventListener("scroll", () => {
     if (header) header.classList.toggle("scrolled", window.scrollY > window.innerHeight - 80);
+    const chatWrap = document.getElementById("chatbot-wrap");
+    if (chatWrap && siteFooter) {
+      const dist = siteFooter.getBoundingClientRect().top - window.innerHeight;
+      chatWrap.style.opacity = Math.min(1, Math.max(0, dist / 180));
+    }
   }, { passive: true });
 
   // ---------- Data badge ----------
