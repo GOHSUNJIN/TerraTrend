@@ -433,7 +433,13 @@
   .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
   #rail-fullscreen { display: none; }
 
-  .auto-tour-btn { display: none; }
+  /* Reposition auto-tour button above the bottom dock */
+  .auto-tour-btn {
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    font-size: 0.65rem;
+    padding: 7px 16px;
+    letter-spacing: 0.14em;
+  }
   /* Raise toast above the bottom pill dock (~68px tall) */
   .complete-toast { bottom: 82px; }
 }

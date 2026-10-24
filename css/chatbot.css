@@ -1,15 +1,5 @@
-﻿/* TerraTrend - chatbot.css
+/* TerraTrend - chatbot.css
    AI chatbot FAB and panel */
-
-/* On mobile: float FAB above the bottom dock; hide the full slide-up panel */
-@media (max-width: 900px) {
-  .chatbot-wrap {
-    top: auto;
-    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
-    right: 14px;
-  }
-  .chatbot-panel { display: none !important; }
-}
 
 /* ---------- AI Chatbot (FAB + panel) ---------- */
 .chatbot-wrap {
@@ -202,3 +192,17 @@
   transition: background 0.2s, border-color 0.2s;
 }
 .chatbot-send svg { stroke: currentColor; }
+
+/* ── Mobile: FAB only, floats above the bottom dock ──────────── */
+/* MUST be last so it wins over the base bottom/top/right above  */
+@media (max-width: 900px) {
+  .chatbot-wrap {
+    top: auto;
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
+  }
+  /* Hide slide-up panel on mobile — FAB only */
+  .chatbot-panel { display: none !important; }
+  /* Hide FAB when the info panel is open */
+  .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
+}
