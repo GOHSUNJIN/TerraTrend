@@ -23,9 +23,16 @@
 
 ## The Challenge
 
-The 2026 NASA Space Apps Challenge asks: *what is changing on Earth, where is it happening, how much is it changing and is it statistically significant?*
+The *Be an Earth System Trend Detective* challenge asks teams to use NASA data to answer four questions about a changing Earth:
 
-TerraTrend answers all four questions at once by pulling real NASA and NOAA measurements, running the Mann-Kendall non-parametric trend test on each time series and pinning every statistically significant result to the exact location on a 3D globe where it was recorded.
+| Question | How TerraTrend answers it |
+|----------|--------------------------|
+| **What** is changing? | 8 Earth science variables from NASA and NOAA missions, each with a plain-language case file |
+| **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 20 clickable regional zones surface local stories |
+| **How much** is it changing? | Sen's slope gives the rate of change per year in real units (mm, ppm, Gt, ZJ) |
+| **Is it statistically significant?** | Mann-Kendall non-parametric test reports S, Z, p-value and confidence level; only trends with p < 0.05 are marked significant |
+
+All data comes from NASA missions or NASA-partner agencies. The app pulls live measurements where CORS-enabled APIs exist and falls back silently to curated real-measurement archives so the experience never breaks.
 
 ---
 
@@ -172,17 +179,6 @@ Live failure  -->  stays on archive, badge shows ARCHIVED DATA
 - **Open-Meteo ERA5** - free, CORS-enabled reanalysis API (no key required)
 - **NOAA GML** - live Mauna Loa CO2 CSV
 - **Vanilla JS** - zero build step, zero runtime dependencies beyond Three.js
-
-### Performance Choices
-
-| Problem | Solution |
-|---------|---------|
-| Full-width `backdrop-filter` every frame | Removed from header; replaced with gradient fade |
-| Moving starfield at 60 fps | Static radial-gradient layers |
-| Nebula scale animation invalidating GPU cache | Translate-only keyframes (no `scale`) |
-| `MeshStandardMaterial` PBR cost | `MeshPhongMaterial` (~2x faster fragment shader) |
-| Frame overrun at 60 fps during auto-spin | 20 fps idle / 5 fps when panel open / 60 fps on drag |
-| Pixel ratio on HiDPI | Capped at 1.5 (saves ~55% GPU pixels vs native 2x) |
 
 ---
 
