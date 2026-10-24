@@ -10,10 +10,10 @@
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(1100px 640px at 50% 28%, rgba(109, 75, 255, 0.22), transparent 65%),
-    radial-gradient(800px 500px at 78% 82%, rgba(255, 94, 168, 0.14), transparent 65%),
-    radial-gradient(700px 460px at 16% 78%, rgba(34, 224, 238, 0.12), transparent 65%),
-    rgba(5, 5, 15, 0.96);
+    radial-gradient(1100px 640px at 50% 28%, rgba(109, 75, 255, 0.16), transparent 65%),
+    radial-gradient(800px 500px at 78% 82%, rgba(255, 94, 168, 0.10), transparent 65%),
+    radial-gradient(700px 460px at 16% 78%, rgba(34, 224, 238, 0.08), transparent 65%),
+    rgba(5, 5, 15, 0.78);
   transition: opacity 0.7s ease, visibility 0.7s;
 }
 .splash.dismissed { opacity: 0; visibility: hidden; pointer-events: none; }

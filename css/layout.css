@@ -321,6 +321,38 @@
   50%       { opacity: 1; }
 }
 
+/* ---------- Completion toast ---------- */
+.complete-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  z-index: 80;
+  background: rgba(6, 7, 20, 0.97);
+  border: 1px solid rgba(34, 224, 238, 0.35);
+  border-radius: 14px;
+  padding: 13px 22px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 0.82rem;
+  color: var(--text);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(34, 224, 238, 0.07) inset;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.complete-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.complete-toast-icon {
+  font-size: 1.1rem;
+  color: var(--accent-2);
+  text-shadow: 0 0 14px rgba(34, 224, 238, 0.8);
+}
+
 /* ---------- Scroll hint ---------- */
 .scroll-hint {
   position: absolute;

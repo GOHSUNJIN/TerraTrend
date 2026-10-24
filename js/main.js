@@ -36,6 +36,20 @@
   const chartTitleEl = document.getElementById("chart-title");
   const exploredSet = new Set();
 
+  function showCompletionToast() {
+    if (document.getElementById("complete-toast")) return;
+    const toast = document.createElement("div");
+    toast.id = "complete-toast";
+    toast.className = "complete-toast";
+    toast.innerHTML = `<span class="complete-toast-icon">◎</span><span>All 8 Earth systems investigated. The patterns are clear.</span>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add("visible")));
+    setTimeout(() => {
+      toast.classList.remove("visible");
+      toast.addEventListener("transitionend", () => toast.remove(), { once: true });
+    }, 5000);
+  }
+
   function showOnboardingHint() {
     if (sessionStorage.getItem("tt-hinted")) return;
     sessionStorage.setItem("tt-hinted", "1");
@@ -240,6 +254,7 @@
   const mkEls = {
     badge: document.getElementById("mk-badge"),
     trend: document.getElementById("mk-trend"),
+    plain: document.getElementById("mk-plain"),
   };
   const mkStatsLine = document.getElementById("mk-stats-line");
 
@@ -255,6 +270,11 @@
     if (mkStatsLine) {
       const pStr = mk.pValue < 0.001 ? "< 0.001" : mk.pValue.toFixed(3);
       mkStatsLine.textContent = `S = ${mk.s} · Z = ${mk.z.toFixed(2)} · p = ${pStr} · ${mk.confidence}`;
+    }
+    if (mkEls.plain) {
+      mkEls.plain.textContent = mk.significant
+        ? `This trend is statistically real — not random noise (${mk.confidence} confidence).`
+        : `This trend is not statistically confirmed — could be natural variation.`;
     }
   }
 
@@ -295,7 +315,8 @@
       document.title = spot.name + " — TerraTrend";
 
       // Fill static data immediately
-      els.kicker.textContent  = "TREND FILE · " + spot.id.toUpperCase().replace(/-/g, " ");
+      const whatLabel = (spot.what || spot.name).replace(/\s*\(.*?\)\s*/g, "").toUpperCase();
+      els.kicker.textContent  = whatLabel;
       els.title.textContent   = spot.icon + "  " + spot.name;
       els.tagline.textContent = spot.tagline || "";
       els.rate.textContent    = "—";
@@ -352,7 +373,11 @@
         const counter = document.getElementById("explore-counter");
         if (counter) {
           counter.textContent = `INVESTIGATED · ${exploredSet.size} / ${HOTSPOTS.length}`;
-          if (exploredSet.size === HOTSPOTS.length) counter.classList.add("all-explored");
+          if (exploredSet.size === HOTSPOTS.length) {
+            counter.classList.add("all-explored");
+            counter.textContent = "ALL SIGNALS FOUND ◎";
+            showCompletionToast();
+          }
         }
         const barFill = document.getElementById("explore-bar-fill");
         if (barFill) barFill.style.width = (exploredSet.size / HOTSPOTS.length * 100) + "%";

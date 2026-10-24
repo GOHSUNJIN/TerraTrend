@@ -278,6 +278,14 @@
 .mk-badge.sig-yes { background: rgba(34, 224, 100, 0.12); color: #34e064; border: 1px solid rgba(34, 224, 100, 0.3); }
 .mk-badge.sig-no  { background: rgba(255, 138, 92, 0.1);  color: var(--signal-warm); border: 1px solid rgba(255, 138, 92, 0.3); }
 .mk-stats-line { font-size: 0.6rem; letter-spacing: 0.05em; color: var(--text-tertiary); line-height: 1.65; }
+.mk-plain {
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(140, 150, 255, 0.08);
+}
 
 .sig-yes   { color: #34e064 !important; text-shadow: 0 0 10px rgba(52, 224, 100, 0.4); }
 .sig-mixed { color: var(--signal-warm) !important; }
