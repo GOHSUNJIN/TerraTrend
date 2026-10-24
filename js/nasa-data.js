@@ -24,7 +24,9 @@ window.TerraTrendData = (function () {
     "sea-level":     "sea-level.json",
     "greenland-ice": "ice.json",
     "groundwater":   "groundwater.json",
-    "wildfire":      "wildfire.json"
+    "wildfire":      "wildfire.json",
+    "arctic-ice":    "arctic-ice.json",
+    "ocean-heat":    "ocean-heat.json"
   };
 
   const memCache = {};

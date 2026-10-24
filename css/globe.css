@@ -1,0 +1,94 @@
+/* TerraTrend — globe.css
+   Globe canvas, tooltip and fallback */
+
+/* ---------- 3D canvas: full-bleed app stage ---------- */
+#globe-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* z 0 (not -1): at -1 the <body> paints ABOVE the canvas and swallows every
+     click — the marker clicks never reached the globe. Content layers below
+     carry z-index 1 so they still stack over the globe. */
+  z-index: 0;
+  cursor: grab;
+}
+#globe-canvas.grabbing { cursor: grabbing; }
+
+.globe-loading {
+  position: absolute;
+  top: calc(var(--appbar-h) + 18px);
+  right: 26px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(34, 224, 238, 0.5);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity: 0.35; } }
+
+/* Friendly overlay shown when WebGL is unavailable or the 3D library fails.
+   Sits over the globe stage so the splash can still be dismissed normally. */
+.globe-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(4, 6, 14, 0.55);
+}
+.globe-fallback-card {
+  max-width: 520px;
+  text-align: center;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-bright);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-glow);
+}
+.globe-fallback-card h3 {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.18em;
+  color: var(--signal-warm);
+  margin: 0 0 12px;
+}
+.globe-fallback-card p {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.22em;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover { background: var(--surface-soft); border-color: var(--accent); }
+
+.globe-tooltip {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-bright);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-glow);
+  white-space: nowrap;
+}
+.globe-tooltip strong { color: var(--text); }
+
+/* ---------- 2D globe mode ---------- */
+body.globe-2d-mode #globe-canvas { cursor: grab; }

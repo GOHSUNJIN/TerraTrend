@@ -1,0 +1,147 @@
+/* TerraTrend — sidebar.css
+   Variable selector sidebar and pills */
+
+/* ---------- Variable sidebar (left panel) ---------- */
+.var-sidebar {
+  position: fixed;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 35;
+  width: 230px;
+  background:
+    linear-gradient(90deg, transparent 15%, rgba(140, 150, 255, 0.35) 50%, transparent 85%) top / 100% 1px no-repeat,
+    rgba(8, 9, 22, 0.94);
+  border: 1px solid rgba(140, 150, 255, 0.16);
+  border-radius: 18px;
+  padding: 20px 14px 18px;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(139, 124, 255, 0.07) inset,
+    0 0 50px -20px rgba(139, 124, 255, 0.4);
+  pointer-events: auto;
+  animation: sidebarIn 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes sidebarIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(-10px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+.var-sidebar-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.3em;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+  padding: 0 6px;
+  display: block;
+  opacity: 0.7;
+}
+.var-selector-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.var-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 0.79rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s;
+  white-space: nowrap;
+  width: 100%;
+  text-align: left;
+}
+.var-pill:hover {
+  background: rgba(139, 124, 255, 0.09);
+  border-color: rgba(139, 124, 255, 0.22);
+  color: var(--text);
+}
+.var-pill.active {
+  background: color-mix(in srgb, var(--pill-col, var(--accent)) 8%, rgba(4, 5, 14, 0.85));
+  border-color: color-mix(in srgb, var(--pill-col, var(--accent)) 55%, transparent);
+  color: #fff;
+  box-shadow:
+    inset 2px 0 0 var(--pill-col, var(--accent)),
+    0 0 0 1px color-mix(in srgb, var(--pill-col, var(--accent)) 20%, transparent) inset,
+    0 6px 20px -6px color-mix(in srgb, var(--pill-col, var(--accent)) 45%, transparent);
+}
+.pill-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.var-pill.active .pill-icon {
+  background: color-mix(in srgb, var(--pill-col, var(--accent)) 14%, transparent);
+}
+.pill-name { font-size: 0.78rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pill-spark {
+  flex-shrink: 0;
+  width: 52px;
+  height: 22px;
+  opacity: 0.65;
+  border-radius: 3px;
+  transition: opacity 0.2s;
+}
+.var-pill:hover .pill-spark,
+.var-pill.active .pill-spark { opacity: 1; }
+
+.pill-arrow { font-size: 0.6rem; flex-shrink: 0; margin-left: 8px; }
+.pill-arrow.up    { color: var(--signal-warm); text-shadow: 0 0 8px rgba(255, 138, 92, 0.6); }
+.pill-arrow.down  { color: var(--accent-2);    text-shadow: 0 0 8px rgba(34, 224, 238, 0.6); }
+.pill-arrow.mixed { color: var(--accent);      text-shadow: 0 0 8px rgba(139, 124, 255, 0.6); }
+.pill-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; overflow: hidden; }
+.pill-rate {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  line-height: 1.2;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.var-pill.active .pill-rate { color: var(--text-secondary); opacity: 0.9; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .var-sidebar {
+    left: 0;
+    right: 0;
+    top: calc(var(--appbar-h) + 6px);
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    padding: 8px 12px 6px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    animation: none;
+  }
+  .var-selector-pills {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .var-selector-pills::-webkit-scrollbar { display: none; }
+  .var-pill { padding: 5px 10px; border-radius: 999px; font-size: 0.72rem; flex-shrink: 0; }
+  .pill-text { display: none; }
+  .var-sidebar-label { display: none; }
+  .pill-spark { display: none; }
+}

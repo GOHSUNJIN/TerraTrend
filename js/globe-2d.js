@@ -289,7 +289,7 @@ window.Globe2D = (function () {
         hoveredIdx = hi;
         canvas.style.cursor = hi >= 0 ? "pointer" : "grab";
         if (hi >= 0) {
-          tooltip = { visible: true, text: hotspots[hi].name + " — click to open", x: e.clientX, y: e.clientY };
+          tooltip = { visible: true, text: hotspots[hi].name + ": click to open", x: e.clientX, y: e.clientY };
         } else {
           tooltip.visible = false;
         }

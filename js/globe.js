@@ -352,6 +352,42 @@
     });
   }
 
+  // ---------- Highlight ring (selected hotspot) ----------
+  let highlightMesh = null;
+
+  function setHighlight(index) {
+    if (highlightMesh) {
+      globeGroup.remove(highlightMesh);
+      highlightMesh.geometry.dispose();
+      highlightMesh.material.dispose();
+      highlightMesh = null;
+    }
+    if (index < 0 || index >= HOTSPOTS.length) return;
+    const spot = HOTSPOTS[index];
+    const pos = latLonToVec3(spot.lat, spot.lon, GLOBE_RADIUS * 1.004);
+    highlightMesh = new THREE.Mesh(
+      new THREE.RingGeometry(0.12, 0.165, 48),
+      new THREE.MeshBasicMaterial({
+        color: spot.color,
+        transparent: true,
+        opacity: 0.8,
+        side: THREE.DoubleSide,
+        depthWrite: false
+      })
+    );
+    highlightMesh.position.copy(pos);
+    highlightMesh.lookAt(pos.clone().multiplyScalar(2));
+    globeGroup.add(highlightMesh);
+  }
+
+  function clearHighlight() {
+    if (!highlightMesh) return;
+    globeGroup.remove(highlightMesh);
+    highlightMesh.geometry.dispose();
+    highlightMesh.material.dispose();
+    highlightMesh = null;
+  }
+
   // ---------- Click ping (expanding ring) ----------
   const activePings = [];
 
@@ -434,6 +470,17 @@
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => (userInteracting = false), 3200);
   }
+
+  // Arrow-key globe rotation (skip when a modal or text input is focused)
+  document.addEventListener("keydown", (e) => {
+    if (document.body.classList.contains("modal-open")) return;
+    if (document.activeElement && (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")) return;
+    const step = 0.06;
+    if (e.key === "ArrowLeft")  { globeGroup.rotation.y -= step; flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowRight") { globeGroup.rotation.y += step; flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowUp")    { targetRotationX = THREE.MathUtils.clamp(targetRotationX - step, -MAX_TILT, MAX_TILT); flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowDown")  { targetRotationX = THREE.MathUtils.clamp(targetRotationX + step, -MAX_TILT, MAX_TILT); flagUserActivity(); e.preventDefault(); }
+  });
 
   // ---------- Raycasting: hover + click ----------
   const raycaster = new THREE.Raycaster();
@@ -594,7 +641,7 @@
     }; // "front" = hemisphere toward the camera
   }
 
-  window.TerraTrendGlobe = { selectHotspot, flyTo, projectToScreen };
+  window.TerraTrendGlobe = { selectHotspot, flyTo, projectToScreen, setHighlight, clearHighlight };
 
   // ---------- Responsive layout ----------
   function resize() {
@@ -690,6 +737,12 @@
     });
 
     updatePings(performance.now());
+
+    if (highlightMesh) {
+      highlightMesh.material.opacity = 0.7 + Math.sin(t * 1.6) * 0.3;
+      highlightMesh.scale.setScalar(1 + Math.sin(t * 1.1) * 0.09);
+    }
+
     renderer.render(scene, camera);
   }
 

@@ -1,0 +1,239 @@
+/* TerraTrend — layout.css
+   Background, header, app structure and footer */
+
+/* ---------- Space background + animated aurora ---------- */
+.space-bg { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+
+/* Stars: single static layer — moving starfields at 60fps waste compositor budget.
+   The globe rotation already gives the feeling of movement. */
+.space-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 22%, #fff 45%, transparent 55%),
+    radial-gradient(1.1px 1.1px at 34% 68%, #d5d9ff 45%, transparent 55%),
+    radial-gradient(1.6px 1.6px at 55% 14%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 71% 82%, #a5b8ff 45%, transparent 55%),
+    radial-gradient(1.3px 1.3px at 84% 35%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 22% 91%, #d5d9ff 45%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 45% 45%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 92% 60%, #a5b8ff 45%, transparent 55%),
+    radial-gradient(1.4px 1.4px at 63% 71%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 8% 55%, #ffd7ec 45%, transparent 55%);
+  background-size: 620px 620px;
+  opacity: 0.5;
+}
+.space-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 18% 35%, #d5d9ff 45%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 47% 58%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 76% 24%, #a5b8ff 45%, transparent 55%),
+    radial-gradient(1.1px 1.1px at 90% 70%, #fff 45%, transparent 55%),
+    radial-gradient(1px 1px at 5% 80%, #d5d9ff 45%, transparent 55%);
+  background-size: 480px 480px;
+  opacity: 0.25;
+}
+
+/* Aurora blobs: use transform-only animation (no scale change) so the browser
+   can cache the blurred raster on the GPU layer and just move it cheaply.
+   Changing scale() on a blur() element invalidates the GPU texture each frame. */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+  transform: translateZ(0);
+}
+.nebula-1 {
+  width: 70vw; height: 70vw;
+  top: -28vw; right: -22vw;
+  background: radial-gradient(circle, rgba(109, 75, 255, 0.5) 0%, rgba(34, 224, 238, 0.3) 50%, transparent 72%);
+  animation: auroraDrift1 28s ease-in-out infinite alternate;
+}
+.nebula-2 {
+  width: 56vw; height: 56vw;
+  bottom: -24vw; left: -16vw;
+  background: radial-gradient(circle, rgba(255, 94, 168, 0.45) 0%, rgba(139, 124, 255, 0.3) 50%, transparent 72%);
+  animation: auroraDrift2 36s ease-in-out infinite alternate;
+}
+/* translate-only: no scale → browser reuses the cached blurred GPU texture */
+@keyframes auroraDrift1 {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-5vw, 4vw, 0); }
+}
+@keyframes auroraDrift2 {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(4vw, -5vw, 0); }
+}
+/* extra slow hue-wash over everything */
+.space-bg {
+  background:
+    radial-gradient(60vw 40vh at 50% 44%, rgba(139, 124, 255, 0.09), transparent 70%),
+    var(--bg);
+  z-index: -2;
+}
+
+/* ---------- App bar ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  height: var(--appbar-h);
+  background: linear-gradient(to bottom, rgba(4, 6, 14, 0.94) 0%, rgba(4, 6, 14, 0.88) 70%, rgba(4, 6, 14, 0));
+  box-shadow: inset 0 -1px 0 var(--line);
+  /* No backdrop-filter on header — it's full-width and forces GPU framebuffer
+     readback every frame, which is the single biggest layout-phase perf killer */
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.site-header.scrolled {
+  background: rgba(4, 5, 14, 0.96);
+  box-shadow: 0 1px 0 var(--line), 0 4px 24px rgba(0,0,0,0.4);
+}
+.header-inner {
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 6px 26px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.logo {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  color: var(--text);
+  white-space: nowrap;
+}
+.logo-mark {
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(34, 224, 238, 0.8);
+}
+.logo span {
+  background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Fullscreen app view ---------- */
+.app-view { height: 100vh; min-height: 620px; position: relative; pointer-events: none; }
+
+.globe-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.globe-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(4, 6, 14, 0.5) 0%, transparent 18%, transparent 72%, rgba(4, 6, 14, 0.45) 100%);
+}
+
+/* ---------- Header tool buttons ---------- */
+.header-tools {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  align-items: center;
+}
+.header-tool-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(9, 10, 24, 0.6);
+  border: 1px solid rgba(140, 150, 255, 0.2);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
+}
+.header-tool-btn:hover {
+  background: rgba(139, 124, 255, 0.15);
+  border-color: rgba(139, 124, 255, 0.5);
+  color: #fff;
+  box-shadow: 0 0 18px -6px rgba(139, 124, 255, 0.6);
+}
+
+/* ---------- z-index stack ---------- */
+/* z 1 keeps page content stacking above the fixed z-0 globe canvas;
+   aurora/starfield stays behind it on .space-bg (z -2) */
+.ticker,
+.site-footer { position: relative; z-index: 1; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 36px;
+  background: rgba(4, 5, 14, 0.99);
+  border-top: 1px solid rgba(140, 150, 255, 0.1);
+}
+/* subtle gradient accent along the top edge */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--grad-a) 28%, var(--grad-b) 55%, var(--grad-c) 82%, transparent);
+  opacity: 0.45;
+}
+/* dissolve the wrapper so children join the footer flex row */
+.footer-inner { display: contents; }
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.footer-logo-mark {
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(34, 224, 238, 0.7);
+}
+.footer-brand-name span {
+  background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.footer-desc {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  opacity: 0.65;
+  text-align: center;
+}
+.footer-note {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  opacity: 0.4;
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media (max-width: 680px) {
+  .site-footer { flex-direction: column; align-items: center; padding: 20px 24px; gap: 8px; }
+  .footer-desc, .footer-note { text-align: center; }
+}

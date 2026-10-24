@@ -1,0 +1,135 @@
+/* TerraTrend — base.css
+   CSS variables, fonts, resets and global utilities */
+
+/* Self-hosted fonts (faster than fonts.googleapis.com: same-origin,
+   cacheable with the site, preloaded and font-display swap) */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/SpaceGrotesk-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-500-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+/* NOTE: This is a web app, so we apply Apple's design principles and
+   foundations (accessibility, color, typography, layout, writing, craft).
+   Native Apple navigation components (tab bars, toolbars, sheets, Liquid Glass)
+   do not apply to a web page; they are translated to web patterns below. */
+  /* Apple design tokens: color, type, layout, and craft */
+  --bg: #04040b;
+  --surface: rgba(9, 10, 24, 0.88);
+  --surface-elevated: rgba(11, 12, 28, 0.96);
+  --line: rgba(140, 150, 255, 0.12);
+  --line-bright: rgba(160, 170, 255, 0.55);
+  --text: #eef0ff;
+  --text-secondary: #b3b8d8;
+  --text-tertiary: #7e82b0;
+  --accent: #8b7cff;           /* brand violet */
+  --accent-2: #22e0ee;         /* signal cyan */
+  --signal-warm: #ff8a5c;      /* warm accent for signal (red/orange not sole carrier) */
+  --surface-soft: rgba(139, 124, 255, 0.08);
+  --grad-a: #22e0ee;
+  --grad-b: #8b7cff;
+  --grad-c: #ff6fb5;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow-glow:
+    0 0 0 1px rgba(139, 124, 255, 0.25),
+    0 20px 60px -20px rgba(139, 124, 255, 0.45),
+    0 0 36px -10px rgba(34, 224, 238, 0.14);
+  --gradient-line: linear-gradient(90deg, var(--grad-a), var(--grad-b) 45%, var(--grad-c));
+  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --appbar-h: 58px;
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 14px;
+  --space-4: 22px;
+  --space-5: 34px;
+  --space-6: 56px;
+  --text-base: 16px;
+  --text-sm: 0.86rem;
+  --text-xs: 0.76rem;
+  --text-lg: 1.05rem;
+  --text-xl: 1.28rem;
+  --text-2xl: 1.7rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --focus-ring: 0 0 0 3px rgba(139, 124, 255, 0.35), 0 0 18px rgba(139, 124, 255, 0.25);
+  --tonic: #15172e;            /* raised surfaces over the globe */
+
+  /* Variables used across modules — defined here to prevent silent bugs */
+  --panel: rgba(8, 9, 22, 0.88);
+  --panel-solid: rgba(5, 6, 18, 0.99);
+  --muted: #b3b8d8;
+  --dim: #7e82b0;
+  --accent-soft: rgba(139, 124, 255, 0.15);
+  --pink: #ff5ea8;
+  --glow-border: 0 0 24px -8px rgba(139, 124, 255, 0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-display);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+/* Hide scrollbar during splash so the dark scrollbar track doesn't show as
+   an artifact on the right edge of the viewport */
+body:not(.app-armed) { overflow: hidden; }
+
+::selection { background: rgba(139, 124, 255, 0.45); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #060714; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--grad-a), var(--grad-b), var(--grad-c));
+  border-radius: 99px;
+}
+
+/* ---------- Utilities ---------- */
+.mono { font-family: var(--font-mono); }
+
+/* gradient accent text — used in modal headings */
+.accent {
+  background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Accessibility ---------- */
+:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .splash-orbit, .ticker-track { animation: none; }
+}

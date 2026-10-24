@@ -7,6 +7,8 @@
 (function () {
   "use strict";
 
+  const { drawChart, bindChartHover } = window.TerraTrendChart;
+
   function hex(c) { return "#" + c.toString(16).padStart(6, "0"); }
   function trendArrow(t) { return t === "up" ? "▲" : t === "down" ? "▼" : "◇"; }
   function shortRate(r) { return r.split(" ").slice(0, 5).join(" "); }
@@ -18,145 +20,20 @@
     }
   }
 
+  // ---------- URL deep-link ----------
+  function getSpotFromURL() {
+    try {
+      const id = new URLSearchParams(window.location.search).get("spot");
+      return typeof HOTSPOTS !== "undefined" && id ? (HOTSPOTS.find(h => h.id === id) || null) : null;
+    } catch { return null; }
+  }
+  function updateURL(spotId) {
+    if (history.replaceState)
+      history.replaceState(null, "", spotId ? "?spot=" + spotId : location.pathname);
+  }
+
   // ---------- Chart ----------
-  const chartCanvas = document.getElementById("panel-chart");
-  const chartTip    = document.getElementById("chart-tip");
   const chartTitleEl = document.getElementById("chart-title");
-  let chartState = { pts: [], color: "#22e0ee" };
-
-  function fmtVal(v, unit) {
-    const a = Math.abs(v);
-    const digits = a >= 100 ? 1 : a >= 10 ? 2 : 3;
-    const sign = v >= 0 ? "+" : "−";
-    return sign + Math.abs(v).toFixed(digits) + (unit ? " " + unit : "");
-  }
-
-  function drawChart(pts, color, unit, targetCanvas) {
-    const canvas = targetCanvas || chartCanvas;
-    if (!canvas || !pts.length) return;
-    const ctx = canvas.getContext && canvas.getContext("2d");
-    if (!ctx) return;
-    const W = canvas.width, H = canvas.height;
-    const isMini = !!targetCanvas;
-    const pad = isMini ? { l: 2, r: 2, t: 4, b: 4 } : { l: 42, r: 12, t: 14, b: 20 };
-
-    ctx.clearRect(0, 0, W, H);
-
-    const vals = pts.map(p => p.value);
-    let min = Math.min(...vals), max = Math.max(...vals);
-    if (max - min < 1e-9) { max += 1; min -= 1; }
-    const span = max - min;
-    min -= span * 0.12; max += span * 0.12;
-
-    const xFn = i => pad.l + (i / (pts.length - 1)) * (W - pad.l - pad.r);
-    const yFn = v => pad.t + (1 - (v - min) / (max - min)) * (H - pad.t - pad.b);
-
-    // Grid
-    if (!isMini) {
-      ctx.strokeStyle = "rgba(160,190,240,0.08)";
-      ctx.lineWidth = 1;
-      for (let g = 0; g <= 4; g++) {
-        const gy = pad.t + (g / 4) * (H - pad.t - pad.b);
-        ctx.beginPath(); ctx.moveTo(pad.l, gy); ctx.lineTo(W - pad.r, gy); ctx.stroke();
-      }
-      ctx.font = "9px IBM Plex Mono, monospace";
-      ctx.fillStyle = "rgba(159,176,205,0.52)";
-      ctx.textAlign = "right";
-      [0, 0.5, 1].forEach(t => {
-        const val = max - t * (max - min);
-        const gy = pad.t + t * (H - pad.t - pad.b);
-        const a = Math.abs(val), d = a >= 100 ? 0 : a >= 10 ? 1 : 2;
-        ctx.fillText((val >= 0 ? "+" : "-") + a.toFixed(d), pad.l - 4, gy + 3);
-      });
-      ctx.fillStyle = "rgba(159,176,205,0.6)";
-      ctx.textAlign = "left";
-      ctx.fillText(String(pts[0].year), pad.l, H - 4);
-      ctx.textAlign = "right";
-      ctx.fillText(String(pts[pts.length - 1].year), W - pad.r, H - 4);
-      ctx.textAlign = "left";
-    }
-
-    // Trend line (linear regression overlay)
-    if (!isMini && pts.length > 2) {
-      const n = pts.length;
-      const mx = (n - 1) / 2;
-      const my = vals.reduce((a, b) => a + b, 0) / n;
-      let num = 0, den = 0;
-      vals.forEach((v, i) => { num += (i - mx) * (v - my); den += (i - mx) ** 2; });
-      const slope = den ? num / den : 0;
-      const inter = my - slope * mx;
-      ctx.beginPath();
-      ctx.moveTo(xFn(0), yFn(inter));
-      ctx.lineTo(xFn(n - 1), yFn(inter + slope * (n - 1)));
-      ctx.strokeStyle = color + "55";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // Area fill
-    const grad = ctx.createLinearGradient(0, pad.t, 0, H - pad.b);
-    grad.addColorStop(0, color + "44");
-    grad.addColorStop(1, color + "00");
-    ctx.beginPath();
-    ctx.moveTo(xFn(0), yFn(vals[0]));
-    pts.forEach((p, i) => ctx.lineTo(xFn(i), yFn(p.value)));
-    ctx.lineTo(xFn(pts.length - 1), H - pad.b);
-    ctx.lineTo(xFn(0), H - pad.b);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Line
-    ctx.beginPath();
-    ctx.moveTo(xFn(0), yFn(vals[0]));
-    pts.forEach((p, i) => ctx.lineTo(xFn(i), yFn(p.value)));
-    ctx.strokeStyle = color;
-    ctx.lineWidth = isMini ? 1.5 : 2;
-    ctx.lineJoin = "round";
-    ctx.stroke();
-
-    if (!isMini) {
-      ctx.beginPath();
-      ctx.arc(xFn(0), yFn(vals[0]), 2.5, 0, Math.PI * 2);
-      ctx.arc(xFn(pts.length - 1), yFn(vals[pts.length - 1]), 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = color;
-      ctx.fill();
-    }
-
-    if (!targetCanvas) {
-      chartState = { pts, color, unit, x: xFn, y: yFn, W, H, pad };
-    }
-  }
-
-  function bindChartHover() {
-    if (!chartCanvas) return;
-    chartCanvas.addEventListener("pointermove", e => {
-      const { pts, color, unit } = chartState;
-      if (!pts.length) return;
-      const rect = chartCanvas.getBoundingClientRect();
-      const px = ((e.clientX - rect.left) / rect.width) * chartCanvas.width;
-      const pL = chartState.pad?.l ?? 8, pR = chartState.pad?.r ?? 12;
-      const idx = Math.round(((px - pL) / (chartCanvas.width - pL - pR)) * (pts.length - 1));
-      const c = Math.max(0, Math.min(pts.length - 1, idx));
-      const p = pts[c];
-      chartTip.innerHTML = `${p.year} · <span class="tip-val">${fmtVal(p.value, unit)}</span>`;
-      chartTip.hidden = false;
-      chartTip.style.left = Math.max(40, Math.min(chartCanvas.width - 40, px)) / chartCanvas.width * 100 + "%";
-      chartTip.style.top = "-26px";
-      drawChart(pts, color, unit);
-      const ctx = chartCanvas.getContext("2d");
-      ctx.beginPath();
-      ctx.arc(chartState.x(c), chartState.y(p.value), 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
-    });
-    chartCanvas.addEventListener("pointerleave", () => {
-      chartTip.hidden = true;
-      drawChart(chartState.pts, chartState.color, chartState.unit);
-    });
-  }
 
   // ---------- Splash ----------
   const splash       = document.getElementById("splash");
@@ -174,8 +51,12 @@
       if (chatWrap) chatWrap.hidden = false;
       setTimeout(() => {
         if (typeof HOTSPOTS !== "undefined" && HOTSPOTS.length) {
-          flyToHotspot(HOTSPOTS[0]);
-          window.TerraTrendUI.openPanel(HOTSPOTS[0]);
+          const urlSpot = getSpotFromURL();
+          const firstSpot = urlSpot || HOTSPOTS[0];
+          tourIndex = Math.max(0, HOTSPOTS.indexOf(firstSpot));
+          flyToHotspot(firstSpot);
+          window.TerraTrendUI.openPanel(firstSpot);
+          startTour();
         }
       }, 1800);
     });
@@ -184,6 +65,8 @@
   // ---------- Variable selector ----------
   const pillWrap = document.getElementById("var-selector-pills");
   let activeHotspotId = null;
+  let tourIndex = 0;
+  let tourTimer = null;
 
   if (pillWrap && typeof HOTSPOTS !== "undefined") {
     HOTSPOTS.forEach((spot, i) => {
@@ -196,8 +79,10 @@
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
         `<span class="pill-text"><span class="pill-name">${spot.name}</span><span class="pill-rate">${shortRate(spot.rate)}</span></span>` +
+        `<canvas class="pill-spark" width="52" height="22" aria-hidden="true"></canvas>` +
         `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
+        tourIndex = i;
         activatePill(spot, i);
         flyToHotspot(spot);
         window.TerraTrendUI.openPanel(spot);
@@ -205,6 +90,32 @@
       pillWrap.appendChild(pill);
     });
   }
+
+  // Draw sparklines on all pills asynchronously after creation
+  if (window.TerraTrendData && pillWrap && typeof HOTSPOTS !== "undefined") {
+    HOTSPOTS.forEach((spot, i) => {
+      window.TerraTrendData.loadCurated(spot).then(data => {
+        if (!data?.series?.length) return;
+        const sparkCanvas = pillWrap.children[i]?.querySelector(".pill-spark");
+        if (sparkCanvas) drawChart(data.series, hex(spot.color), data.unit, sparkCanvas);
+      }).catch(() => {});
+    });
+  }
+
+  // ---------- Auto-tour ----------
+  function startTour() {
+    clearTimeout(tourTimer);
+    tourTimer = setTimeout(advanceTour, 8000);
+  }
+  function advanceTour() {
+    if (typeof HOTSPOTS === "undefined" || !HOTSPOTS.length) return;
+    tourIndex = (tourIndex + 1) % HOTSPOTS.length;
+    const spot = HOTSPOTS[tourIndex];
+    flyToHotspot(spot);
+    window.TerraTrendUI.openPanel(spot);
+    startTour();
+  }
+  document.addEventListener("pointerdown", startTour);
 
   function activatePill(spot, idx) {
     activeHotspotId = spot.id;
@@ -286,14 +197,25 @@
   // ---------- Info panel ----------
   const panel = document.getElementById("info-panel");
   const els = {
-    kicker:  document.getElementById("panel-kicker"),
-    coords:  document.getElementById("panel-coords"),
-    title:   document.getElementById("panel-title"),
-    tagline: document.getElementById("panel-tagline"),
-    rate:    document.getElementById("panel-rate"),
-    desc:    document.getElementById("panel-desc"),
-    source:  document.getElementById("panel-source"),
-    close:   document.getElementById("panel-close")
+    kicker:        document.getElementById("panel-kicker"),
+    coords:        document.getElementById("panel-coords"),
+    title:         document.getElementById("panel-title"),
+    tagline:       document.getElementById("panel-tagline"),
+    rate:          document.getElementById("panel-rate"),
+    desc:          document.getElementById("panel-desc"),
+    source:        document.getElementById("panel-source"),
+    close:         document.getElementById("panel-close"),
+    mission:       document.getElementById("panel-mission"),
+    finding:       document.getElementById("panel-finding"),
+    findingText:   document.getElementById("finding-text"),
+    whyMatters:    document.getElementById("why-matters"),
+    whyMattersText:document.getElementById("why-matters-text"),
+    what:          document.getElementById("panel-what"),
+    where:         document.getElementById("panel-where"),
+    whatWhere:     document.getElementById("panel-what-where"),
+    photoWrap:     document.getElementById("panel-photo-wrap"),
+    photo:         document.getElementById("panel-photo"),
+    chartDelta:    document.getElementById("chart-delta")
   };
 
   let panelIndex = -1;
@@ -312,6 +234,24 @@
       els.rate.textContent    = "—";
       els.desc.textContent    = spot.description;
       els.coords.textContent  = coords || "PINNED HOTSPOT";
+      if (els.mission) els.mission.textContent = spot.mission || "";
+      if (els.finding)  els.finding.hidden  = !spot.keyFinding;
+      if (els.findingText && spot.keyFinding)   els.findingText.textContent   = spot.keyFinding;
+      if (els.whyMatters) els.whyMatters.hidden = !spot.whyItMatters;
+      if (els.whyMattersText && spot.whyItMatters) els.whyMattersText.textContent = spot.whyItMatters;
+      if (els.what)  els.what.textContent  = spot.what  || "";
+      if (els.where) els.where.textContent = spot.where || "";
+      if (els.whatWhere) els.whatWhere.hidden = !spot.what && !spot.where;
+      if (els.photo && els.photoWrap) {
+        if (spot.image) {
+          els.photo.src = spot.image;
+          els.photo.alt = spot.imageAlt || spot.name;
+          els.photoWrap.hidden = false;
+        } else {
+          els.photoWrap.hidden = true;
+        }
+      }
+      if (els.chartDelta) els.chartDelta.hidden = true;
 
       panel.classList.remove("hidden");
       panel.classList.add("visible");
@@ -319,6 +259,10 @@
       document.getElementById("chatbot-wrap")?.classList.add("panel-open");
 
       panelIndex = HOTSPOTS.indexOf(spot);
+      if (panelIndex >= 0) {
+        window.TerraTrendGlobe?.setHighlight?.(panelIndex);
+        updateURL(spot.id);
+      }
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
       if (prevBtn) prevBtn.disabled = panelIndex < 0;
       if (nextBtn) nextBtn.disabled = panelIndex < 0;
@@ -341,7 +285,18 @@
         setDataBadge(data.isLive, data.source);
         renderMK(data.mkResult, col);
         if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend series";
-        if (data.series?.length > 0) drawChart(data.series, col, data.unit);
+        if (data.series?.length > 0) {
+          drawChart(data.series, col, data.unit);
+          if (els.chartDelta && data.series.length >= 2) {
+            const first = data.series[0], last = data.series[data.series.length - 1];
+            const delta = last.value - first.value;
+            const sign = delta >= 0 ? "+" : "";
+            const absD = Math.abs(delta);
+            const dp = absD >= 100 ? 1 : absD >= 10 ? 2 : 3;
+            els.chartDelta.textContent = `Total: ${sign}${delta.toFixed(dp)} ${data.unit || ""} · ${first.year} → ${last.year}`;
+            els.chartDelta.hidden = false;
+          }
+        }
       }
 
       if (window.TerraTrendData) {
@@ -373,6 +328,8 @@
       panel.classList.add("hidden");
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.resume();
       document.getElementById("chatbot-wrap")?.classList.remove("panel-open");
+      window.TerraTrendGlobe?.clearHighlight?.();
+      updateURL(null);
     }
   };
 
@@ -380,6 +337,7 @@
 
   function showCase(i) {
     panelIndex = ((i % HOTSPOTS.length) + HOTSPOTS.length) % HOTSPOTS.length;
+    tourIndex = panelIndex;
     const spot = HOTSPOTS[panelIndex];
     flyToHotspot(spot);
     window.TerraTrendUI.openPanel(spot);
@@ -393,6 +351,24 @@
     if (e.key === "ArrowRight" && panelIndex >= 0) showCase(panelIndex + 1);
     if (e.key === "ArrowLeft"  && panelIndex >= 0) showCase(panelIndex - 1);
   });
+
+  // ---------- Share button ----------
+  const shareBtn = document.getElementById("panel-share");
+  if (shareBtn) {
+    const shareSVG = shareBtn.innerHTML;
+    shareBtn.addEventListener("click", () => {
+      const id = panelIndex >= 0 ? HOTSPOTS[panelIndex].id : null;
+      const url = location.origin + location.pathname + (id ? "?spot=" + id : "");
+      const finish = (ok) => {
+        shareBtn.setAttribute("data-copied", ok ? "yes" : "err");
+        shareBtn.title = ok ? "Copied!" : "Copy link";
+        setTimeout(() => { shareBtn.removeAttribute("data-copied"); shareBtn.title = "Copy link"; shareBtn.innerHTML = shareSVG; }, 2000);
+        if (ok) shareBtn.innerHTML = "✓";
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => finish(true)).catch(() => finish(false));
+      else { prompt("Copy this link:", url); }
+    });
+  }
 
   // ---------- Chatbot FAB (placeholder) ----------
   const chatFab   = document.getElementById("chatbot-fab");

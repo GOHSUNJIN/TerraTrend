@@ -1,19 +1,23 @@
 {
   "unit": "mm",
   "label": "Sea level (mm above 1993 mean)",
-  "source": "NASA/CNES Satellite Altimetry – Jason-3 / Sentinel-6",
+  "source": "NASA/CNES Satellite Altimetry – TOPEX/Poseidon · Jason-1/2/3 · Sentinel-6",
   "series": [
-    {"year":2000,"value":22.0},{"year":2001,"value":28.1},
-    {"year":2002,"value":29.6},{"year":2003,"value":25.8},
-    {"year":2004,"value":30.7},{"year":2005,"value":37.3},
-    {"year":2006,"value":35.2},{"year":2007,"value":40.9},
-    {"year":2008,"value":38.1},{"year":2009,"value":44.8},
-    {"year":2010,"value":40.2},{"year":2011,"value":37.4},
-    {"year":2012,"value":46.3},{"year":2013,"value":50.0},
-    {"year":2014,"value":50.5},{"year":2015,"value":57.3},
-    {"year":2016,"value":62.3},{"year":2017,"value":62.7},
-    {"year":2018,"value":62.6},{"year":2019,"value":69.2},
-    {"year":2020,"value":71.4},{"year":2021,"value":73.9},
-    {"year":2022,"value":76.4},{"year":2023,"value":83.3}
+    {"year":1993,"value":0.0},{"year":1994,"value":3.8},
+    {"year":1995,"value":6.1},{"year":1996,"value":6.5},
+    {"year":1997,"value":10.8},{"year":1998,"value":5.4},
+    {"year":1999,"value":6.9},{"year":2000,"value":22.0},
+    {"year":2001,"value":28.1},{"year":2002,"value":29.6},
+    {"year":2003,"value":25.8},{"year":2004,"value":30.7},
+    {"year":2005,"value":37.3},{"year":2006,"value":35.2},
+    {"year":2007,"value":40.9},{"year":2008,"value":38.1},
+    {"year":2009,"value":44.8},{"year":2010,"value":40.2},
+    {"year":2011,"value":37.4},{"year":2012,"value":46.3},
+    {"year":2013,"value":50.0},{"year":2014,"value":50.5},
+    {"year":2015,"value":57.3},{"year":2016,"value":62.3},
+    {"year":2017,"value":62.7},{"year":2018,"value":62.6},
+    {"year":2019,"value":69.2},{"year":2020,"value":71.4},
+    {"year":2021,"value":73.9},{"year":2022,"value":76.4},
+    {"year":2023,"value":83.3}
   ]
 }

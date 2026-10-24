@@ -1,0 +1,171 @@
+/* TerraTrend — modals.css
+   Method/about modals, steps, about-grid and accessibility */
+
+/* gradient text for about section headline */
+.about-grid h2 {
+  background: linear-gradient(94deg, #fff 30%, var(--grad-a) 60%, var(--grad-b) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Steps: numbered timeline ---------- */
+/* NOTE: use a number, not color, to carry the ordinal — one thing
+   earns its place (simplicity), and the glyph is pure decoration. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+  position: relative;
+}
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: var(--line);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.step {
+  position: relative;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px 26px 22px 30px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+/* subtle top hairline instead of a gradient glow — restrained, one accent */
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 16%; right: 16%;
+  height: 2px;
+  background: var(--gradient-line);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.step:hover { border-color: var(--line-bright); box-shadow: var(--glow-border); }
+.step:hover::before { opacity: 1; }
+.step.revealed { opacity: 1; transform: translateY(0); }
+/* strengthen card plate so step text stays readable over starfield */
+.step { background: linear-gradient(180deg, rgba(9, 10, 24, 0.82), rgba(10, 11, 26, 0.62)); }
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--line-bright);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-2);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  position: relative;
+}
+/* the icon set matches the weight of adjacent text */
+.step h3 { font-size: var(--text-lg); margin-bottom: 8px; font-weight: var(--font-weight-semibold); }
+.step p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
+
+/* ---------- About ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 60px;
+}
+.about-grid > div > p { color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+.mono-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--accent-2);
+  opacity: 0.85;
+}
+/* about facts as a 2x2 bento of tiles */
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-self: start;
+}
+.about-facts div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s, transform 0.5s, border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+.about-facts div::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 16%; right: 16%;
+  height: 1px;
+  background: var(--gradient-line);
+  opacity: 0.6;
+}
+.about-facts div.revealed { opacity: 1; transform: translateY(0); }
+.about-facts div:hover {
+  border-color: var(--line-bright);
+  box-shadow: 0 0 34px -12px rgba(139, 124, 255, 0.5);
+}
+.about-facts strong { color: var(--dim); font-weight: 500; font-size: 0.72rem; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.14em; }
+.about-facts span { font-size: 0.85rem; line-height: 1.45; }
+
+/* ---------- Popup modals (method + about) ---------- */
+.method-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.method-modal[hidden] { display: none; }
+.method-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 4, 12, 0.72);
+}
+.method-card {
+  position: relative;
+  margin: auto; /* centers vertically even when content is shorter than viewport */
+  max-width: 860px;
+  width: 100%;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--panel-solid);
+  border: 1px solid var(--line-bright);
+  border-radius: 20px;
+  padding: 30px 34px 34px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 70px -30px rgba(139, 124, 255, 0.55);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.method-card h3 { font-size: 1.35rem; margin-bottom: 4px; }
+.method-card .panel-head { margin-bottom: 14px; }
+body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 30px; }
+}
