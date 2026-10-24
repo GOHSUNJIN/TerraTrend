@@ -298,6 +298,7 @@
 
       panel.classList.remove("hidden");
       panel.classList.add("visible");
+      if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.pause();
 
       panelIndex = HOTSPOTS.indexOf(spot);
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
@@ -351,6 +352,7 @@
       if (!panel) return;
       panel.classList.remove("visible");
       panel.classList.add("hidden");
+      if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.resume();
     }
   };
 
@@ -391,8 +393,8 @@
   if (tickerTrack && typeof HOTSPOTS !== "undefined") {
     const items = HOTSPOTS.map(s => {
       const dir = s.trend === "up" ? "▲" : s.trend === "down" ? "▼" : "◇";
-      const cls = s.trend === "down" ? "down" : "up";
-      return `<span class="ticker-item">${s.icon} ${s.name.toUpperCase()} <b class="${cls}">${dir} ${shortRate(s.rate).toUpperCase()}</b></span>`;
+      const cls = s.trend === "down" ? "down" : s.trend === "mixed" ? "mixed" : "up";
+      return `<span class="ticker-item"><span class="ticker-icon">${s.icon}</span>${s.name.toUpperCase()}<b class="${cls}">${dir} ${shortRate(s.rate).toUpperCase()}</b></span>`;
     });
     const half = document.createElement("div");
     half.className = "ticker-half";
