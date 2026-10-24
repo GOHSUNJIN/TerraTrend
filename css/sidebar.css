@@ -98,6 +98,7 @@
   width: 44px;
   height: 18px;
   flex-shrink: 0;
+  margin-left: auto;
   opacity: 0.6;
   border-radius: 3px;
   transition: opacity 0.2s;
@@ -109,7 +110,6 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: center;
