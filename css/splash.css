@@ -189,14 +189,21 @@
 
 /* Responsive: stack splash layout on small screens */
 @media (max-width: 700px) {
-  .splash-inner { padding: 24px 20px; }
-  .splash-topbar { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 28px; }
-  .splash-hero { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
-  .splash-orbital { width: 100px; height: 100px; }
-  .splash-title { font-size: clamp(2.4rem, 14vw, 5rem); }
-  .splash-bottom { flex-direction: column; gap: 24px; }
+  /* Contain everything — no horizontal bleed */
+  .splash-inner { padding: 24px 20px; overflow: hidden; }
+  .splash-topbar { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 22px; }
+  /* Tag text has wide letter-spacing that overflows narrow screens — hide it */
+  .splash-topbar-tag { display: none; }
+  .splash-hero { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
+  .splash-orbital { width: 88px; height: 88px; }
+  /* Pure vw scaling — no rem minimum that forces large size on small phones */
+  .splash-title { font-size: clamp(2rem, 12vw, 5rem); }
+  .splash-rule { margin-bottom: 20px; }
+  .splash-bottom { flex-direction: column; gap: 20px; }
   .splash-cta { align-items: flex-start; }
-  .splash-hint { text-align: left !important; }
+  /* Hint text has wide letter-spacing that overflows — hide on mobile */
+  .splash-hint { display: none; }
+  .launch-btn { height: 54px; padding: 0 36px; font-size: 0.88rem; }
 }
 
 /* LAUNCH button */

@@ -405,10 +405,25 @@
   .info-panel.visible { transform: translate(50%, 0) scale(1); }
   .chatbot-wrap.panel-open { opacity: 0; pointer-events: none; }
 }
-@media (max-width: 760px) {
-  .info-panel { width: min(340px, 96%); bottom: 16px; }
-  .panel-banner { height: 130px; }
-  .panel-body { padding: 13px 14px 16px; gap: 12px; }
-  .panel-nav-btn { width: 40px; height: 38px; }
+@media (max-width: 900px) {
+  /* Bottom sheet: anchored to bottom edge, no gap, rounded top corners only */
+  .info-panel {
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    /* Cap height so the globe is always visible above the sheet */
+    max-height: 60dvh;
+    max-height: 60vh; /* fallback */
+    transform: translateY(24px) scale(0.99);
+  }
+  .info-panel.visible { transform: none; }
+  .panel-banner { height: 110px; }
+  .panel-body { padding: 12px 14px 16px; gap: 11px; }
   .panel-close { width: 36px; height: 36px; }
+  .panel-nav-btn { width: 40px; height: 38px; }
 }

@@ -95,9 +95,12 @@ body {
   color: var(--text);
   overflow-x: hidden;
 }
-/* Hide scrollbar during splash so the dark scrollbar track doesn't show as
-   an artifact on the right edge of the viewport */
 body:not(.app-armed) { overflow: hidden; }
+
+/* Mobile: lock the viewport — the app is a single full-screen experience */
+@media (max-width: 900px) {
+  html, body { height: 100%; overflow: hidden; }
+}
 
 ::selection { background: rgba(139, 124, 255, 0.45); color: #fff; }
 

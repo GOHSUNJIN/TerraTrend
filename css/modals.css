@@ -189,7 +189,8 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
   .about-grid { grid-template-columns: 1fr; gap: 30px; }
 }
 @media (max-width: 600px) {
-  .method-card { padding: 20px 16px 24px; }
+  .method-modal { padding: 12px; align-items: flex-end; }
+  .method-card { padding: 20px 16px 24px; max-height: 86dvh; max-height: 86vh; }
   .steps { grid-template-columns: 1fr; gap: 12px; }
   .about-facts { grid-template-columns: 1fr; }
   .about-grid { gap: 20px; }

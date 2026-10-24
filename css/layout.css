@@ -387,5 +387,19 @@
   50%       { transform: translateY(5px); }
 }
 
-@media (max-width: 900px) { .auto-tour-btn { bottom: 40px; font-size: 0.56rem; padding: 6px 14px; } }
+/* ── Mobile layout: single-screen app, no scroll ──────────── */
+@media (max-width: 900px) {
+  /* Lock to one viewport, hide below-fold content */
+  .app-view { height: 100vh; height: 100dvh; overflow: hidden; }
+  .ticker, .site-footer { display: none; }
+  .scroll-hint { display: none !important; }
+
+  /* Tighter header on narrow screens */
+  .header-inner { padding: 6px 16px; gap: 14px; }
+  .header-tools { gap: 4px; }
+  .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
+
+  .auto-tour-btn { bottom: 40px; font-size: 0.56rem; padding: 6px 14px; }
+}
+
 @media (max-width: 500px) { .complete-toast { white-space: normal; max-width: calc(100vw - 32px); } }
