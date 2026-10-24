@@ -3,7 +3,7 @@
 
 /* ---------- Variable sidebar (left panel) ---------- */
 .var-sidebar {
-  position: fixed;
+  position: absolute;
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
@@ -46,7 +46,7 @@
 }
 .var-pill {
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 28px 1fr 44px 16px;
   grid-template-rows: auto;
   column-gap: 8px;
   align-items: center;
@@ -96,47 +96,68 @@
   font-size: 0.78rem;
   line-height: 1.3;
 }
-.pill-right {
-  grid-column: 3;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-self: end;
-}
 .pill-spark {
+  grid-column: 3;
   width: 44px;
   height: 18px;
   opacity: 0.6;
   border-radius: 3px;
   transition: opacity 0.2s;
-  flex-shrink: 0;
+  justify-self: center;
 }
 .var-pill:hover .pill-spark,
 .var-pill.active .pill-spark { opacity: 1; }
 .pill-arrow {
+  grid-column: 4;
   font-size: 0.58rem;
-  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  justify-self: center;
 }
 .pill-arrow.up    { color: var(--signal-warm); text-shadow: 0 0 8px rgba(255, 138, 92, 0.6); }
 .pill-arrow.down  { color: var(--accent-2);    text-shadow: 0 0 8px rgba(34, 224, 238, 0.6); }
 .pill-arrow.mixed { color: var(--accent);      text-shadow: 0 0 8px rgba(139, 124, 255, 0.6); }
 
-/* ---------- Explored counter ---------- */
+/* ---------- Explore tracker ---------- */
+.explore-tracker {
+  margin-top: 14px;
+  padding: 10px 10px 9px;
+  background: rgba(34, 224, 238, 0.05);
+  border: 1px solid rgba(34, 224, 238, 0.14);
+  border-radius: 10px;
+}
 .explore-counter {
-  font-size: 0.47rem;
-  letter-spacing: 0.22em;
-  color: var(--text-tertiary);
-  opacity: 0.5;
-  margin-top: 16px;
-  padding: 0 6px;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  color: var(--accent-2);
   display: block;
   text-align: center;
-  transition: color 0.4s, opacity 0.4s, text-shadow 0.4s;
+  margin-bottom: 7px;
+  opacity: 0.9;
+  transition: color 0.4s, text-shadow 0.4s;
 }
 .explore-counter.all-explored {
-  color: var(--accent-2);
-  opacity: 1;
-  text-shadow: 0 0 14px rgba(34, 224, 238, 0.55);
+  text-shadow: 0 0 14px rgba(34, 224, 238, 0.6);
+}
+.explore-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.explore-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-2);
+  border-radius: 99px;
+  box-shadow: 0 0 8px rgba(34, 224, 238, 0.7);
+  transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Viewed pill indicator */
+.var-pill.viewed .pill-icon {
+  box-shadow: 0 0 0 1.5px rgba(34, 224, 238, 0.45);
 }
 
 /* ---------- Responsive ---------- */
@@ -165,6 +186,7 @@
   .var-pill { padding: 5px 10px; border-radius: 999px; font-size: 0.72rem; flex-shrink: 0; }
   .pill-text { display: none; }
   .var-sidebar-label { display: none; }
-  .pill-right { display: none; }
-  .explore-counter { display: none; }
+  .pill-spark { display: none; }
+  .pill-arrow { display: none; }
+  .explore-tracker { display: none; }
 }

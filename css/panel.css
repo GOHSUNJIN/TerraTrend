@@ -18,7 +18,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 30;
+  z-index: 36;
   max-height: calc(100vh - var(--appbar-h) - 28px);
   display: flex;
   flex-direction: column;

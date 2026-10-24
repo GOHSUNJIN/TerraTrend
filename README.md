@@ -4,7 +4,7 @@
 
 > Select a variable. Spin the globe. Discover what is changing, where, how much and whether it is statistically significant.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-terratrend.vercel.app-8b7cff?style=flat-square)](https://terratrend.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-terratrend2.vercel.app-8b7cff?style=flat-square)](https://terratrend2.vercel.app)
 [![NASA Space Apps](https://img.shields.io/badge/NASA%20Space%20Apps-2026-22e0ee?style=flat-square)](https://www.spaceappschallenge.org/)
 [![Static Site](https://img.shields.io/badge/Stack-Vanilla%20JS%20%2B%20Three.js-ff6fb5?style=flat-square)](#technology)
 
@@ -59,9 +59,9 @@ flowchart TB
     end
 
     subgraph UI["UI Layer"]
-        MAIN["main.js  —  UI wiring\nVariable pills · Sparklines\nAuto-tour · Deep-link · Share\nTicker · Modals"]
-        CHART["chart.js  —  TerraTrendChart\nInteractive chart · Hover tooltip\nRegression overlay · Delta annotation"]
-        PANEL["Info panel output\nNASA photo · Key Finding\nWhy It Matters · MK block"]
+        MAIN["main.js  —  UI wiring\nVariable pills · Sparklines\nAuto-tour · Deep-link\nTicker · Modals · Explore tracker"]
+        CHART["chart.js  —  TerraTrendChart\nInteractive chart · Hover tooltip\nRegression overlay · Delta annotation · Unit label"]
+        PANEL["Info panel output\nNASA photo · Key Finding\nWhy It Matters · MK block · Source links"]
     end
 
     NOAA & OM --> DATALAYER
@@ -137,20 +137,24 @@ Auto-tour fires after 8 s idle  ──►  cycles all 8 hotspots
 
 ## Features
 
-- **3D interactive globe** — Three.js r160, drag/spin, arrow-key navigation, auto-spin
+- **3D interactive globe** — Three.js r160, drag/spin, arrow-key navigation, auto-spin with snap-back fix
+- **Pulsing hotspot labels** — sprite labels breathe with a sine-wave scale animation
 - **Auto-tour** — cycles through all 8 hotspots every 8s when idle; resets on interaction
 - **URL deep-linking** — share any hotspot with `?spot=co2`, `?spot=arctic-ice`, etc.
 - **Mann-Kendall significance** — non-parametric trend test with S, Z, p-value and Sen's slope
 - **Two-stage data loading** — archived JSON opens instantly, live API upgrades silently if available
-- **Interactive chart** — hover to read any year's exact value; linear regression overlay; total-change annotation
+- **Clickable source links** — data attribution links directly to the source dataset
+- **Interactive chart** — hover to read any year's exact value; linear regression overlay; total-change annotation; unit label
 - **Sparkline pills** — mini trend charts in the variable selector sidebar
 - **NASA satellite imagery** — real mission photograph in every case-file panel
 - **Key Finding + Why It Matters** — plain-language callouts alongside statistical output
-- **Pulsing highlight ring** — animated ring marks the selected hotspot on the globe
+- **Panel stagger animation** — each section slides in sequentially when a hotspot is opened
+- **Explore tracker** — progress bar + "INVESTIGATED X/8" counter; viewed pills get a cyan ring indicator
+- **Onboarding hint** — one-per-session arrow prompts new users to pick a variable
 - **20 clickable surface zones** — click anywhere on the globe for a regional trend story
-- **Share button** — copies a deep-link URL to clipboard
 - **WebGL fallback** — orthographic 2D canvas globe when WebGL is unavailable
 - **Responsive** — works on mobile (horizontal pill bar, bottom-anchored panel)
+- **AI assistant slot** — chatbot FAB wired and ready for Claude API integration
 
 ---
 
@@ -184,23 +188,23 @@ TerraTrend/
 ├── favicon.svg                 SVG favicon (◎ brand mark)
 ├── css/
 │   ├── base.css                Variables, fonts, resets, .mono, .accent
-│   ├── layout.css              Background, header, app structure, footer
+│   ├── layout.css              Background, header, app structure, footer, onboarding hint
 │   ├── splash.css              Splash screen and launch button
 │   ├── globe.css               Globe canvas, tooltip, fallback card
 │   ├── ticker.css              Marquee data ticker
-│   ├── panel.css               Info panel, chart, MK block, callouts
-│   ├── sidebar.css             Variable selector sidebar and pills
+│   ├── panel.css               Info panel, chart, MK block, callouts, stagger animation
+│   ├── sidebar.css             Variable selector sidebar, pills, explore tracker
 │   ├── modals.css              Method and about modals
 │   └── chatbot.css             AI assistant FAB and chat panel
 ├── js/
-│   ├── data.js                 8 HOTSPOTS case-file definitions
+│   ├── data.js                 8 HOTSPOTS case-file definitions (with sourceUrl)
 │   ├── regions.js              20 REGION_ZONES for surface clicks
 │   ├── mann-kendall.js         Non-parametric trend test
 │   ├── nasa-data.js            Live API + fallback JSON data layer
 │   ├── chart.js                Interactive canvas chart (TerraTrendChart)
 │   ├── globe-2d.js             Canvas 2D globe (WebGL fallback)
-│   ├── globe.js                Three.js 3D globe
-│   ├── main.js                 UI wiring: pills, panel, ticker, modals
+│   ├── globe.js                Three.js 3D globe (label pulse, snap-back fix)
+│   ├── main.js                 UI wiring: pills, panel, ticker, modals, explore tracker
 │   └── vendor/
 │       └── three.min.js        Three.js r160 (self-hosted)
 ├── data/
@@ -242,7 +246,7 @@ npx serve .
 
 ## What's Next
 
-- **Earth AI assistant** — chatbot placeholder wired, ready for Claude API integration to explain trends in plain language
+- **Earth AI assistant** — chatbot slot wired and ready for Claude API integration to explain trends in plain language
 - **Animation playback** — scrub through years to watch trends evolve spatially
 - **Custom region upload** — bring your own CSV and run Mann-Kendall on the spot
 
@@ -250,8 +254,10 @@ npx serve .
 
 ## Team
 
-Built for the **2026 NASA Space Apps Challenge** with real NASA and NOAA Earth science data.
+Built for the **2026 NASA Space Apps Challenge** by **Ritish & Sun Jin** · The Data Detectives.
+
+Real NASA and NOAA Earth science data throughout.
 
 *Not affiliated with NASA. Built with curiosity.*
 
-**Live Demo:** https://terratrend.vercel.app
+**Live Demo:** https://terratrend2.vercel.app

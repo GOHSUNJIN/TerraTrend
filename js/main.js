@@ -95,7 +95,8 @@
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
         `<span class="pill-name">${spot.name}</span>` +
-        `<span class="pill-right"><canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas><span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span></span>`;
+        `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
+        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
         tourIndex = i;
         activatePill(spot, i);
@@ -283,6 +284,10 @@
           counter.textContent = `INVESTIGATED · ${exploredSet.size} / ${HOTSPOTS.length}`;
           if (exploredSet.size === HOTSPOTS.length) counter.classList.add("all-explored");
         }
+        const barFill = document.getElementById("explore-bar-fill");
+        if (barFill) barFill.style.width = (exploredSet.size / HOTSPOTS.length * 100) + "%";
+        const pill = pillWrap?.querySelectorAll(".var-pill")[panelIndex];
+        if (pill) pill.classList.add("viewed");
       }
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
       if (prevBtn) prevBtn.disabled = panelIndex < 0;
