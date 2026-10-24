@@ -217,27 +217,45 @@
   <!-- ===== AI Chat placeholder ===== -->
   <div class="chatbot-wrap" id="chatbot-wrap" hidden>
     <div class="chatbot-panel" id="chatbot-panel" hidden>
+      <!-- Header -->
       <div class="chatbot-head">
-        <div class="chatbot-head-left">
-          <p class="panel-kicker">// AI ASSISTANT</p>
-          <h3 class="chatbot-title">Earth Data Chat</h3>
+        <div class="chatbot-head-info">
+          <div class="chatbot-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+          </div>
+          <div>
+            <p class="chatbot-name">Earth AI</p>
+            <p class="chatbot-status">COMING SOON</p>
+          </div>
         </div>
         <button class="panel-close" id="chatbot-close" aria-label="Close chat">×</button>
       </div>
-      <div class="chatbot-body">
-        <div class="chatbot-placeholder">
-          <span class="chatbot-placeholder-icon">✦</span>
-          <p>Ask me anything about Earth science trends, climate data, or statistical methods.</p>
-          <span class="chatbot-coming-soon mono">AI ASSISTANT · COMING SOON</span>
+      <!-- Messages -->
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-msg chat-msg-ai">
+          <div class="chat-bubble">
+            Hi! I can answer questions about Earth science trends, climate data, and what the Mann-Kendall statistics mean for the variable you are viewing.
+            <span class="chat-coming-soon">AI ASSISTANT · COMING SOON</span>
+          </div>
         </div>
       </div>
+      <!-- Input -->
       <div class="chatbot-input-row">
         <input class="chatbot-input" type="text" placeholder="Ask about climate trends..." disabled aria-label="Chat input" />
-        <button class="chatbot-send" disabled aria-label="Send">→</button>
+        <button class="chatbot-send" disabled aria-label="Send">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
       </div>
     </div>
+    <!-- FAB: speech-bubble icon -->
     <button class="chatbot-fab" id="chatbot-fab" aria-label="Open AI assistant" title="AI Data Assistant">
-      <span class="chatbot-fab-icon">✦</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
     </button>
   </div>
 
