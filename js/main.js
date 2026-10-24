@@ -248,8 +248,10 @@
           els.photo.src = spot.image;
           els.photo.alt = spot.imageAlt || spot.name;
           els.photoWrap.hidden = false;
+          panel.classList.remove("no-photo");
         } else {
           els.photoWrap.hidden = true;
+          panel.classList.add("no-photo");
         }
       }
       if (els.chartDelta) els.chartDelta.hidden = true;

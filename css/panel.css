@@ -49,11 +49,13 @@
 .panel-banner {
   position: relative;
   height: 160px;
-  min-height: 120px;
+  min-height: 86px;
   flex-shrink: 0;
   overflow: hidden;
   background: linear-gradient(150deg, rgba(12, 8, 40, 1) 0%, rgba(6, 12, 35, 1) 100%);
+  transition: height 0.25s ease;
 }
+.info-panel.no-photo .panel-banner { height: 86px; }
 .panel-banner-photo {
   position: absolute;
   inset: 0;
@@ -311,7 +313,6 @@
   transition: color 0.2s, border-color 0.2s;
 }
 .panel-source a:hover { color: #fff; border-color: var(--accent-2); }
-.panel-source a::after { content: " ↗"; font-size: 0.5rem; opacity: 0.7; }
 .mission-tag  { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-tertiary); line-height: 1.45; }
 
 /* ── Navigation bar (pinned to bottom) ───────────────────── */
