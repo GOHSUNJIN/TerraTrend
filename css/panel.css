@@ -406,16 +406,13 @@
   .chatbot-wrap.panel-open { opacity: 0; pointer-events: none; }
 }
 @media (max-width: 900px) {
-  /* Bottom sheet: anchored to bottom edge, no gap, rounded top corners only */
+  /* Floating card above the dock so the variable pills stay reachable */
   .info-panel {
     right: 0;
     left: 0;
-    bottom: 0;
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px));
     width: 100%;
-    border-radius: 20px 20px 0 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
+    border-radius: 18px;
     max-height: 60dvh;
     max-height: 60vh;
     transform: translateY(24px) scale(0.99);

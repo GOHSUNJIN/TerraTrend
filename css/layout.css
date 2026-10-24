@@ -430,7 +430,7 @@
   /* Tighter header on narrow screens */
   .header-inner { padding: 6px 16px; gap: 14px; }
   .header-tools { gap: 4px; }
-  .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
+  .header-tool-btn { width: 36px; height: 36px; font-size: 0.82rem; }
   #rail-fullscreen { display: none; }
 
   /* Reposition auto-tour button above the bottom dock */
@@ -440,8 +440,8 @@
     padding: 7px 16px;
     letter-spacing: 0.14em;
   }
-  /* Raise toast above the bottom pill dock (~68px tall) */
-  .complete-toast { bottom: 82px; }
+  /* Raise toast above the dock */
+  .complete-toast { bottom: calc(104px + env(safe-area-inset-bottom, 0px)); }
 }
 
 @media (max-width: 500px) { .complete-toast { white-space: normal; max-width: calc(100vw - 32px); } }

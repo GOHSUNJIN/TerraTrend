@@ -133,7 +133,7 @@
     autoTourPreTimer = null;
     autoTourActive = true;
     const btn = document.getElementById("auto-tour-btn");
-    if (btn) { btn.classList.remove("pending"); btn.classList.add("active"); btn.textContent = "⏹ TOURING"; }
+    if (btn) { btn.classList.remove("pending"); btn.classList.add("active"); btn.textContent = "⏹ STOP TOUR"; }
     autoTourTimer = setInterval(() => {
       tourIndex = (tourIndex + 1) % HOTSPOTS.length;
       const spot = HOTSPOTS[tourIndex];

@@ -206,6 +206,8 @@
     flex: none;
     height: min(380px, calc(100dvh - 220px - env(safe-area-inset-bottom, 0px)));
   }
+  /* Hide the disabled input so it doesn't look broken */
+  .chatbot-input-row { display: none; }
   /* Hide FAB when the info panel is open */
   .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
 }
