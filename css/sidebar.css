@@ -116,6 +116,24 @@
 .pill-arrow.down  { color: var(--accent-2);    text-shadow: 0 0 8px rgba(34, 224, 238, 0.6); }
 .pill-arrow.mixed { color: var(--accent);      text-shadow: 0 0 8px rgba(139, 124, 255, 0.6); }
 
+/* ---------- Explored counter ---------- */
+.explore-counter {
+  font-size: 0.47rem;
+  letter-spacing: 0.22em;
+  color: var(--text-tertiary);
+  opacity: 0.5;
+  margin-top: 16px;
+  padding: 0 6px;
+  display: block;
+  text-align: center;
+  transition: color 0.4s, opacity 0.4s, text-shadow 0.4s;
+}
+.explore-counter.all-explored {
+  color: var(--accent-2);
+  opacity: 1;
+  text-shadow: 0 0 14px rgba(34, 224, 238, 0.55);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .var-sidebar {
@@ -143,4 +161,5 @@
   .pill-text { display: none; }
   .var-sidebar-label { display: none; }
   .pill-spark { display: none; }
+  .explore-counter { display: none; }
 }

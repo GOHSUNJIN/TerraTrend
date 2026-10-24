@@ -4,6 +4,7 @@
 /* ---------- AI Chatbot (FAB + panel) ---------- */
 .chatbot-wrap {
   position: fixed;
+  top: calc(var(--appbar-h) + 14px);
   bottom: 32px;
   right: 28px;
   z-index: 50;
@@ -41,6 +42,10 @@
 
 /* Chat panel */
 .chatbot-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   width: 320px;
   background: rgba(5, 6, 20, 0.98);
   border: 1px solid rgba(140, 150, 255, 0.2);
@@ -50,11 +55,11 @@
     0 0 50px -20px rgba(139, 124, 255, 0.4),
     0 0 0 1px rgba(139, 124, 255, 0.06) inset;
   overflow: hidden;
-  animation: chatSlideUp 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: chatSlideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-@keyframes chatSlideUp {
-  from { opacity: 0; transform: translateY(12px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes chatSlideIn {
+  from { opacity: 0; transform: translateX(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 .chatbot-panel[hidden] { display: none; }
 
@@ -102,8 +107,8 @@
 /* Message thread */
 .chatbot-messages {
   padding: 14px 14px 10px;
-  min-height: 200px;
-  max-height: 320px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

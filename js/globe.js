@@ -250,6 +250,7 @@
   // ---------- Pinned hotspot markers ----------
   const markerHitTargets = [];
   const markerGlows = [];
+  const markerLabels = [];
 
   // Canvas-text label sprite that floats above a marker
   function makeLabelSprite(text, hexColor, icon) {
@@ -385,6 +386,7 @@
       const label = makeLabelSprite(spot.name, spot.color, spot.icon);
       label.position.copy(pos.clone().normalize().multiplyScalar(0.40));
       anchor.add(label);
+      markerLabels.push({ sprite: label, baseX: label.scale.x, baseY: label.scale.y, phase: i * 0.85 });
 
       globeGroup.add(anchor);
     });
@@ -495,6 +497,9 @@
       -MAX_TILT,
       MAX_TILT
     );
+    // Cancel any active fly-to so the globe doesn't snap back after dragging
+    flyTo.targetY = undefined;
+    flyTo.targetX = undefined;
     flagUserActivity();
   });
 
@@ -514,10 +519,10 @@
     if (document.body.classList.contains("modal-open")) return;
     if (document.activeElement && (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")) return;
     const step = 0.06;
-    if (e.key === "ArrowLeft")  { globeGroup.rotation.y -= step; flagUserActivity(); e.preventDefault(); }
-    if (e.key === "ArrowRight") { globeGroup.rotation.y += step; flagUserActivity(); e.preventDefault(); }
-    if (e.key === "ArrowUp")    { targetRotationX = THREE.MathUtils.clamp(targetRotationX - step, -MAX_TILT, MAX_TILT); flagUserActivity(); e.preventDefault(); }
-    if (e.key === "ArrowDown")  { targetRotationX = THREE.MathUtils.clamp(targetRotationX + step, -MAX_TILT, MAX_TILT); flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowLeft")  { globeGroup.rotation.y -= step; flyTo.targetY = undefined; flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowRight") { globeGroup.rotation.y += step; flyTo.targetY = undefined; flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowUp")    { targetRotationX = THREE.MathUtils.clamp(targetRotationX - step, -MAX_TILT, MAX_TILT); flyTo.targetX = undefined; flagUserActivity(); e.preventDefault(); }
+    if (e.key === "ArrowDown")  { targetRotationX = THREE.MathUtils.clamp(targetRotationX + step, -MAX_TILT, MAX_TILT); flyTo.targetX = undefined; flagUserActivity(); e.preventDefault(); }
   });
 
   // ---------- Raycasting: hover + click ----------
@@ -723,7 +728,7 @@
 
     // Throttle: 60fps active, 20fps idle auto-spin, pause when panel open
     const busy = dragState.active || userInteracting || activePings.length > 0;
-    const minInterval = busy ? 16 : (globePaused ? 200 : 50); // 60fps / 20fps / 5fps
+    const minInterval = busy ? 16 : (globePaused ? 100 : 50); // 60fps / 10fps / 20fps
     if (ts - lastFrameTs < minInterval) return;
     lastFrameTs = ts;
 
@@ -772,6 +777,11 @@
       const pulse = 1 + Math.sin(t * 2.4 + phase) * 0.18;
       const boost = i === hoveredIndex ? 1.45 : 1;
       sprite.scale.setScalar(0.46 * pulse * boost);
+    });
+
+    markerLabels.forEach(({ sprite, baseX, baseY, phase }) => {
+      const pulse = 1 + Math.sin(t * 1.5 + phase) * 0.05;
+      sprite.scale.set(baseX * pulse, baseY * pulse, 1);
     });
 
     updatePings(performance.now());

@@ -49,6 +49,7 @@
 .panel-banner {
   position: relative;
   height: 160px;
+  min-height: 120px;
   flex-shrink: 0;
   overflow: hidden;
   background: linear-gradient(150deg, rgba(12, 8, 40, 1) 0%, rgba(6, 12, 35, 1) 100%);
@@ -346,6 +347,23 @@
 .panel-share-btn[data-copied="yes"] { color: #34e064; border-color: rgba(34, 224, 100, 0.4); }
 .panel-nav-count { font-size: 0.62rem; letter-spacing: 0.16em; color: var(--muted); }
 
+/* ── Panel body stagger reveal ───────────────────────────── */
+@keyframes panelItemIn {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel-body.entering > * {
+  animation: panelItemIn 0.38s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.panel-body.entering > *:nth-child(1) { animation-delay: 0ms; }
+.panel-body.entering > *:nth-child(2) { animation-delay: 55ms; }
+.panel-body.entering > *:nth-child(3) { animation-delay: 110ms; }
+.panel-body.entering > *:nth-child(4) { animation-delay: 165ms; }
+.panel-body.entering > *:nth-child(5) { animation-delay: 220ms; }
+.panel-body.entering > *:nth-child(6) { animation-delay: 275ms; }
+.panel-body.entering > *:nth-child(7) { animation-delay: 330ms; }
+.panel-body.entering > *:nth-child(8) { animation-delay: 385ms; }
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .info-panel {
@@ -362,4 +380,5 @@
   .info-panel { width: min(340px, 96%); bottom: 16px; }
   .panel-banner { height: 130px; }
   .panel-body { padding: 13px 14px 16px; gap: 12px; }
+  .panel-nav-btn { width: 40px; height: 38px; }
 }

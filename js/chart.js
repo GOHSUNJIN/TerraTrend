@@ -56,6 +56,10 @@ window.TerraTrendChart = (function () {
       ctx.fillText(String(pts[0].year), pad.l, H - 4);
       ctx.textAlign = "right";
       ctx.fillText(String(pts[pts.length - 1].year), W - pad.r, H - 4);
+      if (unit) {
+        ctx.fillStyle = "rgba(159,176,205,0.38)";
+        ctx.fillText(unit, W - pad.r, pad.t + 10);
+      }
       ctx.textAlign = "left";
     }
 

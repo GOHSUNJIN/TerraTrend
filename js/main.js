@@ -34,6 +34,23 @@
 
   // ---------- Chart ----------
   const chartTitleEl = document.getElementById("chart-title");
+  const exploredSet = new Set();
+
+  function showOnboardingHint() {
+    if (sessionStorage.getItem("tt-hinted")) return;
+    sessionStorage.setItem("tt-hinted", "1");
+    const hint = document.createElement("div");
+    hint.className = "onboard-hint";
+    hint.innerHTML = '<span class="onboard-arrow">←</span><span>Pick a variable</span>';
+    document.body.appendChild(hint);
+    requestAnimationFrame(() => requestAnimationFrame(() => hint.classList.add("visible")));
+    const dismiss = () => {
+      hint.classList.remove("visible");
+      hint.addEventListener("transitionend", () => hint.remove(), { once: true });
+    };
+    const dismissTimer = setTimeout(dismiss, 5000);
+    pillWrap?.addEventListener("click", () => { clearTimeout(dismissTimer); dismiss(); }, { once: true });
+  }
 
   // ---------- Splash ----------
   const splash       = document.getElementById("splash");
@@ -58,6 +75,7 @@
           window.TerraTrendUI.openPanel(firstSpot);
         }
       }, 1800);
+      setTimeout(showOnboardingHint, 2800);
     });
   }
 
@@ -236,8 +254,21 @@
       }
       if (els.chartDelta) els.chartDelta.hidden = true;
 
+      // Mutual exclusivity: close chatbot if open
+      const chatPanelEl = document.getElementById("chatbot-panel");
+      if (chatPanelEl) chatPanelEl.hidden = true;
+
       panel.classList.remove("hidden");
       panel.classList.add("visible");
+
+      // Stagger-reveal each panel section
+      const panelBody = panel.querySelector(".panel-body");
+      if (panelBody) {
+        panelBody.classList.remove("entering");
+        void panelBody.offsetWidth;
+        panelBody.classList.add("entering");
+      }
+
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.pause();
       document.getElementById("chatbot-wrap")?.classList.add("panel-open");
 
@@ -245,6 +276,12 @@
       if (panelIndex >= 0) {
         window.TerraTrendGlobe?.setHighlight?.(panelIndex);
         updateURL(spot.id);
+        exploredSet.add(panelIndex);
+        const counter = document.getElementById("explore-counter");
+        if (counter) {
+          counter.textContent = `INVESTIGATED · ${exploredSet.size} / ${HOTSPOTS.length}`;
+          if (exploredSet.size === HOTSPOTS.length) counter.classList.add("all-explored");
+        }
       }
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
       if (prevBtn) prevBtn.disabled = panelIndex < 0;
@@ -366,7 +403,11 @@
   const chatPanel = document.getElementById("chatbot-panel");
   const chatClose = document.getElementById("chatbot-close");
   if (chatFab && chatPanel) {
-    chatFab.addEventListener("click", () => { chatPanel.hidden = !chatPanel.hidden; });
+    chatFab.addEventListener("click", () => {
+      const willOpen = chatPanel.hidden;
+      chatPanel.hidden = !chatPanel.hidden;
+      if (willOpen) window.TerraTrendUI.closePanel(); // mutual exclusivity
+    });
     if (chatClose) chatClose.addEventListener("click", () => { chatPanel.hidden = true; });
   }
 
