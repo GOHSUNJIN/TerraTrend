@@ -150,54 +150,17 @@
   }
 
   // ---------- Splash ----------
-  const splash    = document.getElementById("splash");
-  const launchBtn = document.getElementById("launch-btn");
-  const sideRail  = document.querySelector(".side-rail");
-  const varSel    = document.getElementById("var-selector");
-
-  // ---------- Bottom bar ----------
-  const bottomBar = document.querySelector(".bottom-bar");
-  const barToggle = document.getElementById("bar-toggle");
-  const BAR_HIDE  = 4500;
-  let barTimer    = null;
-
-  function showBar() {
-    if (!bottomBar) return;
-    bottomBar.classList.add("active");
-    bottomBar.style.opacity = "";
-    bottomBar.style.pointerEvents = "";
-    document.body.classList.add("bar-open");
-    resetBarTimer();
-  }
-  function hideBar() {
-    if (!bottomBar) return;
-    bottomBar.classList.remove("active");
-    bottomBar.style.opacity = "0";
-    bottomBar.style.pointerEvents = "none";
-    document.body.classList.remove("bar-open");
-    clearTimeout(barTimer);
-  }
-  function resetBarTimer() {
-    clearTimeout(barTimer);
-    barTimer = setTimeout(hideBar, BAR_HIDE);
-  }
-  if (bottomBar) {
-    bottomBar.addEventListener("mouseenter", () => clearTimeout(barTimer));
-    bottomBar.addEventListener("mouseleave", resetBarTimer);
-  }
-  if (barToggle) {
-    barToggle.addEventListener("click", () => {
-      bottomBar.classList.contains("active") ? hideBar() : showBar();
-    });
-  }
+  const splash       = document.getElementById("splash");
+  const launchBtn    = document.getElementById("launch-btn");
+  const varSel       = document.getElementById("var-selector");
+  const headerTools  = document.getElementById("header-tools");
 
   if (launchBtn) {
     launchBtn.addEventListener("click", () => {
       splash.classList.add("dismissed");
       document.body.classList.add("app-armed");
-      if (sideRail) sideRail.classList.add("active");
-      if (varSel)   varSel.hidden = false;
-      if (barToggle) barToggle.classList.add("active");
+      if (varSel) varSel.hidden = false;
+      if (headerTools) headerTools.hidden = false;
     });
   }
 
@@ -234,25 +197,6 @@
     });
   }
 
-  // ---------- Bottom bar dots ----------
-  const dotWrap = document.getElementById("bar-dots");
-  if (dotWrap && typeof HOTSPOTS !== "undefined") {
-    HOTSPOTS.forEach((spot, i) => {
-      const dot = document.createElement("button");
-      dot.className = "bar-dot";
-      dot.style.setProperty("--dot", hex(spot.color));
-      dot.dataset.name = spot.name.toUpperCase();
-      dot.setAttribute("aria-label", "Go to " + spot.name);
-      dot.addEventListener("click", () => {
-        activatePill(spot, i);
-        flyToHotspot(spot);
-        window.TerraTrendUI.openPanel(spot);
-        hideBar();
-      });
-      dotWrap.appendChild(dot);
-    });
-  }
-
   // ---------- Modals ----------
   function setupModal(modalId, openers) {
     const modal = document.getElementById(modalId);
@@ -269,7 +213,7 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) close(); });
     return { open, close };
   }
-  setupModal("method-modal", ["rail-method", "rail-mission", "nav-mission"]);
+  setupModal("method-modal", ["rail-method", "nav-mission"]);
   setupModal("about-modal",  ["rail-about", "nav-about"]);
 
   const fsBtn = document.getElementById("rail-fullscreen");
@@ -304,12 +248,8 @@
   const mkEls = {
     badge: document.getElementById("mk-badge"),
     trend: document.getElementById("mk-trend"),
-    s:     document.getElementById("mk-s"),
-    z:     document.getElementById("mk-z"),
-    p:     document.getElementById("mk-p"),
-    conf:  document.getElementById("mk-conf"),
-    sig:   document.getElementById("mk-sig"),
   };
+  const mkStatsLine = document.getElementById("mk-stats-line");
 
   function renderMK(mk, color) {
     if (!mk || !mkBlock) return;
@@ -317,18 +257,13 @@
     mkBlock.style.setProperty("--mk-col", color || "#8b7cff");
 
     const arrow = mk.trend === "up" ? "▲" : mk.trend === "down" ? "▼" : "◇";
-    const sigText = mk.significant ? "Yes — " + mk.confidence : "No (p = " + mk.pValue + ")";
-    const sigClass = mk.significant ? "sig-yes" : "sig-mixed";
-
     mkEls.badge.textContent = mk.significant ? "SIGNIFICANT" : "NOT SIGNIFICANT";
     mkEls.badge.className   = "mk-badge " + (mk.significant ? "sig-yes" : "sig-no");
     mkEls.trend.textContent = arrow + " " + mk.trend.toUpperCase();
-    mkEls.s.textContent     = mk.s;
-    mkEls.z.textContent     = mk.z.toFixed(3);
-    mkEls.p.textContent     = mk.pValue < 0.001 ? "< 0.001" : mk.pValue.toFixed(4);
-    mkEls.conf.textContent  = mk.confidence;
-    mkEls.sig.textContent   = sigText;
-    mkEls.sig.className     = "sig " + sigClass;
+    if (mkStatsLine) {
+      const pStr = mk.pValue < 0.001 ? "< 0.001" : mk.pValue.toFixed(3);
+      mkStatsLine.textContent = `S = ${mk.s} · Z = ${mk.z.toFixed(2)} · p = ${pStr} · ${mk.confidence}`;
+    }
   }
 
   // ---------- Info panel ----------
@@ -338,17 +273,11 @@
     coords:  document.getElementById("panel-coords"),
     title:   document.getElementById("panel-title"),
     tagline: document.getElementById("panel-tagline"),
-    what:    document.getElementById("panel-what"),
-    where:   document.getElementById("panel-where"),
     rate:    document.getElementById("panel-rate"),
     desc:    document.getElementById("panel-desc"),
     source:  document.getElementById("panel-source"),
     close:   document.getElementById("panel-close")
   };
-
-  function setRailShift(on) {
-    if (sideRail) sideRail.classList.toggle("shifted", on && window.innerWidth > 1100);
-  }
 
   let panelIndex = -1;
   const prevBtn  = document.getElementById("panel-prev");
@@ -363,29 +292,12 @@
       els.kicker.textContent  = "TREND FILE · " + spot.id.toUpperCase().replace(/-/g, " ");
       els.title.textContent   = spot.icon + "  " + spot.name;
       els.tagline.textContent = spot.tagline || "";
-      els.what.textContent    = spot.what;
-      els.where.textContent   = spot.where;
-      els.rate.textContent    = "loading…";
+      els.rate.textContent    = "—";
       els.desc.textContent    = spot.description;
       els.coords.textContent  = coords || "PINNED HOTSPOT";
 
-      // Photo
-      const photoFig = document.getElementById("panel-photo");
-      const photoImg = document.getElementById("panel-photo-img");
-      if (photoFig && photoImg) {
-        if (spot.image) {
-          photoImg.onerror = () => { photoFig.hidden = true; };
-          photoImg.onload  = () => { photoFig.hidden = false; };
-          photoImg.alt = spot.imageAlt || spot.name;
-          photoImg.src = spot.image;
-        } else {
-          photoFig.hidden = true;
-        }
-      }
-
       panel.classList.remove("hidden");
       panel.classList.add("visible");
-      setRailShift(true);
 
       panelIndex = HOTSPOTS.indexOf(spot);
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
@@ -439,7 +351,6 @@
       if (!panel) return;
       panel.classList.remove("visible");
       panel.classList.add("hidden");
-      setRailShift(false);
     }
   };
 

@@ -146,7 +146,7 @@
   );
 
   function buildEarth(texture) {
-    const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 96, 96);
+    const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       roughness: 0.9,
@@ -519,6 +519,11 @@
     }
   }
 
+  /* Throttled hover: only runs on pointer movement, never inside the render loop */
+  canvas.addEventListener("pointermove", () => {
+    if (!dragState.active) updateHover();
+  });
+
   const tooltip = document.createElement("div");
   tooltip.className = "globe-tooltip";
   tooltip.style.display = "none";
@@ -609,11 +614,18 @@
 
   // ---------- Animation loop ----------
   const clock = new THREE.Clock();
+  let lastFrameTs = 0;
 
-  function animate() {
+  function animate(ts) {
     requestAnimationFrame(animate);
+
+    // Throttle: 60fps when interacting or pings active, 30fps when idle auto-spinning
+    const busy = dragState.active || userInteracting || activePings.length > 0;
+    const minInterval = busy ? 16 : 33; // ~60fps vs ~30fps
+    if (ts - lastFrameTs < minInterval) return;
+    lastFrameTs = ts;
+
     const t = clock.getElapsedTime();
-    // frame-rate-independent smoothing: ~1 at 60fps, larger arcs on slow frames
     const dt = Math.min(Math.max(t - (animate.lastT || t), 0), 0.05);
     animate.lastT = t;
     const s = dt * 60;
@@ -625,7 +637,6 @@
       dragState.velX *= 0.94;
     }
 
-    // vertical drag inertia keeps easing after release, like the horizontal spin
     if (!dragState.active) {
       dragState.velY *= 0.94;
       if (Math.abs(dragState.velY) > 0.0002) {
@@ -643,22 +654,25 @@
     }
 
     globeGroup.rotation.x += (targetRotationX - globeGroup.rotation.x) * Math.min(1, 0.08 * s);
-    globeGroup.position.y += Math.sin(t * 0.6) * 0.0006;
 
-    // eased camera drift: parallax toward the pointer, framed on the globe
-    parallax.x += (parallax.tx - parallax.x) * Math.min(1, 0.035 * s);
-    parallax.y += (parallax.ty - parallax.y) * Math.min(1, 0.035 * s);
-    camera.position.x = parallax.x;
-    camera.position.y = parallax.y;
-    camera.lookAt(globeGroup.position);
+    // Parallax camera drift — only update lookAt when it actually changed
+    const px = parallax.x + (parallax.tx - parallax.x) * Math.min(1, 0.035 * s);
+    const py = parallax.y + (parallax.ty - parallax.y) * Math.min(1, 0.035 * s);
+    if (Math.abs(px - parallax.x) > 0.0001 || Math.abs(py - parallax.y) > 0.0001) {
+      parallax.x = px;
+      parallax.y = py;
+      camera.position.x = px;
+      camera.position.y = py;
+      camera.lookAt(globeGroup.position);
+    }
 
     markerGlows.forEach(({ sprite, phase }, i) => {
       const pulse = 1 + Math.sin(t * 2.4 + phase) * 0.18;
       const boost = i === hoveredIndex ? 1.45 : 1;
-      sprite.scale.setScalar(0.34 * pulse * boost);    });
+      sprite.scale.setScalar(0.34 * pulse * boost);
+    });
 
     updatePings(performance.now());
-    updateHover();
     renderer.render(scene, camera);
   }
 
