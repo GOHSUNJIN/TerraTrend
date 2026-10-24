@@ -387,6 +387,38 @@
   50%       { transform: translateY(5px); }
 }
 
+/* ── Landscape lock: phones only ──────────────────────────── */
+.rotate-prompt {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--bg);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+}
+@media (max-width: 900px) and (orientation: landscape) {
+  .rotate-prompt { display: flex; }
+}
+.rotate-icon {
+  font-size: 2.8rem;
+  animation: rotateTip 2.2s ease-in-out infinite;
+  display: block;
+}
+@keyframes rotateTip {
+  0%, 40%, 100% { transform: rotate(0deg); }
+  60%, 90%      { transform: rotate(-90deg); }
+}
+.rotate-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--text-secondary);
+}
+
 /* ── Mobile layout: single-screen app, no scroll ──────────── */
 @media (max-width: 900px) {
   /* Lock to one viewport, hide below-fold content */
@@ -398,6 +430,7 @@
   .header-inner { padding: 6px 16px; gap: 14px; }
   .header-tools { gap: 4px; }
   .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
+  #rail-fullscreen { display: none; }
 
   /* Auto-tour moves to top-right so it doesn't conflict with the bottom dock */
   .auto-tour-btn {

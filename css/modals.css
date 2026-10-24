@@ -190,7 +190,13 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
 }
 @media (max-width: 600px) {
   .method-modal { padding: 12px; align-items: flex-end; }
-  .method-card { padding: 20px 16px 24px; max-height: 86dvh; max-height: 86vh; }
+  .method-card {
+    padding: 20px 16px 24px;
+    max-height: 86dvh;
+    max-height: 86vh;
+    scrollbar-width: none;
+  }
+  .method-card::-webkit-scrollbar { display: none; }
   .steps { grid-template-columns: 1fr; gap: 12px; }
   .about-facts { grid-template-columns: 1fr; }
   .about-grid { gap: 20px; }

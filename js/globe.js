@@ -195,7 +195,7 @@
   // ---------- Atmosphere glow ----------
   function addAtmosphere() {
     const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(GLOBE_RADIUS * 1.16, 64, 64),
+      new THREE.SphereGeometry(GLOBE_RADIUS * 1.07, 64, 64),
       new THREE.ShaderMaterial({
         transparent: true,
         side: THREE.BackSide,
@@ -386,7 +386,7 @@
       const label = makeLabelSprite(spot.name, spot.color, spot.icon);
       label.position.copy(pos.clone().normalize().multiplyScalar(0.40));
       anchor.add(label);
-      markerLabels.push({ sprite: label, baseX: label.scale.x, baseY: label.scale.y, phase: i * 0.85 });
+      markerLabels.push({ sprite: label, origX: label.scale.x, origY: label.scale.y, baseX: label.scale.x, baseY: label.scale.y, phase: i * 0.85 });
 
       globeGroup.add(anchor);
     });
@@ -705,6 +705,13 @@
       globeGroup.position.set(0, w > 640 ? 0.55 : 0.9, 0);
       globeGroup.scale.setScalar(w > 640 ? 0.85 : 0.62);
     }
+
+    // Compensate label sprite scale against globeGroup reduction so labels stay legible on mobile
+    const labelBoost = w <= 640 ? (1 / 0.62) : (w <= 1024 ? (1 / 0.85) : 1.0);
+    markerLabels.forEach(l => {
+      l.baseX = l.origX * labelBoost;
+      l.baseY = l.origY * labelBoost;
+    });
   }
   window.addEventListener("resize", resize);
   resize();

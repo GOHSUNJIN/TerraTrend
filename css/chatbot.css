@@ -2,7 +2,7 @@
    AI chatbot FAB and panel */
 
 /* Hide on mobile — FAB and panel compete for the same bottom area */
-@media (max-width: 900px) { .chatbot-wrap { display: none; } }
+@media (max-width: 900px) { .chatbot-wrap { display: none !important; } }
 
 /* ---------- AI Chatbot (FAB + panel) ---------- */
 .chatbot-wrap {

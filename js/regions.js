@@ -396,6 +396,7 @@ const REGION_ZONES = [
 const FALLBACK_TEMPLATES = [
   {
     match: (lat) => lat >= 60,
+    name: "Polar Climate",
     what: "Polar climate variables",
     where: "High northern latitudes",
     rate: "Arctic amplification: warming 3-4x global average",
@@ -409,6 +410,7 @@ const FALLBACK_TEMPLATES = [
   },
   {
     match: (lat) => lat >= 23.5 && lat < 60,
+    name: "Mid-latitude Climate",
     what: "Mid-latitude climate variables",
     where: "Northern temperate zone",
     rate: "≈ +0.2 °C per decade, region-dependent",
@@ -422,6 +424,7 @@ const FALLBACK_TEMPLATES = [
   },
   {
     match: (lat) => lat >= -23.5 && lat < 23.5,
+    name: "Tropical Climate",
     what: "Tropical climate variables",
     where: "Tropics",
     rate: "Warming with strong ENSO modulation",
@@ -435,6 +438,7 @@ const FALLBACK_TEMPLATES = [
   },
   {
     match: (lat) => lat < -60,
+    name: "Antarctic Climate",
     what: "Antarctic variables",
     where: "Antarctica & Southern Ocean",
     rate: "West losing ice; East largely stable",
@@ -448,6 +452,7 @@ const FALLBACK_TEMPLATES = [
   },
   {
     match: () => true,
+    name: "Southern Latitudes",
     what: "Regional Earth observations",
     where: "Southern mid-latitudes",
     rate: "Trends vary strongly by region",

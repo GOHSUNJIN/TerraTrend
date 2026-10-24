@@ -416,13 +416,37 @@
     border-left: none;
     border-right: none;
     border-bottom: none;
-    /* Cap height so the globe is always visible above the sheet */
     max-height: 60dvh;
-    max-height: 60vh; /* fallback */
+    max-height: 60vh;
     transform: translateY(24px) scale(0.99);
   }
   .info-panel.visible { transform: none; }
-  .panel-banner { height: 110px; }
+
+  /* No photo or dark overlay on mobile — too noisy on a small sheet */
+  .panel-banner-photo,
+  .panel-banner-overlay { display: none; }
+
+  /* Flat header: remove the absolute-overlay stacking, let kicker and
+     title stack naturally so there's real breathing room between them */
+  .panel-banner {
+    height: auto;
+    min-height: 0;
+    padding: 16px 14px 0;
+    background: transparent;
+  }
+  .panel-banner-head {
+    position: static;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .panel-banner-title {
+    position: static;
+    padding: 0 0 14px;
+  }
+  /* Text-shadows were for legibility over images — not needed without them */
+  .info-panel h3 { font-size: 1.05rem; text-shadow: none; }
+  .panel-tagline  { text-shadow: none; }
+
   .panel-body { padding: 12px 14px 16px; gap: 11px; }
   .panel-close { width: 36px; height: 36px; }
   .panel-nav-btn { width: 40px; height: 38px; }
