@@ -95,6 +95,15 @@
   min-width: 0;
   padding-right: 8px;
 }
+.pill-rate {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  opacity: 0.65;
+  margin-top: 2px;
+}
 .pill-spark { display: none; }
 .pill-arrow {
   grid-column: 3;

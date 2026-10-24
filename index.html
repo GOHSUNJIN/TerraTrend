@@ -108,13 +108,19 @@
           <!-- pills injected by JS -->
         </div>
         <div class="explore-tracker">
-          <p class="explore-counter mono" id="explore-counter">INVESTIGATED · 0 / 8</p>
+          <p class="explore-counter mono" id="explore-counter">EXPLORE ALL 8</p>
           <div class="explore-bar"><div class="explore-bar-fill" id="explore-bar-fill"></div></div>
         </div>
       </div>
 
       <!-- Auto-tour toggle -->
       <button class="auto-tour-btn" id="auto-tour-btn" aria-label="Toggle auto-tour" title="Toggle auto-tour" hidden>▶ AUTO-TOUR</button>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" id="scroll-hint" hidden aria-hidden="true">
+        <span class="scroll-hint-arrow">↓</span>
+        <span class="scroll-hint-label">scroll</span>
+      </div>
 
       <!-- Info panel (right) -->
       <div id="info-panel" class="info-panel hidden" role="dialog" aria-modal="false" aria-label="Trend details">

@@ -10,7 +10,7 @@
   const { drawChart, bindChartHover } = window.TerraTrendChart;
 
   function hex(c) { return "#" + c.toString(16).padStart(6, "0"); }
-  function trendArrow(t) { return t === "up" ? "▲" : t === "down" ? "▼" : "◇"; }
+  function trendArrow(t) { return t === "up" ? "▲" : t === "down" ? "▼" : "↕"; }
   function shortRate(r) { return r.split(" ").slice(0, 5).join(" "); }
 
   function flyToHotspot(spot) {
@@ -68,6 +68,18 @@
       if (chatWrap) chatWrap.hidden = false;
       const tourBtnEl = document.getElementById("auto-tour-btn");
       if (tourBtnEl) tourBtnEl.hidden = false;
+
+      // Scroll hint
+      const scrollHintEl = document.getElementById("scroll-hint");
+      if (scrollHintEl) {
+        scrollHintEl.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => scrollHintEl.classList.add("visible")));
+        window.addEventListener("scroll", () => {
+          scrollHintEl.classList.remove("visible");
+          scrollHintEl.addEventListener("transitionend", () => { scrollHintEl.hidden = true; }, { once: true });
+        }, { once: true, passive: true });
+      }
+
       setTimeout(() => {
         if (typeof HOTSPOTS !== "undefined" && HOTSPOTS.length) {
           const urlSpot = getSpotFromURL();
@@ -79,8 +91,14 @@
         }
       }, 1800);
       setTimeout(showOnboardingHint, 2800);
-      // Start auto-tour after 15s if no spot was deep-linked
-      setTimeout(() => { if (!getSpotFromURL()) startAutoTour(); }, 15000);
+      // Warn 3s before auto-tour starts, then launch at 15s
+      if (!getSpotFromURL()) {
+        autoTourPreTimer = setTimeout(() => {
+          const btn = document.getElementById("auto-tour-btn");
+          if (btn) { btn.classList.add("pending"); btn.textContent = "TOUR IN 3S…"; }
+          autoTourPreTimer = setTimeout(startAutoTour, 3000);
+        }, 12000);
+      }
     });
   }
 
@@ -90,23 +108,28 @@
   let tourIndex = 0;
 
   // ---------- Auto-tour ----------
-  let autoTourTimer  = null;
-  let autoTourActive = false;
+  let autoTourTimer    = null;
+  let autoTourPreTimer = null;
+  let autoTourActive   = false;
 
   function stopAutoTour() {
-    if (!autoTourActive) return;
-    autoTourActive = false;
-    clearInterval(autoTourTimer);
-    autoTourTimer = null;
+    clearTimeout(autoTourPreTimer);
+    autoTourPreTimer = null;
+    if (autoTourActive) {
+      autoTourActive = false;
+      clearInterval(autoTourTimer);
+      autoTourTimer = null;
+    }
     const btn = document.getElementById("auto-tour-btn");
-    if (btn) { btn.classList.remove("active"); btn.textContent = "▶ AUTO-TOUR"; }
+    if (btn) { btn.classList.remove("active", "pending"); btn.textContent = "▶ AUTO-TOUR"; }
   }
 
   function startAutoTour() {
     if (autoTourActive) return;
+    autoTourPreTimer = null;
     autoTourActive = true;
     const btn = document.getElementById("auto-tour-btn");
-    if (btn) { btn.classList.add("active"); btn.textContent = "⏹ TOURING"; }
+    if (btn) { btn.classList.remove("pending"); btn.classList.add("active"); btn.textContent = "⏹ TOURING"; }
     autoTourTimer = setInterval(() => {
       tourIndex = (tourIndex + 1) % HOTSPOTS.length;
       const spot = HOTSPOTS[tourIndex];
@@ -125,7 +148,7 @@
       pill.style.setProperty("--pill-col", hex(spot.color));
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
-        `<span class="pill-name">${spot.name}</span>` +
+        `<span class="pill-name">${spot.name}${spot.shortVal ? `<span class="pill-rate">${spot.shortVal}</span>` : ""}</span>` +
         `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
         `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
@@ -225,7 +248,7 @@
     mkBlock.hidden = false;
     mkBlock.style.setProperty("--mk-col", color || "#8b7cff");
 
-    const arrow = mk.trend === "up" ? "▲" : mk.trend === "down" ? "▼" : "◇";
+    const arrow = mk.trend === "up" ? "▲" : mk.trend === "down" ? "▼" : "↕";
     mkEls.badge.textContent = mk.significant ? "SIGNIFICANT" : "NOT SIGNIFICANT";
     mkEls.badge.className   = "mk-badge " + (mk.significant ? "sig-yes" : "sig-no");
     mkEls.trend.textContent = arrow + " " + mk.trend.toUpperCase();
@@ -425,8 +448,9 @@
   const autoTourBtn = document.getElementById("auto-tour-btn");
   if (autoTourBtn) {
     autoTourBtn.addEventListener("click", () => {
-      if (autoTourActive) stopAutoTour();
-      else startAutoTour();
+      const wasActive = autoTourActive;
+      stopAutoTour();
+      if (!wasActive) startAutoTour();
     });
   }
 
@@ -483,7 +507,7 @@
   const tickerTrack = document.getElementById("ticker-track");
   if (tickerTrack && typeof HOTSPOTS !== "undefined") {
     const items = HOTSPOTS.map(s => {
-      const dir = s.trend === "up" ? "▲" : s.trend === "down" ? "▼" : "◇";
+      const dir = s.trend === "up" ? "▲" : s.trend === "down" ? "▼" : "↕";
       const cls = s.trend === "down" ? "down" : s.trend === "mixed" ? "mixed" : "up";
       return `<span class="ticker-item" data-ticker-id="${s.id}"><span class="ticker-icon">${s.icon}</span>${s.name.toUpperCase()}<b class="${cls}">${dir} ${shortRate(s.rate).toUpperCase()}</b></span>`;
     });
@@ -495,7 +519,7 @@
   }
 
   function updateTickerItem(id, senSlope, unit, trend) {
-    const dir = trend === "up" ? "▲" : trend === "down" ? "▼" : "◇";
+    const dir = trend === "up" ? "▲" : trend === "down" ? "▼" : "↕";
     const cls = trend === "down" ? "down" : trend === "mixed" ? "mixed" : "up";
     const val = (senSlope >= 0 ? "+" : "") + Math.abs(senSlope).toFixed(2) + (unit ? " " + unit.toUpperCase() : "");
     document.querySelectorAll(`.ticker-item[data-ticker-id="${id}"] b`).forEach(b => {
