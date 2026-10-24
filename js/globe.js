@@ -701,13 +701,22 @@
       globeGroup.position.y = -0.2;
       const scale = Math.min(1.12, Math.max(0.95, w / 1440));
       globeGroup.scale.setScalar(scale);
+      camera.position.z = CAMERA_Z;
+    } else if (w > 640) {
+      globeGroup.position.set(0, 0.35, 0);
+      globeGroup.scale.setScalar(0.85);
+      camera.position.z = CAMERA_Z;
     } else {
-      globeGroup.position.set(0, w > 640 ? 0.55 : 0.9, 0);
-      globeGroup.scale.setScalar(w > 640 ? 0.85 : 0.62);
+      // Narrow portrait phones: pull camera back so globe fits in the horizontal FOV
+      globeGroup.position.set(0, 0.4, 0);
+      globeGroup.scale.setScalar(0.62);
+      camera.position.z = 9.5;
     }
 
-    // Compensate label sprite scale against globeGroup reduction so labels stay legible on mobile
-    const labelBoost = w <= 640 ? (1 / 0.62) : (w <= 1024 ? (1 / 0.85) : 1.0);
+    // Compensate label scale against globeGroup reduction AND camera distance change
+    const camZ  = w <= 640 ? 9.5 : CAMERA_Z;
+    const glSc  = w <= 640 ? 0.62 : (w <= 1024 ? 0.85 : 1.0);
+    const labelBoost = (CAMERA_Z / camZ) / glSc;
     markerLabels.forEach(l => {
       l.baseX = l.origX * labelBoost;
       l.baseY = l.origY * labelBoost;

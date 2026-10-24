@@ -7,6 +7,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
+  touch-action: none;
   /* z 0 (not -1): at -1 the <body> paints ABOVE the canvas and swallows every
      click - the marker clicks never reached the globe. Content layers below
      carry z-index 1 so they still stack over the globe. */
