@@ -161,6 +161,8 @@
       document.body.classList.add("app-armed");
       if (varSel) varSel.hidden = false;
       if (headerTools) headerTools.hidden = false;
+      const chatWrap = document.getElementById("chatbot-wrap");
+      if (chatWrap) chatWrap.hidden = false;
     });
   }
 
@@ -213,8 +215,8 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) close(); });
     return { open, close };
   }
-  setupModal("method-modal", ["rail-method", "nav-mission"]);
-  setupModal("about-modal",  ["rail-about", "nav-about"]);
+  setupModal("method-modal", ["rail-method"]);
+  setupModal("about-modal",  ["rail-about"]);
 
   const fsBtn = document.getElementById("rail-fullscreen");
   if (fsBtn) {
@@ -374,18 +376,13 @@
     if (e.key === "ArrowLeft"  && panelIndex >= 0) showCase(panelIndex - 1);
   });
 
-  // ---------- Mobile nav ----------
-  const navToggle = document.getElementById("nav-toggle");
-  const nav = document.querySelector(".main-nav");
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", () => {
-      nav.classList.toggle("open");
-      navToggle.textContent = nav.classList.contains("open") ? "✕" : "☰";
-    });
-    nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
-      nav.classList.remove("open");
-      navToggle.textContent = "☰";
-    }));
+  // ---------- Chatbot FAB (placeholder) ----------
+  const chatFab   = document.getElementById("chatbot-fab");
+  const chatPanel = document.getElementById("chatbot-panel");
+  const chatClose = document.getElementById("chatbot-close");
+  if (chatFab && chatPanel) {
+    chatFab.addEventListener("click", () => { chatPanel.hidden = !chatPanel.hidden; });
+    if (chatClose) chatClose.addEventListener("click", () => { chatPanel.hidden = true; });
   }
 
   // ---------- Ticker ----------

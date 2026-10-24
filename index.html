@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TerraTrend — Earth System Trend Detective | NASA Space Apps 2026</title>
-  <meta name="description" content="Select Earth science variables measured by NASA missions, visualise how they change over time, and determine what is changing, where, how much, and if it is statistically significant." />
+  <title>TerraTrend: Earth System Trend Detective | NASA Space Apps 2026</title>
+  <meta name="description" content="Select Earth science variables measured by NASA missions, visualise how they change over time, and determine what is changing, where, how much, and whether it is statistically significant." />
 
   <link rel="preload" href="fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/IBMPlexMono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -25,21 +25,43 @@
   <!-- ===== Splash ===== -->
   <div class="splash" id="splash" role="dialog" aria-label="TerraTrend introduction">
     <div class="splash-inner">
-      <div class="splash-logo-wrap">
-        <span class="splash-orbit" aria-hidden="true"></span>
-        <span class="splash-orbit splash-orbit-2" aria-hidden="true"></span>
-        <div class="splash-logo">◎</div>
+
+      <!-- Top bar: wordmark + mission tag -->
+      <div class="splash-topbar">
+        <div class="splash-wordmark">
+          <span class="splash-mark-glyph">◎</span>
+          TERRA<span>TREND</span>
+        </div>
+        <p class="splash-topbar-tag">A 3D Interactive Earth &nbsp;·&nbsp; NASA Space Apps 2026</p>
       </div>
-      <p class="splash-kicker">A 3D INTERACTIVE EARTH · NASA SPACE APPS 2026</p>
-      <h1 class="splash-title">TERRA<span>TREND</span></h1>
-      <p class="splash-lede">
-        Select a variable. Spin the globe. Discover where Earth is changing —
-        and whether scientists would call it <em>significant</em>.
-      </p>
-      <button class="launch-btn" id="launch-btn" type="button">
-        <span class="launch-ring"></span> Launch the globe
-      </button>
-      <p class="splash-hint">Works without WebGL · Mouse, touch &amp; keyboard supported</p>
+
+      <!-- Hero: oversized title + orbital widget -->
+      <div class="splash-hero">
+        <h1 class="splash-title">TERRA<span>TREND</span></h1>
+        <div class="splash-orbital" aria-hidden="true">
+          <span class="splash-orbit"></span>
+          <span class="splash-orbit splash-orbit-2"></span>
+          <div class="splash-logo">◎</div>
+        </div>
+      </div>
+
+      <!-- Gradient rule -->
+      <div class="splash-rule" aria-hidden="true"></div>
+
+      <!-- Bottom: lede + CTA -->
+      <div class="splash-bottom">
+        <p class="splash-lede">
+          Select a variable. Spin the globe. Discover where Earth is changing,
+          and whether scientists would call it <em>significant</em>.
+        </p>
+        <div class="splash-cta">
+          <button class="launch-btn" id="launch-btn" type="button">
+            <span class="launch-ring"></span> Launch the Globe
+          </button>
+          <p class="splash-hint">Works without WebGL &nbsp;·&nbsp; Touch &amp; keyboard supported</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -50,15 +72,10 @@
         <span class="logo-mark">◎</span> TERRA<span>TREND</span>
       </a>
       <div class="header-tools" id="header-tools" hidden>
-        <button class="header-tool-btn" id="rail-method" title="The Detective's Method" aria-label="The Detective's Method">?</button>
-        <button class="header-tool-btn" id="rail-about" title="About" aria-label="About">ℹ</button>
+        <button class="header-tool-btn" id="rail-method" title="The Method" aria-label="The Detective's Method">?</button>
+        <button class="header-tool-btn" id="rail-about"  title="About"      aria-label="About this project">ℹ</button>
         <button class="header-tool-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
       </div>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#" id="nav-mission">Method</a>
-        <a href="#" id="nav-about">About</a>
-      </nav>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
     </div>
   </header>
 
@@ -87,22 +104,22 @@
           <button class="panel-close" id="panel-close" aria-label="Close trend details">×</button>
         </div>
 
-        <h3 id="panel-title">—</h3>
+        <h3 id="panel-title">--</h3>
         <p class="panel-tagline" id="panel-tagline"></p>
 
         <div class="panel-meta">
-          <span class="panel-meta-item mono" id="panel-coords">—</span>
+          <span class="panel-meta-item mono" id="panel-coords">--</span>
           <span class="panel-meta-sep">·</span>
-          <span class="panel-meta-item mono" id="panel-rate">—</span>
+          <span class="panel-meta-item mono" id="panel-rate">--</span>
         </div>
 
         <!-- Mann-Kendall significance block -->
         <div class="mk-block" id="mk-block" hidden>
           <div class="mk-status-row">
-            <span class="mk-direction" id="mk-trend">—</span>
-            <span class="mk-badge" id="mk-badge">—</span>
+            <span class="mk-direction" id="mk-trend">--</span>
+            <span class="mk-badge" id="mk-badge">--</span>
           </div>
-          <p class="mk-stats-line mono" id="mk-stats-line">—</p>
+          <p class="mk-stats-line mono" id="mk-stats-line">--</p>
         </div>
 
         <div class="panel-chart-wrap">
@@ -144,23 +161,23 @@
       <div class="steps">
         <div class="step revealed">
           <div class="step-num">01</div>
-          <h3>Select the variable</h3>
-          <p>Choose from variables measured by NASA missions or produced by Earth science models — CO₂, sea level, ice mass, temperature, fire, or groundwater.</p>
+          <h3>Select the Variable</h3>
+          <p>Choose from variables measured by NASA missions or produced by Earth science models: CO2, sea level, ice mass, temperature, wildfire risk, or groundwater.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">02</div>
-          <h3>Fetch the data</h3>
-          <p>We pull live data from NOAA GML and Open-Meteo ERA5 APIs where available. When APIs are offline, curated real-measurement archives are served instead — always clearly labelled.</p>
+          <h3>Fetch the Data</h3>
+          <p>Live data is pulled from NOAA GML and Open-Meteo ERA5 APIs where available. When APIs are offline, curated real-measurement archives are served instead, always clearly labelled.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">03</div>
-          <h3>Test for significance</h3>
-          <p>The Mann-Kendall test — the non-parametric method Earth scientists use — computes S, Z, a p-value, and Sen's slope. A trend is reported <em>significant</em> only when p&nbsp;&lt;&nbsp;0.05.</p>
+          <h3>Test for Significance</h3>
+          <p>The Mann-Kendall test, the non-parametric method Earth scientists use, computes S, Z, a p-value, and Sen's slope. A trend is reported <em>significant</em> only when p &lt; 0.05.</p>
         </div>
         <div class="step revealed">
           <div class="step-num">04</div>
-          <h3>Pin it to Earth</h3>
-          <p>Every confirmed trend is anchored to the exact place where it occurs. Click anywhere on the globe to surface the regional trend at that coordinate.</p>
+          <h3>Pin It to Earth</h3>
+          <p>Every confirmed trend is anchored to the exact place where it is measured. Click anywhere on the globe to surface the regional trend at that coordinate.</p>
         </div>
       </div>
     </div>
@@ -189,12 +206,39 @@
         </div>
         <div class="about-facts">
           <div><strong>Event</strong><span>2026 NASA Space Apps Challenge</span></div>
-          <div><strong>Challenge</strong><span>Be An Earth System Trend Detective!</span></div>
-          <div><strong>Stat method</strong><span>Mann-Kendall + Sen's slope</span></div>
+          <div><strong>Challenge</strong><span>Be an Earth System Trend Detective</span></div>
+          <div><strong>Stat Method</strong><span>Mann-Kendall + Sen's slope</span></div>
           <div><strong>Questions</strong><span>What · Where · How much · Significant?</span></div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ===== AI Chat placeholder ===== -->
+  <div class="chatbot-wrap" id="chatbot-wrap" hidden>
+    <div class="chatbot-panel" id="chatbot-panel" hidden>
+      <div class="chatbot-head">
+        <div class="chatbot-head-left">
+          <p class="panel-kicker">// AI ASSISTANT</p>
+          <h3 class="chatbot-title">Earth Data Chat</h3>
+        </div>
+        <button class="panel-close" id="chatbot-close" aria-label="Close chat">×</button>
+      </div>
+      <div class="chatbot-body">
+        <div class="chatbot-placeholder">
+          <span class="chatbot-placeholder-icon">✦</span>
+          <p>Ask me anything about Earth science trends, climate data, or statistical methods.</p>
+          <span class="chatbot-coming-soon mono">AI ASSISTANT · COMING SOON</span>
+        </div>
+      </div>
+      <div class="chatbot-input-row">
+        <input class="chatbot-input" type="text" placeholder="Ask about climate trends..." disabled aria-label="Chat input" />
+        <button class="chatbot-send" disabled aria-label="Send">→</button>
+      </div>
+    </div>
+    <button class="chatbot-fab" id="chatbot-fab" aria-label="Open AI assistant" title="AI Data Assistant">
+      <span class="chatbot-fab-icon">✦</span>
+    </button>
   </div>
 
   <footer class="site-footer">
@@ -203,7 +247,7 @@
         <span class="footer-logo-mark">◎</span>
         <span class="footer-brand-name">TERRA<span>TREND</span></span>
       </div>
-      <p class="footer-desc">A NASA Space Apps 2026 project — real data from NASA &amp; NOAA Earth science missions.</p>
+      <p class="footer-desc">A NASA Space Apps 2026 project. Real data from NASA and NOAA Earth science missions.</p>
       <p class="footer-note">Not affiliated with NASA &nbsp;·&nbsp; Built with curiosity by our hackathon team</p>
     </div>
   </footer>
