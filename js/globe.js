@@ -159,6 +159,7 @@
     globeGroup.add(earthMesh);
     addAtmosphere();
     addMarkers();
+    resize(); // re-run now that markers exist so label boost applies immediately
   }
 
   // Crude stylized earth used only if the real texture can't load
@@ -708,15 +709,16 @@
       camera.position.z = CAMERA_Z;
     } else {
       // Narrow portrait phones: pull camera back so globe fits in the horizontal FOV
-      globeGroup.position.set(0, 0.4, 0);
+      globeGroup.position.set(0, 0.6, 0);
       globeGroup.scale.setScalar(0.62);
       camera.position.z = 9.5;
     }
 
     // Compensate label scale against globeGroup reduction AND camera distance change
+    // Extra 1.4× on narrow phones so labels remain readable
     const camZ  = w <= 640 ? 9.5 : CAMERA_Z;
     const glSc  = w <= 640 ? 0.62 : (w <= 1024 ? 0.85 : 1.0);
-    const labelBoost = (CAMERA_Z / camZ) / glSc;
+    const labelBoost = (CAMERA_Z / camZ) / glSc * (w <= 640 ? 1.4 : 1.0);
     markerLabels.forEach(l => {
       l.baseX = l.origX * labelBoost;
       l.baseY = l.origY * labelBoost;

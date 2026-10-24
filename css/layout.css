@@ -371,16 +371,17 @@
 }
 .scroll-hint.visible { opacity: 1; }
 .scroll-hint-arrow {
-  font-size: 1rem;
-  color: rgba(140, 150, 255, 0.5);
+  font-size: 1.1rem;
+  color: rgba(160, 170, 255, 0.85);
   display: block;
   animation: scrollBounce 1.5s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(139, 124, 255, 0.5);
 }
 .scroll-hint-label {
   font-family: var(--font-mono);
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   letter-spacing: 0.24em;
-  color: rgba(140, 150, 255, 0.55);
+  color: rgba(160, 170, 255, 0.75);
 }
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); }
