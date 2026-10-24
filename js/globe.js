@@ -288,11 +288,10 @@
         map: tex,
         transparent: true,
         depthWrite: false,
-        depthTest: false
+        depthTest: true   // globe mesh occludes labels on the back hemisphere
       })
     );
-    // keep world size in step with the canvas aspect
-    const labelWorldH = 0.16;
+    const labelWorldH = 0.14;
     sprite.scale.set((labelWorldH * c.width) / c.height, labelWorldH, 1);
     return sprite;
   }
@@ -326,12 +325,12 @@
       anchor.position.copy(pos);
 
       const glow = makeGlowSprite(spot.color);
-      glow.scale.setScalar(0.34);
+      glow.scale.setScalar(0.46);
       anchor.add(glow);
       markerGlows.push({ sprite: glow, phase: i * 1.3 });
 
       const dot = new THREE.Mesh(
-        new THREE.SphereGeometry(0.028, 12, 12),
+        new THREE.SphereGeometry(0.040, 12, 12),
         new THREE.MeshBasicMaterial({ color: spot.color })
       );
       anchor.add(dot);
@@ -343,6 +342,11 @@
       hit.userData.hotspotIndex = i;
       anchor.add(hit);
       markerHitTargets.push(hit);
+
+      // Label floats above the dot; depthTest:true occludes it when behind the globe
+      const label = makeLabelSprite(spot.name, spot.color);
+      label.position.copy(pos.clone().normalize().multiplyScalar(0.40));
+      anchor.add(label);
 
       globeGroup.add(anchor);
     });
@@ -682,7 +686,7 @@
     markerGlows.forEach(({ sprite, phase }, i) => {
       const pulse = 1 + Math.sin(t * 2.4 + phase) * 0.18;
       const boost = i === hoveredIndex ? 1.45 : 1;
-      sprite.scale.setScalar(0.34 * pulse * boost);
+      sprite.scale.setScalar(0.46 * pulse * boost);
     });
 
     updatePings(performance.now());
