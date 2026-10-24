@@ -662,7 +662,19 @@
     renderer.render(scene, camera);
   }
 
+  /* Delay full animation until after the splash is dismissed
+     so the GPU isn't competing with CSS backdrop-filter blur during load */
   if (typeof HOTSPOTS !== "undefined") {
-    animate();
+    const splashEl = document.getElementById("splash");
+    if (splashEl && !document.body.classList.contains("app-armed")) {
+      const launchBtn = document.getElementById("launch-btn");
+      if (launchBtn) {
+        launchBtn.addEventListener("click", () => requestAnimationFrame(animate), { once: true });
+      } else {
+        animate();
+      }
+    } else {
+      animate();
+    }
   }
 })();

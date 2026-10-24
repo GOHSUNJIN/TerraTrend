@@ -138,9 +138,10 @@ body {
 .nebula {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.42;
+  filter: blur(60px);
+  opacity: 0.35;
   will-change: transform;
+  transform: translateZ(0); /* own compositor layer */
 }
 .nebula-1 {
   width: 62vw; height: 62vw;
@@ -155,8 +156,8 @@ body {
   animation: auroraDrift 34s ease-in-out infinite alternate-reverse;
 }
 @keyframes auroraDrift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); filter: blur(90px); }
-  50%  { transform: translate3d(6vw, 5vw, 0) scale(1.15); }
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(6vw, 5vw, 0) scale(1.1); }
   100% { transform: translate3d(-4vw, -6vw, 0) scale(0.96); }
 }
 /* extra slow hue-wash over everything */
@@ -270,7 +271,6 @@ body {
     radial-gradient(800px 500px at 78% 82%, rgba(255, 94, 168, 0.14), transparent 65%),
     radial-gradient(700px 460px at 16% 78%, rgba(34, 224, 238, 0.12), transparent 65%),
     rgba(5, 5, 15, 0.96);
-  backdrop-filter: blur(10px);
   transition: opacity 0.7s ease, visibility 0.7s;
 }
 .splash.dismissed { opacity: 0; visibility: hidden; pointer-events: none; }
