@@ -234,7 +234,7 @@
   .splash-lede {
     text-align: center;
     font-size: 0.9rem;
-    max-width: 30ch;
+    max-width: none;
     color: var(--text-secondary);
     opacity: 0.9;
   }
@@ -250,15 +250,7 @@
   }
 
   /* Event tag below button instead of overflowing header */
-  .splash-hint {
-    display: block;
-    font-size: 0.5rem;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    opacity: 0.45;
-    text-align: center;
-    color: var(--text-tertiary);
-  }
+  .splash-hint { display: none; }
   .splash-topbar-tag { display: none; }
 }
 
