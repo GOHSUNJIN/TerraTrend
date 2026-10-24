@@ -26,8 +26,8 @@ const HOTSPOTS = [
     keyFinding: "The global ocean has risen ≈ 83 mm since 1993, a pace roughly double the 20th-century average and still accelerating.",
     whyItMatters: "Every centimetre pushes storm surge further inland. A 1 m rise by 2100 (a mid-range projection) would permanently flood the homes of 150 million people and cost trillions in infrastructure.",
     mission: "NASA/CNES TOPEX · Jason-1/2/3 · Sentinel-6 Michael Freilich",
-    image: "https://images-assets.nasa.gov/image/PIA25775/PIA25775~medium.jpg",
-    imageAlt: "Satellite record of global sea level rise, 1993-2024"
+    image: "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005611/seaLevelRise_2025.png",
+    imageAlt: "Global mean sea level rise 1993–2025 — NASA SVS"
   },{
     id: "greenland-ice",
     name: "Greenland Ice Loss",
@@ -72,8 +72,8 @@ const HOTSPOTS = [
     keyFinding: "Atmospheric CO₂ reached 421 ppm in 2023, a concentration not seen on Earth in at least 3 million years.",
     whyItMatters: "CO₂ traps outgoing infrared radiation, creating the energy imbalance that drives every other trend on this globe. The current growth rate is three times faster than in the 1960s and CO₂ persists in the atmosphere for centuries.",
     mission: "NASA OCO-2 (2014-) · OCO-3 (ISS, 2019-) · NOAA GML Mauna Loa",
-    image: "https://images-assets.nasa.gov/image/PIA23781/PIA23781~small.jpg",
-    imageAlt: "OCO-2 measurements of atmospheric carbon dioxide"
+    image: "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005115/TotalCO2_Comp_1920x1920p30_00080_print.jpg",
+    imageAlt: "Earth enveloped in CO₂ — NASA GEOS model 2021"
   },{
     id: "temp-anomaly",
     name: "Warming Anomaly",
@@ -95,8 +95,8 @@ const HOTSPOTS = [
     keyFinding: "2023 was 1.17 °C above the 1951-1980 average, the warmest year in the instrument record, which now stretches back to the 1880s.",
     whyItMatters: "The Paris Agreement target of 1.5 °C is now years, not decades, away. Beyond it, coral bleaching, permafrost thaw and ice-sheet instability accelerate sharply and some effects become locked in for centuries.",
     mission: "NASA GISS GISTEMP v4 · NOAA GlobalTemp · AIRS (Aqua satellite)",
-    image: "https://images-assets.nasa.gov/image/PIA24139/PIA24139~small.jpg",
-    imageAlt: "Global temperature anomalies measured by AIRS"
+    image: "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005207/2023GISTEMP_Map.00899_print.jpg",
+    imageAlt: "Global temperature anomalies 2023 — NASA GISTEMP"
   },{
     id: "wildfire",
     name: "Wildfire Intensity",
@@ -118,8 +118,8 @@ const HOTSPOTS = [
     keyFinding: "The 2019 Amazon fire season produced a Fire Radiative Power index 95% above the 2000 baseline, the highest single-year value in the record.",
     whyItMatters: "Wildfires release decades of stored carbon in days, blanket cities in toxic smoke and create a feedback: burned land absorbs more heat, drying vegetation further and raising risk for the next season.",
     mission: "NASA Terra / Aqua MODIS · Suomi-NPP / NOAA-20 VIIRS",
-    image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001621/GSFC_20171208_Archive_e001621~small.jpg",
-    imageAlt: "NASA satellite view of the Mustang Complex Fires"
+    image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/151000/151965/amazonfires_tmo_2023284.jpg",
+    imageAlt: "Smoke blankets the Amazon near Manaus, October 2023 — NASA MODIS"
   },{
     id: "groundwater",
     name: "Groundwater Decline",
@@ -164,8 +164,8 @@ const HOTSPOTS = [
     keyFinding: "Arctic summer sea ice has shrunk by ≈ 3.6 million km² since 1979, an area larger than India gone from the map each September.",
     whyItMatters: "Sea ice reflects 80% of sunlight back to space. As it disappears, dark ocean water absorbs that heat instead, a feedback that makes the Arctic warm 4x faster than the global average and disrupts mid-latitude weather patterns.",
     mission: "NASA Aqua / AMSR-E · JAXA GCOM-W / AMSR2 · NSIDC passive microwave",
-    image: "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/152000/152596/arctic_nsidc_202474.jpg",
-    imageAlt: "Arctic sea ice extent satellite image, March 2024 — NASA/NSIDC"
+    image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/153000/153457/arctic_nsidc_20240911.jpg",
+    imageAlt: "Arctic sea ice September 2024 minimum vs 1981–2010 median — NASA/NSIDC"
   },{
     id: "ocean-heat",
     name: "Ocean Heat",
@@ -187,7 +187,7 @@ const HOTSPOTS = [
     keyFinding: "The upper ocean has absorbed an extra 41 ZJ since 1993, roughly equivalent to five Hiroshima-scale detonations per second for 30 continuous years.",
     whyItMatters: "A warmer ocean fuels more intense hurricanes, bleaches coral reefs and melts ice shelves from below. It is also a heat time-bomb: energy stored today commits future generations to further warming, even if all emissions stopped tomorrow.",
     mission: "NOAA NCEI · Argo Float Network · NASA Aquarius / SAC-D",
-    image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001621/GSFC_20171208_Archive_e001621~small.jpg",
-    imageAlt: "Failed to load image"
+    image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/151000/151743/ssta_mur_2023233.jpg",
+    imageAlt: "Global sea surface temperature anomaly, August 2023 — NASA MUR SST"
   }
 ];
