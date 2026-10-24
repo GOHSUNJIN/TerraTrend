@@ -11,7 +11,7 @@
 
 /* ---------- Steps: numbered timeline ---------- */
 /* NOTE: use a number, not color, to carry the ordinal - one thing
-   earns its place (simplicity), and the glyph is pure decoration. */
+   earns its place (simplicity) and the glyph is pure decoration. */
 .steps {
   display: grid;
   grid-template-columns: 1fr 1fr;

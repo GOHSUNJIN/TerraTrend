@@ -13,7 +13,7 @@ const HOTSPOTS = [
     lon: -75.0,
     color: 0x2fa8ff,
     shortVal: "+4.5 mm/yr",
-    tagline: "The ocean is climbing, and it isn't stopping.",
+    tagline: "The ocean is climbing and it isn't stopping.",
     what: "Global mean sea level",
     where: "Global; fastest near the tropical western Pacific & Caribbean",
     rate: "≈ +4.5 mm per year (and accelerating)",

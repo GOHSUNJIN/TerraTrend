@@ -435,7 +435,7 @@
 
   /* Reposition auto-tour button above the bottom dock */
   .auto-tour-btn {
-    bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(104px + env(safe-area-inset-bottom, 0px));
     font-size: 0.65rem;
     padding: 7px 16px;
     letter-spacing: 0.14em;

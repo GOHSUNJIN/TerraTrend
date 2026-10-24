@@ -202,7 +202,7 @@
     gap: 0;
   }
 
-  /* Hide desktop top-bar — header logo already identifies the brand */
+  /* Hide desktop top-bar: header logo already identifies the brand */
   .splash-topbar  { display: none; }
   .splash-rule    { display: none; }
 

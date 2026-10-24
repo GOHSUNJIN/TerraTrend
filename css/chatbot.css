@@ -193,16 +193,19 @@
 }
 .chatbot-send svg { stroke: currentColor; }
 
-/* ── Mobile: FAB only, floats above the bottom dock ──────────── */
+/* Mobile: FAB floats above the dock; panel slides up when opened */
 /* MUST be last so it wins over the base bottom/top/right above  */
 @media (max-width: 900px) {
   .chatbot-wrap {
     top: auto;
-    bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(104px + env(safe-area-inset-bottom, 0px));
     right: 14px;
   }
-  /* Hide slide-up panel on mobile — FAB only */
-  .chatbot-panel { display: none !important; }
+  /* Give panel a usable fixed height on mobile so it can open */
+  .chatbot-panel {
+    flex: none;
+    height: min(380px, calc(100dvh - 220px - env(safe-area-inset-bottom, 0px)));
+  }
   /* Hide FAB when the info panel is open */
   .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
 }

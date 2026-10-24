@@ -422,7 +422,7 @@
   }
   .info-panel.visible { transform: none; }
 
-  /* No photo or dark overlay on mobile — too noisy on a small sheet */
+  /* No photo or dark overlay on mobile: too noisy on a small sheet */
   .panel-banner-photo,
   .panel-banner-overlay { display: none; }
 
@@ -443,11 +443,28 @@
     position: static;
     padding: 0 0 14px;
   }
-  /* Text-shadows were for legibility over images — not needed without them */
-  .info-panel h3 { font-size: 1.05rem; text-shadow: none; }
-  .panel-tagline  { text-shadow: none; }
+  /* Text-shadows were for legibility over images, not needed without them */
+  .info-panel h3 { font-size: 1.1rem; text-shadow: none; }
+  .panel-tagline  { text-shadow: none; font-size: 0.8rem; }
 
-  .panel-body { padding: 12px 14px 16px; gap: 11px; }
+  /* Colored top accent strip keyed to the active variable */
+  .info-panel {
+    border-top: 2px solid color-mix(in srgb, var(--spot-col, var(--accent)) 80%, transparent);
+  }
+  .panel-banner {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--spot-col, var(--accent)) 10%, rgba(4, 5, 16, 0)),
+      transparent 100%
+    );
+    padding-bottom: 8px;
+  }
+  .panel-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+  }
+
+  .panel-body { padding: 12px 14px 16px; gap: 12px; }
   .panel-close { width: 36px; height: 36px; }
   .panel-nav-btn { width: 40px; height: 38px; }
 }

@@ -30,7 +30,7 @@
    foundations (accessibility, color, typography, layout, writing, craft).
    Native Apple navigation components (tab bars, toolbars, sheets, Liquid Glass)
    do not apply to a web page; they are translated to web patterns below. */
-  /* Apple design tokens: color, type, layout, and craft */
+  /* Apple design tokens: color, type, layout and craft */
   --bg: #04040b;
   --surface: rgba(9, 10, 24, 0.88);
   --surface-elevated: rgba(11, 12, 28, 0.96);
@@ -97,7 +97,7 @@ body {
 }
 body:not(.app-armed) { overflow: hidden; }
 
-/* Mobile: lock the viewport — the app is a single full-screen experience */
+/* Mobile: lock the viewport: the app is a single full-screen experience */
 @media (max-width: 900px) {
   html, body { height: 100%; overflow: hidden; }
 }

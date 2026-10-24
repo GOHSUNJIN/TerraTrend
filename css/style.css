@@ -33,7 +33,7 @@
    foundations (accessibility, color, typography, layout, writing, craft).
    Native Apple navigation components (tab bars, toolbars, sheets, Liquid Glass)
    do not apply to a web page; they are translated to web patterns below. */
-  /* Apple design tokens: color, type, layout, and craft */
+  /* Apple design tokens: color, type, layout and craft */
   --bg: #04040b;
   --surface: rgba(9, 10, 24, 0.88);
   --surface-elevated: rgba(11, 12, 28, 0.96);
@@ -1276,7 +1276,7 @@ body:not(.app-armed) { overflow: hidden; }
 
 /* ---------- Steps: numbered timeline ---------- */
 /* NOTE: in SkyLight, use a number, not color, to carry the ordinal â€” one thing
-   earns its place (simplicity), and the glyph is pure decoration. */
+   earns its place (simplicity) and the glyph is pure decoration. */
 .steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

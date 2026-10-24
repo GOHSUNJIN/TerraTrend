@@ -35,7 +35,7 @@ const REGION_ZONES = [
     significance: "YES; strongest land-sea contrast on Earth",
     tone: "yes",
     description:
-      "Every summer the Arctic cap shrinks, and the summer minimum has fallen dramatically since satellite records began in 1979. Older, thicker multi-year ice is being replaced by thin seasonal ice that melts more easily, a reinforcing loop.",
+      "Every summer the Arctic cap shrinks and the summer minimum has fallen dramatically since satellite records began in 1979. Older, thicker multi-year ice is being replaced by thin seasonal ice that melts more easily, a reinforcing loop.",
     source: "NASA NSIDC · passive microwave record"
   },
   {
@@ -250,7 +250,7 @@ const REGION_ZONES = [
     significance: "YES; fastest-disappearing glaciers on Earth by area fraction",
     tone: "yes",
     description:
-      "The Andes hold over 99% of the world's tropical glaciers, and NASA ICESat-2 surveys show them in near-freefall. Bolivia's Chacaltaya glacier, once a ski resort, vanished entirely in 2009. These glaciers regulate dry-season water for millions; when they disappear, the dry season has no buffer.",
+      "The Andes hold over 99% of the world's tropical glaciers and NASA ICESat-2 surveys show them in near-freefall. Bolivia's Chacaltaya glacier, once a ski resort, vanished entirely in 2009. These glaciers regulate dry-season water for millions; when they disappear, the dry season has no buffer.",
     source: "NASA ICESat-2 · GRACE-FO · Landsat"
   },
   {
@@ -280,7 +280,7 @@ const REGION_ZONES = [
     significance: "YES; the largest man-made environmental disaster ever recorded from space",
     tone: "yes",
     description:
-      "Soviet-era irrigation canals diverted the Amu Darya and Syr Darya rivers away from the Aral Sea, and NASA Landsat documented the result decade by decade: one of the world's four largest lakes reduced to a series of toxic, hyper-saline remnants. The exposed lake bed is now a salt desert spreading dust across Central Asia.",
+      "Soviet-era irrigation canals diverted the Amu Darya and Syr Darya rivers away from the Aral Sea and NASA Landsat documented the result decade by decade: one of the world's four largest lakes reduced to a series of toxic, hyper-saline remnants. The exposed lake bed is now a salt desert spreading dust across Central Asia.",
     source: "NASA Landsat · MODIS"
   },
   {
@@ -295,7 +295,7 @@ const REGION_ZONES = [
     significance: "YES; warming clear; link to storm intensification significant",
     tone: "yes",
     description:
-      "The Bay of Bengal is one of the world's most deadly tropical cyclone basins, and a warmer sea surface gives storms more energy. NASA GPM measures rainfall inside cyclones in real time while MODIS tracks the warm core. Cyclone Fani (2019) and Amphan (2020) both rapidly intensified over anomalously warm water before making landfall.",
+      "The Bay of Bengal is one of the world's most deadly tropical cyclone basins and a warmer sea surface gives storms more energy. NASA GPM measures rainfall inside cyclones in real time while MODIS tracks the warm core. Cyclone Fani (2019) and Amphan (2020) both rapidly intensified over anomalously warm water before making landfall.",
     source: "NASA GPM · MODIS SST · Jason-3"
   },
   {

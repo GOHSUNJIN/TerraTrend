@@ -102,9 +102,6 @@ load(spot) tries live API
       v
 Live success  -->  panel upgrades silently, badge shows LIVE DATA
 Live failure  -->  stays on archive, badge shows ARCHIVED DATA
-      |
-      v
-Auto-tour: 12s idle -> 3s countdown warning -> cycles all 8 hotspots
 ```
 
 ---
@@ -139,7 +136,7 @@ Auto-tour: 12s idle -> 3s countdown warning -> cycles all 8 hotspots
 
 - **3D interactive globe** - Three.js r160, drag/spin, arrow-key navigation, auto-spin with snap-back
 - **Pulsing hotspot labels** - sprite labels breathe with a sine-wave scale animation
-- **Auto-tour with countdown** - idles for 12s, shows a 3s warning, then cycles all 8 hotspots at 8s intervals; any interaction resets the timer
+- **Auto-tour** - cycles all 8 hotspots at 8s intervals when triggered manually via the tour button; any interaction stops the tour
 - **URL deep-linking** - share any hotspot with `?spot=co2`, `?spot=arctic-ice`, etc.
 - **Mann-Kendall significance** - non-parametric trend test with S, Z, p-value and Sen's slope; plain-language summary alongside the statistics
 - **Two-stage data loading** - archived JSON opens instantly, live API upgrades silently if available

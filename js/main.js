@@ -103,14 +103,6 @@
         }
       }, 1800);
       setTimeout(showOnboardingHint, 2800);
-      // Warn 3s before auto-tour starts, then launch at 15s
-      if (!getSpotFromURL()) {
-        autoTourPreTimer = setTimeout(() => {
-          const btn = document.getElementById("auto-tour-btn");
-          if (btn) { btn.classList.add("pending"); btn.textContent = "TOUR IN 3S…"; }
-          autoTourPreTimer = setTimeout(startAutoTour, 3000);
-        }, 12000);
-      }
     });
   }
 
@@ -352,6 +344,7 @@
       clearTimeout(panel._hideTimer);
       panel.classList.remove("hidden");
       void panel.offsetWidth;
+      panel.style.setProperty("--spot-col", hex(spot.color));
       panel.classList.add("visible");
       setTimeout(() => els.close?.focus(), 350);
 
