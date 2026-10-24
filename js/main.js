@@ -395,38 +395,40 @@
       // Update variable selector pill
       if (panelIndex >= 0) activatePill(spot, panelIndex);
 
-      // Load real data asynchronously
+      const col = hex(spot.color);
+
+      function applyData(data, upgrading) {
+        if (!data) return;
+        if (data.mkResult?.senSlope !== undefined) {
+          const s = data.mkResult.senSlope;
+          els.rate.textContent = (s >= 0 ? "+" : "") + s.toFixed(3) + " " + (data.unit || "") + " / yr (Sen's slope)";
+        } else {
+          els.rate.textContent = spot.rate;
+        }
+        els.source.textContent = "DATA: " + data.source;
+        setDataBadge(data.isLive, data.source);
+        renderMK(data.mkResult, col);
+        if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend series";
+        if (data.series?.length > 0) drawChart(data.series, col, data.unit);
+      }
+
       if (window.TerraTrendData) {
-        if (dataBadge) { dataBadge.hidden = false; dataBadgeLabel.textContent = "LOADING…"; dataBadge.className = "data-badge loading"; }
         if (mkBlock) mkBlock.hidden = true;
 
-        try {
-          const data = await window.TerraTrendData.load(spot);
-          const col  = hex(spot.color);
-
-          // Update rate from Sen's slope if available
-          if (data.mkResult && data.mkResult.senSlope !== undefined) {
-            const slope = data.mkResult.senSlope;
-            const slopeStr = (slope >= 0 ? "+" : "") + slope.toFixed(3) + " " + (data.unit || "") + " / yr (Sen's slope)";
-            els.rate.textContent = slopeStr;
-          } else {
-            els.rate.textContent = spot.rate;
-          }
-
-          els.source.textContent = "DATA: " + data.source;
-          setDataBadge(data.isLive, data.source);
-          renderMK(data.mkResult, col);
-
-          if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend series";
-          if (data.series && data.series.length > 0) {
-            drawChart(data.series, col, data.unit);
-          }
-
-        } catch (err) {
-          els.rate.textContent   = spot.rate;
-          els.source.textContent = "DATA: " + spot.source;
-          if (dataBadge) dataBadge.hidden = true;
+        // Step 1: show curated data instantly (no waiting)
+        const fast = await window.TerraTrendData.loadCurated(spot);
+        if (fast) {
+          applyData(fast, false);
+          if (dataBadge) { dataBadge.hidden = false; dataBadgeLabel.textContent = "CHECKING…"; dataBadge.className = "data-badge loading"; }
         }
+
+        // Step 2: try live source in background, upgrade if it succeeds
+        window.TerraTrendData.load(spot).then(live => {
+          if (live?.isLive) applyData(live, true);
+          else if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
+        }).catch(() => {
+          if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
+        });
       } else {
         els.rate.textContent   = spot.rate;
         els.source.textContent = "DATA: " + spot.source;
