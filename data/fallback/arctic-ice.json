@@ -1,7 +1,7 @@
 {
   "unit": "M km²",
   "label": "Sea ice extent (million km²)",
-  "source": "NASA NSIDC · AMSR-E (Aqua) · AMSR2 (GCOM-W) – September minimum",
+  "source": "NASA NSIDC · AMSR-E (Aqua) · AMSR2 (GCOM-W) - September minimum",
   "series": [
     {"year":1979,"value":7.05},{"year":1980,"value":7.68},
     {"year":1981,"value":7.20},{"year":1982,"value":7.31},

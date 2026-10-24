@@ -28,7 +28,7 @@ const HOTSPOTS = [
     whyItMatters: "Every centimetre pushes storm surge further inland. A 1 m rise by 2100 (a mid-range projection) would permanently flood the homes of 150 million people and cost trillions in infrastructure.",
     mission: "NASA/CNES TOPEX · Jason-1/2/3 · Sentinel-6 Michael Freilich",
     image: "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005611/seaLevelRise_2025.png",
-    imageAlt: "Global mean sea level rise 1993–2025 - NASA SVS"
+    imageAlt: "Global mean sea level rise 1993-2025 - NASA SVS"
   },{
     id: "greenland-ice",
     name: "Greenland Ice Loss",
@@ -172,7 +172,7 @@ const HOTSPOTS = [
     whyItMatters: "Sea ice reflects 80% of sunlight back to space. As it disappears, dark ocean water absorbs that heat instead, a feedback that makes the Arctic warm 4x faster than the global average and disrupts mid-latitude weather patterns.",
     mission: "NASA Aqua / AMSR-E · JAXA GCOM-W / AMSR2 · NSIDC passive microwave",
     image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/153000/153457/arctic_nsidc_20240911.jpg",
-    imageAlt: "Arctic sea ice September 2024 minimum vs 1981–2010 median - NASA/NSIDC"
+    imageAlt: "Arctic sea ice September 2024 minimum vs 1981-2010 median - NASA/NSIDC"
   },{
     id: "ocean-heat",
     name: "Ocean Heat",

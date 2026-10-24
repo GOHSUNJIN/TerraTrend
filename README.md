@@ -1,12 +1,23 @@
 # TerraTrend - Earth System Trend Detective
 
-**2026 NASA Space Apps Challenge** - Challenge: *Be an Earth System Trend Detective*
+**NASA Space Apps Challenge 2026** — *Be an Earth System Trend Detective*
 
-> Select a variable. Spin the globe. Discover what is changing, where, how much and whether it is statistically significant.
+> Select a variable. Spin the globe. Discover what is changing, where, by how much and whether it is statistically significant.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-terratrend2.vercel.app-8b7cff?style=flat-square)](https://terratrend2.vercel.app)
 [![NASA Space Apps](https://img.shields.io/badge/NASA%20Space%20Apps-2026-22e0ee?style=flat-square)](https://www.spaceappschallenge.org/)
-[![Static Site](https://img.shields.io/badge/Stack-Vanilla%20JS%20%2B%20Three.js-ff6fb5?style=flat-square)](#technology)
+[![Stack](https://img.shields.io/badge/Stack-Vanilla%20JS%20%2B%20Three.js-ff6fb5?style=flat-square)](#technology)
+
+---
+
+## Team
+
+| Role | Name | LinkedIn |
+|------|------|----------|
+| Developer | Goh Sun Jin | [linkedin.com/in/gohsunjin](https://www.linkedin.com/in/gohsunjin) |
+| Developer | Prabhakaran Ritish | [linkedin.com/in/prabhakaran-ritish-45286921a](https://www.linkedin.com/in/prabhakaran-ritish-45286921a) |
+
+*The Data Detectives — NASA Space Apps 2026*
 
 ---
 
@@ -86,7 +97,7 @@ User clicks Launch
 Globe initialises  (Three.js WebGL or Canvas 2D fallback)
       |
       v
-URL deep-link checked  -->  if ?spot=X, open that hotspot first
+URL deep-link checked  -->  if ?spot=X open that hotspot first
       |
       v
 loadCurated(spot)  -->  instant open: archived JSON from /data/fallback/
@@ -134,24 +145,22 @@ Live failure  -->  stays on archive, badge shows ARCHIVED DATA
 
 ## Features
 
-- **3D interactive globe** - Three.js r160, drag/spin, arrow-key navigation, auto-spin with snap-back
-- **Pulsing hotspot labels** - sprite labels breathe with a sine-wave scale animation
-- **Auto-tour** - cycles all 8 hotspots at 8s intervals when triggered manually via the tour button; any interaction stops the tour
+- **3D interactive globe** - Three.js r160, drag to spin, arrow-key navigation, auto-spin with snap-back
+- **Pulsing hotspot labels** - sprite labels breathe with a sine-wave scale animation; clicking any label opens its case file
+- **Auto-tour** - cycles all 8 hotspots at 8s intervals when triggered manually; any interaction stops the tour
 - **URL deep-linking** - share any hotspot with `?spot=co2`, `?spot=arctic-ice`, etc.
 - **Mann-Kendall significance** - non-parametric trend test with S, Z, p-value and Sen's slope; plain-language summary alongside the statistics
 - **Two-stage data loading** - archived JSON opens instantly, live API upgrades silently if available
 - **NASA satellite imagery** - real mission photograph in every case-file panel
-- **Cinematic panel** - banner photo, key finding callout, "Why It Matters" section, source link, mission tag
+- **Cinematic panel** - banner photo, key finding callout, "Why It Matters" section, source link and mission tag
 - **Interactive chart** - hover to read any year's exact value; linear regression overlay; total-change annotation; unit label
-- **Rate pill on hover** - Sen's slope or quoted rate appears under variable name on hover or when active
-- **Explore tracker** - progress bar and "INVESTIGATED X/8" counter; viewed pills get a cyan ring; completion toast fires when all 8 are opened
+- **Explore tracker** - progress counter and viewed-pill indicator; completion toast fires exactly once when all 8 are opened
 - **Clickable source links** - data attribution links directly to the source dataset
-- **Panel stagger animation** - each section slides in sequentially when a hotspot is opened
-- **Onboarding hint** - one-per-session arrow prompts new users to pick a variable
+- **Panel navigation** - prev/next arrows cycle all 8 variables and auto-scroll to the top on each change
 - **20 clickable surface zones** - click anywhere on the globe for a regional trend story
 - **WebGL fallback** - orthographic 2D canvas globe when WebGL is unavailable
-- **Responsive** - mobile horizontal pill bar (icon-only), bottom-anchored panel, modal stack collapse
-- **AI assistant slot** - chatbot FAB wired and ready for Claude API integration
+- **Responsive** - mobile horizontal pill bar (icon-only), panel floats above dock, chatbot hides while info panel is open
+- **Earth AI assistant** *(work in progress)* - chatbot slot wired and ready for Claude API integration
 
 ---
 
@@ -164,7 +173,7 @@ Live failure  -->  stays on archive, badge shows ARCHIVED DATA
 - **NOAA GML** - live Mauna Loa CO2 CSV
 - **Vanilla JS** - zero build step, zero runtime dependencies beyond Three.js
 
-### Performance choices
+### Performance Choices
 
 | Problem | Solution |
 |---------|---------|
@@ -182,9 +191,9 @@ Live failure  -->  stays on archive, badge shows ARCHIVED DATA
 ```
 TerraTrend/
 +-- index.html                  Single-page app shell
-+-- favicon.svg                 SVG favicon (brand mark)
++-- favicon.svg                 SVG favicon
 +-- css/
-|   +-- base.css                Variables, fonts, resets, .mono, .accent
+|   +-- base.css                Variables, fonts, resets
 |   +-- layout.css              Background, header, app structure, footer
 |   +-- splash.css              Splash screen and launch button
 |   +-- globe.css               Globe canvas, tooltip, fallback card
@@ -200,7 +209,7 @@ TerraTrend/
 |   +-- nasa-data.js            Live API + fallback JSON data layer
 |   +-- chart.js                Interactive canvas chart (TerraTrendChart)
 |   +-- globe-2d.js             Canvas 2D globe (WebGL fallback)
-|   +-- globe.js                Three.js 3D globe (label pulse, snap-back)
+|   +-- globe.js                Three.js 3D globe (label pulse, snap-back, raycasting)
 |   +-- main.js                 UI wiring: pills, panel, ticker, modals, explore tracker
 |   +-- vendor/
 |       +-- three.min.js        Three.js r160 (self-hosted)
@@ -214,6 +223,8 @@ TerraTrend/
 |       +-- wildfire.json       ERA5 Amazon 2000-2023
 |       +-- arctic-ice.json     NSIDC September extent 1979-2023
 |       +-- ocean-heat.json     NOAA/Argo OHC 1993-2023
++-- docs/
+|   +-- screenshots/            Project screenshots
 +-- fonts/                      Self-hosted woff2
     +-- SpaceGrotesk-latin.woff2
     +-- IBMPlexMono-400-latin.woff2
@@ -243,18 +254,12 @@ npx serve .
 
 ## What's Next
 
-- **Earth AI assistant** - chatbot slot wired and ready for Claude API integration to explain trends in plain language
+- **Earth AI assistant** - chatbot integration with the Claude API to explain trends in plain language *(in progress)*
 - **Animation playback** - scrub through years to watch trends evolve spatially
 - **Custom region upload** - bring your own CSV and run Mann-Kendall on the spot
 
 ---
 
-## Team
-
-Built for the **2026 NASA Space Apps Challenge** by **Ritish & Sun Jin** - The Data Detectives.
-
-Real NASA and NOAA Earth science data throughout.
-
-*Not affiliated with NASA. Built with curiosity.*
+*Not affiliated with NASA. Built with curiosity and real Earth science data.*
 
 **Live Demo:** https://terratrend2.vercel.app

@@ -1,7 +1,7 @@
 {
   "unit": "cm weq",
   "label": "Groundwater (cm water-equivalent)",
-  "source": "NASA GRACE-FO – Terrestrial Water Storage Anomaly, NW India",
+  "source": "NASA GRACE-FO - Terrestrial Water Storage Anomaly, NW India",
   "series": [
     {"year":2002,"value":0},    {"year":2003,"value":-1.5},
     {"year":2004,"value":-3.2}, {"year":2005,"value":-4.7},

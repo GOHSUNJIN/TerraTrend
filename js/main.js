@@ -292,9 +292,6 @@
     findingText:   document.getElementById("finding-text"),
     whyMatters:    document.getElementById("why-matters"),
     whyMattersText:document.getElementById("why-matters-text"),
-    what:          document.getElementById("panel-what"),
-    where:         document.getElementById("panel-where"),
-    whatWhere:     document.getElementById("panel-what-where"),
     photoWrap:     document.getElementById("panel-photo-wrap"),
     photo:         document.getElementById("panel-photo"),
     chartDelta:    document.getElementById("chart-delta")
@@ -325,9 +322,6 @@
       if (els.findingText && spot.keyFinding)   els.findingText.textContent   = spot.keyFinding;
       if (els.whyMatters) els.whyMatters.hidden = !spot.whyItMatters;
       if (els.whyMattersText && spot.whyItMatters) els.whyMattersText.textContent = spot.whyItMatters;
-      if (els.what)  els.what.textContent  = spot.what  || "";
-      if (els.where) els.where.textContent = spot.where || "";
-      if (els.whatWhere) els.whatWhere.hidden = true;
       if (els.photo && els.photoWrap) {
         if (spot.image) {
           els.photo.src = spot.image;

@@ -1,7 +1,7 @@
 {
   "unit": "ppm",
   "label": "CO₂ (ppm)",
-  "source": "NOAA Global Monitoring Laboratory – Mauna Loa Observatory",
+  "source": "NOAA Global Monitoring Laboratory - Mauna Loa Observatory",
   "series": [
     {"year":1960,"value":316.91},{"year":1961,"value":317.64},
     {"year":1962,"value":318.45},{"year":1963,"value":318.99},

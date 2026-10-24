@@ -1,7 +1,7 @@
 {
   "unit": "mm",
   "label": "Sea level (mm above 1993 mean)",
-  "source": "NASA/CNES Satellite Altimetry – TOPEX/Poseidon · Jason-1/2/3 · Sentinel-6",
+  "source": "NASA/CNES Satellite Altimetry - TOPEX/Poseidon · Jason-1/2/3 · Sentinel-6",
   "series": [
     {"year":1993,"value":0.0},{"year":1994,"value":3.8},
     {"year":1995,"value":6.1},{"year":1996,"value":6.5},

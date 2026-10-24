@@ -1,7 +1,7 @@
 {
   "unit": "Gt",
   "label": "Ice mass (Gt relative to 2002)",
-  "source": "NASA GRACE / GRACE-FO – Greenland Ice Sheet Mass Balance",
+  "source": "NASA GRACE / GRACE-FO - Greenland Ice Sheet Mass Balance",
   "series": [
     {"year":2002,"value":0},    {"year":2003,"value":-100},
     {"year":2004,"value":-220}, {"year":2005,"value":-330},

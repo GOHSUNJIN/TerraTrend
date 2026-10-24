@@ -306,7 +306,7 @@ const REGION_ZONES = [
     color: 0xa0d8ef,
     what: "Fjord glacier mass & sea ice extent",
     where: "Norway, Svalbard & the Barents Sea",
-    rate: "Most Norwegian glaciers retreating 10–50 m/yr; Svalbard warming 5x global average",
+    rate: "Most Norwegian glaciers retreating 10-50 m/yr; Svalbard warming 5x global average",
     significance: "YES; consistent retreat and record sea ice losses",
     tone: "yes",
     description:

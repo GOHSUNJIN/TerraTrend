@@ -1,7 +1,7 @@
 {
   "unit": "ZJ",
   "label": "Ocean heat content (ZJ)",
-  "source": "NOAA NCEI Ocean Heat Content / Argo Float Network – upper 700 m anomaly vs 1981–2010",
+  "source": "NOAA NCEI Ocean Heat Content / Argo Float Network - upper 700 m anomaly vs 1981-2010",
   "series": [
     {"year":1993,"value":4.2},{"year":1994,"value":4.8},
     {"year":1995,"value":5.1},{"year":1996,"value":6.0},
