@@ -163,6 +163,12 @@
       if (headerTools) headerTools.hidden = false;
       const chatWrap = document.getElementById("chatbot-wrap");
       if (chatWrap) chatWrap.hidden = false;
+      setTimeout(() => {
+        if (typeof HOTSPOTS !== "undefined" && HOTSPOTS.length) {
+          flyToHotspot(HOTSPOTS[0]);
+          window.TerraTrendUI.openPanel(HOTSPOTS[0]);
+        }
+      }, 1800);
     });
   }
 
@@ -180,7 +186,7 @@
       pill.style.setProperty("--pill-col", hex(spot.color));
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
-        `<span class="pill-name">${spot.name}</span>` +
+        `<span class="pill-text"><span class="pill-name">${spot.name}</span><span class="pill-rate">${shortRate(spot.rate)}</span></span>` +
         `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
         activatePill(spot, i);
@@ -301,6 +307,7 @@
       panel.classList.remove("hidden");
       panel.classList.add("visible");
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.pause();
+      document.getElementById("chatbot-wrap")?.classList.add("panel-open");
 
       panelIndex = HOTSPOTS.indexOf(spot);
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
@@ -317,6 +324,7 @@
         if (data.mkResult?.senSlope !== undefined) {
           const s = data.mkResult.senSlope;
           els.rate.textContent = (s >= 0 ? "+" : "") + s.toFixed(3) + " " + (data.unit || "") + " / yr (Sen's slope)";
+          if (data.isLive) updateTickerItem(spot.id, s, data.unit || "", data.mkResult.trend || spot.trend);
         } else {
           els.rate.textContent = spot.rate;
         }
@@ -355,6 +363,7 @@
       panel.classList.remove("visible");
       panel.classList.add("hidden");
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.resume();
+      document.getElementById("chatbot-wrap")?.classList.remove("panel-open");
     }
   };
 
@@ -391,13 +400,23 @@
     const items = HOTSPOTS.map(s => {
       const dir = s.trend === "up" ? "▲" : s.trend === "down" ? "▼" : "◇";
       const cls = s.trend === "down" ? "down" : s.trend === "mixed" ? "mixed" : "up";
-      return `<span class="ticker-item"><span class="ticker-icon">${s.icon}</span>${s.name.toUpperCase()}<b class="${cls}">${dir} ${shortRate(s.rate).toUpperCase()}</b></span>`;
+      return `<span class="ticker-item" data-ticker-id="${s.id}"><span class="ticker-icon">${s.icon}</span>${s.name.toUpperCase()}<b class="${cls}">${dir} ${shortRate(s.rate).toUpperCase()}</b></span>`;
     });
     const half = document.createElement("div");
     half.className = "ticker-half";
     half.innerHTML = items.join("");
     tickerTrack.appendChild(half.cloneNode(true));
     tickerTrack.appendChild(half.cloneNode(true));
+  }
+
+  function updateTickerItem(id, senSlope, unit, trend) {
+    const dir = trend === "up" ? "▲" : trend === "down" ? "▼" : "◇";
+    const cls = trend === "down" ? "down" : trend === "mixed" ? "mixed" : "up";
+    const val = (senSlope >= 0 ? "+" : "") + Math.abs(senSlope).toFixed(2) + (unit ? " " + unit.toUpperCase() : "");
+    document.querySelectorAll(`.ticker-item[data-ticker-id="${id}"] b`).forEach(b => {
+      b.className = cls;
+      b.textContent = dir + " " + val + " / YR";
+    });
   }
 
   // ---------- Scroll reveals ----------

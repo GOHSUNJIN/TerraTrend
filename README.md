@@ -1,73 +1,220 @@
-# TerraTrend — Earth System Trend Detective
+# ◎ TerraTrend — Earth System Trend Detective
 
-An interactive 3D Earth visualization revealing significant trends in NASA Earth system data.
+**2026 NASA Space Apps Challenge** · Challenge: *Be an Earth System Trend Detective*
 
-## Overview
+> Select a variable. Spin the globe. Discover what is changing, where, how much, and whether it is statistically significant.
 
-TerraTrend lets you explore key environmental trends — sea level rise, ice sheet loss, CO₂ accumulation, global temperature anomalies, wildfire intensity, and groundwater decline — pinned to real-world locations on a globe. Each "case file" provides what's changing, where, how fast, and whether the trend is statistically significant.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-terratrend.vercel.app-8b7cff?style=flat-square)](https://terratrend.vercel.app)
+[![NASA Space Apps](https://img.shields.io/badge/NASA%20Space%20Apps-2026-22e0ee?style=flat-square)](https://www.spaceappschallenge.org/)
+[![Static Site](https://img.shields.io/badge/Stack-Vanilla%20JS%20%2B%20Three.js-ff6fb5?style=flat-square)](#technology)
+
+---
+
+## The Challenge
+
+The 2026 NASA Space Apps Challenge asks: *what is changing on Earth, where is it happening, how much is it changing, and is it statistically significant?*
+
+TerraTrend answers those four questions at once — by pulling real NASA and NOAA measurements, running the Mann-Kendall non-parametric trend test on each time series, and pinning every statistically significant result to the exact location on a 3D globe where it was recorded.
+
+---
 
 ## Screenshots
 
-### Web
-
 <p align="center">
-  <img src="docs/screenshots/splash.png" alt="Liquid-launch splash screen" width="45%" />
+  <img src="docs/screenshots/splash.png" alt="Launch splash screen" width="45%" />
   <img src="docs/screenshots/globe.png" alt="Interactive 3D globe" width="45%" />
 </p>
-<p align="center">
-  <img src="docs/screenshots/case-files.png" alt="Case-file hotspot cards" width="70%" />
-</p>
 
-### Mobile
+---
 
-<p align="center">
-  <img src="docs/screenshots/mobile-globe.png" alt="Mobile layout" width="22%" />
-</p>
+## Architecture
 
-## Data Themes
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        TerraTrend  ◎                           │
+│                     (Static Web App)                            │
+└─────────────────┬───────────────────────────┬───────────────────┘
+                  │                           │
+        ┌─────────▼─────────┐     ┌───────────▼───────────┐
+        │   Data Layer       │     │   Rendering Layer      │
+        │  (nasa-data.js)    │     │   (globe.js / globe-   │
+        │                   │     │    2d.js + Three.js)    │
+        │ ┌───────────────┐ │     │                        │
+        │ │  Live Sources  │ │     │  ┌──────────────────┐  │
+        │ │               │ │     │  │  3D WebGL Globe   │  │
+        │ │ NOAA GML CO₂  │ │     │  │  (Three.js r160)  │  │
+        │ │ Open-Meteo    │ │     │  │  - Earth texture  │  │
+        │ │ ERA5 reanalysis│ │     │  │  - Atmosphere     │  │
+        │ └───────────────┘ │     │  │  - Hotspot markers│  │
+        │ ┌───────────────┐ │     │  │  - Click-to-ping  │  │
+        │ │ Fallback JSON  │ │     │  └──────────────────┘  │
+        │ │               │ │     │  ┌──────────────────┐  │
+        │ │ co2.json       │ │     │  │  2D Canvas Mode   │  │
+        │ │ sea-level.json │ │     │  │  (WebGL fallback) │  │
+        │ │ ice.json       │ │     │  └──────────────────┘  │
+        │ │ temperature.json│ │     └───────────────────────┘
+        │ │ groundwater.json│ │
+        │ │ wildfire.json  │ │     ┌───────────────────────┐
+        │ └───────────────┘ │     │   Statistics Layer     │
+        └─────────┬─────────┘     │  (mann-kendall.js)     │
+                  │               │                        │
+                  │               │  Input: time series    │
+        ┌─────────▼─────────┐     │  Output:               │
+        │  UI Layer          │     │  · S statistic         │
+        │  (main.js)         │     │  · Z score             │
+        │                   │◄────│  · p-value             │
+        │ · Variable pills   │     │  · Sen's slope         │
+        │ · Info panel       │     │  · Significant?        │
+        │ · Trend chart      │     └───────────────────────┘
+        │ · Mann-Kendall UI  │
+        │ · Live ticker      │     ┌───────────────────────┐
+        │ · Chatbot (soon)   │     │   Region Layer         │
+        └───────────────────┘     │  (regions.js)          │
+                                  │                        │
+                                  │  Maps any lat/lon →    │
+                                  │  nearest hotspot zone  │
+                                  │  (surface click)       │
+                                  └───────────────────────┘
+```
 
-| Theme | Icon | Trend Direction | Key Metric |
-|-------|------|----------------|------------|
-| Rising Seas | 🌊 | up | Global mean sea level: ≈ +4.5 mm/year |
-| Greenland Ice Loss | 🧊 | down | Ice sheet mass: ≈ −270 Gt/year |
-| CO₂ Accumulation | 🏭 | up | Atmospheric CO₂: ≈ +2.4 ppm/year |
-| Warming Anomaly | 🌡️ | up | Global temperature anomaly: ≈ +0.2°C/decade |
-| Wildfire Intensity | 🔥 | mixed | Fire Radiative Power index |
-| Groundwater Decline | 💧 | down | Terrestrial water storage |
+### Data Flow
 
-## Interactions
+```
+User clicks "Launch"
+        │
+        ▼
+Globe initialises (Three.js or 2D fallback)
+        │
+        ▼
+User selects variable pill  ──► Globe flies to hotspot location
+        │
+        ▼
+loadCurated(spot)  ──── Instant: archived JSON from /data/fallback/
+        │
+        ▼
+Info panel opens with curated data + MK stats
+        │
+        ▼  (background)
+load(spot) attempts live API
+  ├── NOAA GML CSV  (CO₂)
+  └── Open-Meteo ERA5  (temperature, ice, wildfire)
+        │
+        ▼
+If live succeeds → panel upgrades silently, ticker updates
+If live fails   → stays on archived data (labelled ARCHIVED DATA)
+```
 
-- **Drag** to rotate the globe
-- **Click** any hotspot to open its case file
-- **Use** the bottom control bar to quickly jump between case files
-- **Scroll** to reveal sections below the app (hotspots, detective method, about)
-- **Resize** the window for responsive layout (mobile/desktop)
+---
+
+## How We Catch a Trend
+
+| Step | What happens |
+|------|-------------|
+| **01 Select** | Choose one of six Earth science variables measured by NASA missions or Earth system models |
+| **02 Fetch** | Live data pulled from NOAA GML and Open-Meteo ERA5 APIs; curated real-measurement archives used as instant fallback |
+| **03 Test** | Mann-Kendall non-parametric test computes S, Z, p-value, and Sen's slope. Trend reported *significant* only when p < 0.05 |
+| **04 Pin** | Every confirmed trend is anchored to the measurement location. Click anywhere on the globe to surface the regional trend at that coordinate |
+
+---
+
+## Variables
+
+| Variable | Data Source | Live API | Archive |
+|----------|------------|---------|---------|
+| 🌊 Rising Seas | NASA/CNES Jason-3, Sentinel-6 | — | `sea-level.json` |
+| 🧊 Greenland Ice | GRACE-FO + ERA5 reanalysis | Open-Meteo | `ice.json` |
+| 🏭 CO₂ Accumulation | NOAA GML Mauna Loa | NOAA GML CSV | `co2.json` |
+| 🌡️ Warming Anomaly | ECMWF ERA5 reanalysis | Open-Meteo | `temperature.json` |
+| 🔥 Wildfire Risk | ECMWF ERA5 Amazon precip | Open-Meteo | `wildfire.json` |
+| 💧 Groundwater | NASA GRACE-FO TWS | — | `groundwater.json` |
+
+---
 
 ## Technology
 
-- Three.js r160 for 3D globe rendering (self-hosted in `js/vendor/` so network filters and ad-blockers can't block it)
-- **Graceful 3D fallbacks**: if WebGL is unavailable, GPU acceleration is off, or the graphics context is lost, a friendly overlay explains the problem with a retry button instead of a blank canvas
-- NASA Earth system open data (GRACE-FO, Jason-3, Sentinel-6, OCO-2, MODIS, NOAA)
-- **NASA imagery**: each case file pairs its trend data with a public-domain NASA photo (hotspot cards and the info panel), lazy-loaded so the first paint stays fast
-- **Fast first load**: self-hosted preloaded woff2 fonts, deferred scripts, and the Earth texture preloaded in the head
-- **Dark neon-glow design**: animated aurora background, gradient glass panels, spotlight hover cards, a glowing LAUNCH button, and a looping neon marquee ticker
-- Neon palette: electric violet + cyan + hot pink on near-black, with gradient text headlines
-- Fully responsive from 320px to 1440px+; honors `prefers-reduced-motion`
+- **Three.js r160** — 3D WebGL globe, self-hosted so no CDN blocking issues
+- **Canvas 2D fallback** — automatic degradation when WebGL is unavailable (remote desktop, GPU blocklisted)
+- **Mann-Kendall test** — non-parametric trend detection; same method used by Earth scientists
+- **Open-Meteo ERA5** — free, CORS-enabled reanalysis API (no key required)
+- **NOAA GML** — live Mauna Loa CO₂ data
+- **Vanilla JS** — zero build step, zero runtime dependencies beyond Three.js
 
-## Setup
+### Performance choices
 
-No build step or dependencies — the site is fully static (deployed on Vercel, which serves it as-is):
+| Problem | Solution |
+|---------|---------|
+| Full-width `backdrop-filter` every frame | Removed from header; replaced with gradient fade |
+| Moving starfield at 60 fps | Static radial-gradient layers |
+| Nebula scale animation invalidating GPU cache | Translate-only keyframes (no `scale`) |
+| `MeshStandardMaterial` PBR cost | `MeshPhongMaterial` (~2× faster fragment shader) |
+| Frame overrun at 60 fps during auto-spin | 20 fps idle / 5 fps when panel open / 60 fps on drag |
+| Pixel ratio on HiDPI | Capped at 1.5 (saves ~55% GPU pixels vs native 2×) |
 
-```bash
-# Serve locally from the project root, e.g.
-python3 -m http.server 8090
-# then open http://localhost:8090
+---
 
-# Or simply open index.html in a modern browser
+## Project Structure
+
+```
+TerraTrend/
+├── index.html              # Single-page app shell
+├── favicon.svg             # SVG favicon (◎ brand mark)
+├── css/
+│   └── style.css           # All styles (dark neon-glow design)
+├── js/
+│   ├── data.js             # HOTSPOTS and REGION_ZONES definitions
+│   ├── regions.js          # findRegionForPoint() surface-click resolver
+│   ├── mann-kendall.js     # MannKendall.test() — S, Z, p, Sen's slope
+│   ├── nasa-data.js        # Data layer: live APIs + fallback JSON
+│   ├── globe.js            # Three.js 3D globe (WebGL path)
+│   ├── globe-2d.js         # Canvas 2D globe (fallback path)
+│   ├── main.js             # UI wiring: pills, panel, chart, ticker
+│   └── vendor/
+│       └── three.min.js    # Three.js r160 (self-hosted)
+├── data/
+│   └── fallback/           # Curated real-measurement JSON archives
+│       ├── co2.json
+│       ├── sea-level.json
+│       ├── ice.json
+│       ├── temperature.json
+│       ├── groundwater.json
+│       └── wildfire.json
+└── fonts/                  # Self-hosted woff2 (Space Grotesk + IBM Plex Mono)
 ```
 
-## License
+---
 
-NASA Space Apps Challenge 2026 — built with curiosity by **The Data Detectives**
+## Running Locally
 
-**Live Demo**: https://terratrend.vercel.app
+No build step. No dependencies to install.
+
+```bash
+# Option 1: Python
+python3 -m http.server 8090
+# open http://localhost:8090
+
+# Option 2: Node
+npx serve .
+
+# Option 3: Open index.html directly in a modern browser
+```
+
+> **Note:** Live API calls (NOAA, Open-Meteo) require a server context (not `file://`). Archived fallback data works without a server.
+
+---
+
+## What's Next (Roadmap)
+
+- **Earth AI assistant** — chatbot placeholder wired, ready for Claude API integration to explain trends in plain language
+- **More variables** — ocean heat content, Arctic sea ice extent, deforestation index
+- **Animation playback** — scrub through years to watch trends evolve spatially
+- **Custom region upload** — bring your own CSV and run Mann-Kendall on the spot
+
+---
+
+## Team
+
+Built for the **2026 NASA Space Apps Challenge** with real NASA and NOAA Earth science data.
+
+*Not affiliated with NASA. Built with curiosity.*
+
+**Live Demo:** https://terratrend.vercel.app

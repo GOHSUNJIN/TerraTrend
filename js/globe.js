@@ -538,7 +538,7 @@
       return;
     }
     const spot = HOTSPOTS[idx];
-    tooltip.innerHTML = `${spot.icon} <strong>${spot.name}</strong> — click to open`;
+    tooltip.innerHTML = `${spot.icon} <strong>${spot.name}</strong> &nbsp;· Open Trend File`;
     tooltip.style.display = "block";
   }
 
