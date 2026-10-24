@@ -313,8 +313,8 @@
       els.kicker.textContent  = whatLabel;
       els.title.textContent   = spot.icon + "  " + spot.name;
       els.tagline.textContent = spot.tagline || "";
-      els.rate.textContent    = "-";
-      els.rate.classList.add("loading");
+      els.rate.textContent = spot.rate || "-";
+      els.rate.classList.remove("loading");
       els.desc.textContent    = spot.description;
       els.coords.textContent  = coords || "PINNED HOTSPOT";
       if (els.mission) els.mission.textContent = spot.mission || "";
