@@ -66,6 +66,8 @@
       if (headerTools) headerTools.hidden = false;
       const chatWrap = document.getElementById("chatbot-wrap");
       if (chatWrap) chatWrap.hidden = false;
+      const tourBtnEl = document.getElementById("auto-tour-btn");
+      if (tourBtnEl) tourBtnEl.hidden = false;
       setTimeout(() => {
         if (typeof HOTSPOTS !== "undefined" && HOTSPOTS.length) {
           const urlSpot = getSpotFromURL();
@@ -77,6 +79,8 @@
         }
       }, 1800);
       setTimeout(showOnboardingHint, 2800);
+      // Start auto-tour after 15s if no spot was deep-linked
+      setTimeout(() => { if (!getSpotFromURL()) startAutoTour(); }, 15000);
     });
   }
 
@@ -84,6 +88,32 @@
   const pillWrap = document.getElementById("var-selector-pills");
   let activeHotspotId = null;
   let tourIndex = 0;
+
+  // ---------- Auto-tour ----------
+  let autoTourTimer  = null;
+  let autoTourActive = false;
+
+  function stopAutoTour() {
+    if (!autoTourActive) return;
+    autoTourActive = false;
+    clearInterval(autoTourTimer);
+    autoTourTimer = null;
+    const btn = document.getElementById("auto-tour-btn");
+    if (btn) { btn.classList.remove("active"); btn.textContent = "▶ AUTO-TOUR"; }
+  }
+
+  function startAutoTour() {
+    if (autoTourActive) return;
+    autoTourActive = true;
+    const btn = document.getElementById("auto-tour-btn");
+    if (btn) { btn.classList.add("active"); btn.textContent = "⏹ TOURING"; }
+    autoTourTimer = setInterval(() => {
+      tourIndex = (tourIndex + 1) % HOTSPOTS.length;
+      const spot = HOTSPOTS[tourIndex];
+      flyToHotspot(spot);
+      window.TerraTrendUI.openPanel(spot);
+    }, 8000);
+  }
 
   if (pillWrap && typeof HOTSPOTS !== "undefined") {
     HOTSPOTS.forEach((spot, i) => {
@@ -99,6 +129,7 @@
         `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
         `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
       pill.addEventListener("click", () => {
+        stopAutoTour();
         tourIndex = i;
         activatePill(spot, i);
         flyToHotspot(spot);
@@ -162,8 +193,10 @@
     if (header) header.classList.toggle("scrolled", window.scrollY > window.innerHeight - 80);
     const chatWrap = document.getElementById("chatbot-wrap");
     if (chatWrap && siteFooter) {
+      // dist is negative when footer is visible, positive when below viewport
       const dist = siteFooter.getBoundingClientRect().top - window.innerHeight;
-      chatWrap.style.opacity = Math.min(1, Math.max(0, dist / 180));
+      // +150 buffer so chatbot stays fully visible until footer actually enters viewport
+      chatWrap.style.opacity = Math.min(1, Math.max(0, (dist + 150) / 150));
     }
   }, { passive: true });
 
@@ -235,11 +268,15 @@
     async openPanel(spot, coords) {
       if (!panel) return;
 
+      // Update page title
+      document.title = spot.name + " — TerraTrend";
+
       // Fill static data immediately
       els.kicker.textContent  = "TREND FILE · " + spot.id.toUpperCase().replace(/-/g, " ");
       els.title.textContent   = spot.icon + "  " + spot.name;
       els.tagline.textContent = spot.tagline || "";
       els.rate.textContent    = "—";
+      els.rate.classList.add("loading");
       els.desc.textContent    = spot.description;
       els.coords.textContent  = coords || "PINNED HOTSPOT";
       if (els.mission) els.mission.textContent = spot.mission || "";
@@ -267,8 +304,11 @@
       const chatPanelEl = document.getElementById("chatbot-panel");
       if (chatPanelEl) chatPanelEl.hidden = true;
 
+      clearTimeout(panel._hideTimer);
       panel.classList.remove("hidden");
+      void panel.offsetWidth;
       panel.classList.add("visible");
+      setTimeout(() => els.close?.focus(), 350);
 
       // Stagger-reveal each panel section
       const panelBody = panel.querySelector(".panel-body");
@@ -307,6 +347,7 @@
 
       function applyData(data, upgrading) {
         if (!data) return;
+        els.rate.classList.remove("loading");
         if (data.mkResult?.senSlope !== undefined) {
           const s = data.mkResult.senSlope;
           els.rate.textContent = (s >= 0 ? "+" : "") + s.toFixed(3) + " " + (data.unit || "") + " / yr (Sen's slope)";
@@ -365,18 +406,32 @@
 
     closePanel() {
       if (!panel) return;
+      stopAutoTour();
       panel.classList.remove("visible");
-      panel.classList.add("hidden");
+      clearTimeout(panel._hideTimer);
+      panel._hideTimer = setTimeout(() => panel.classList.add("hidden"), 310);
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.resume();
       document.getElementById("chatbot-wrap")?.classList.remove("panel-open");
       window.TerraTrendGlobe?.clearHighlight?.();
       updateURL(null);
+      document.title = "TerraTrend: Earth System Trend Detective | NASA Space Apps 2026";
+      pillWrap?.querySelector(".var-pill.active")?.focus();
     }
   };
 
   if (els.close) els.close.addEventListener("click", () => window.TerraTrendUI.closePanel());
 
+  // Auto-tour toggle button
+  const autoTourBtn = document.getElementById("auto-tour-btn");
+  if (autoTourBtn) {
+    autoTourBtn.addEventListener("click", () => {
+      if (autoTourActive) stopAutoTour();
+      else startAutoTour();
+    });
+  }
+
   function showCase(i) {
+    stopAutoTour();
     panelIndex = ((i % HOTSPOTS.length) + HOTSPOTS.length) % HOTSPOTS.length;
     tourIndex = panelIndex;
     const spot = HOTSPOTS[panelIndex];

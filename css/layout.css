@@ -269,3 +269,37 @@
   50%       { transform: translateX(-5px); }
 }
 @media (max-width: 900px) { .onboard-hint { display: none; } }
+
+/* ---------- Auto-tour toggle ---------- */
+.auto-tour-btn {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  pointer-events: auto;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(8, 9, 22, 0.8);
+  border: 1px solid rgba(140, 150, 255, 0.18);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.3s;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+.auto-tour-btn:hover {
+  opacity: 1;
+  border-color: rgba(139, 124, 255, 0.45);
+  color: var(--text);
+}
+.auto-tour-btn.active {
+  background: rgba(139, 124, 255, 0.1);
+  border-color: rgba(139, 124, 255, 0.4);
+  color: var(--accent);
+  opacity: 1;
+}
+@media (max-width: 900px) { .auto-tour-btn { bottom: 10px; font-size: 0.45rem; padding: 5px 12px; } }
