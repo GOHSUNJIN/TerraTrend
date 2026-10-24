@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TerraTrend: Earth System Trend Detective | NASA Space Apps 2026</title>
   <meta name="description" content="Select Earth science variables measured by NASA missions, visualise how they change over time, and determine what is changing, where, how much, and whether it is statistically significant." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TerraTrend: Earth System Trend Detective" />
+  <meta property="og:description" content="Select a variable. Spin the globe. Discover what is changing, where, how much, and whether it is statistically significant." />
+  <meta property="og:url" content="https://terratrend.vercel.app" />
+  <meta property="og:image" content="https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-blue-marble.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TerraTrend: Earth System Trend Detective" />
+  <meta name="twitter:description" content="Select a variable. Spin the globe. Discover what is changing, where, how much, and whether it is statistically significant." />
+  <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-blue-marble.jpg" />
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preload" href="fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -73,8 +82,8 @@
         <span class="logo-mark">◎</span> TERRA<span>TREND</span>
       </a>
       <div class="header-tools" id="header-tools" hidden>
-        <button class="header-tool-btn" id="rail-method" title="The Method" aria-label="The Detective's Method">?</button>
-        <button class="header-tool-btn" id="rail-about"  title="About"      aria-label="About this project">ℹ</button>
+        <button class="header-tool-btn header-pill" id="rail-method" title="The Method" aria-label="The Detective's Method">METHOD</button>
+        <button class="header-tool-btn header-pill" id="rail-about"  title="About"      aria-label="About this project">ABOUT</button>
         <button class="header-tool-btn" id="rail-fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
       </div>
     </div>
@@ -97,10 +106,6 @@
         <div class="panel-head">
           <div class="panel-head-left">
             <p class="panel-kicker" id="panel-kicker">TREND FILE</p>
-            <span class="data-badge" id="data-badge" hidden>
-              <span class="data-badge-dot"></span>
-              <span class="data-badge-label" id="data-badge-label">LOADING</span>
-            </span>
           </div>
           <button class="panel-close" id="panel-close" aria-label="Close trend details">×</button>
         </div>

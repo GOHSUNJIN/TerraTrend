@@ -38,7 +38,7 @@
     if (!ctx) return;
     const W = canvas.width, H = canvas.height;
     const isMini = !!targetCanvas;
-    const pad = isMini ? { l: 2, r: 2, t: 4, b: 4 } : { l: 8, r: 12, t: 14, b: 20 };
+    const pad = isMini ? { l: 2, r: 2, t: 4, b: 4 } : { l: 42, r: 12, t: 14, b: 20 };
 
     ctx.clearRect(0, 0, W, H);
 
@@ -59,8 +59,16 @@
         const gy = pad.t + (g / 4) * (H - pad.t - pad.b);
         ctx.beginPath(); ctx.moveTo(pad.l, gy); ctx.lineTo(W - pad.r, gy); ctx.stroke();
       }
-      ctx.fillStyle = "rgba(159,176,205,0.6)";
       ctx.font = "9px IBM Plex Mono, monospace";
+      ctx.fillStyle = "rgba(159,176,205,0.52)";
+      ctx.textAlign = "right";
+      [0, 0.5, 1].forEach(t => {
+        const val = max - t * (max - min);
+        const gy = pad.t + t * (H - pad.t - pad.b);
+        const a = Math.abs(val), d = a >= 100 ? 0 : a >= 10 ? 1 : 2;
+        ctx.fillText((val >= 0 ? "+" : "-") + a.toFixed(d), pad.l - 4, gy + 3);
+      });
+      ctx.fillStyle = "rgba(159,176,205,0.6)";
       ctx.textAlign = "left";
       ctx.fillText(String(pts[0].year), pad.l, H - 4);
       ctx.textAlign = "right";
@@ -129,7 +137,8 @@
       if (!pts.length) return;
       const rect = chartCanvas.getBoundingClientRect();
       const px = ((e.clientX - rect.left) / rect.width) * chartCanvas.width;
-      const idx = Math.round(((px - 8) / (chartCanvas.width - 20)) * (pts.length - 1));
+      const pL = chartState.pad?.l ?? 8, pR = chartState.pad?.r ?? 12;
+      const idx = Math.round(((px - pL) / (chartCanvas.width - pL - pR)) * (pts.length - 1));
       const c = Math.max(0, Math.min(pts.length - 1, idx));
       const p = pts[c];
       chartTip.innerHTML = `${p.year} · <span class="tip-val">${fmtVal(p.value, unit)}</span>`;

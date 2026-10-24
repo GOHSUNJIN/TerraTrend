@@ -818,6 +818,13 @@ body:not(.app-armed) { overflow: hidden; }
   color: #fff;
   box-shadow: 0 0 18px -6px rgba(139, 124, 255, 0.6);
 }
+.header-pill {
+  width: auto;
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+}
 .mono { font-family: var(--font-mono); }
 
 /* ---------- Marquee ticker (neon signals strip) ---------- */
@@ -1011,6 +1018,14 @@ body:not(.app-armed) { overflow: hidden; }
   letter-spacing: -0.03em;
   line-height: 1.04;
   font-weight: 700;
+}
+
+/* gradient accent text — used in modal headings */
+.accent {
+  background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* gradient text for every section headline */
@@ -1601,7 +1616,7 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
   top: 50%;
   transform: translateY(-50%);
   z-index: 35;
-  width: 210px;
+  width: 230px;
   background:
     linear-gradient(90deg, transparent 15%, rgba(140, 150, 255, 0.35) 50%, transparent 85%) top / 100% 1px no-repeat,
     rgba(8, 9, 22, 0.94);
@@ -1680,12 +1695,12 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
 .var-pill.active .pill-icon {
   background: color-mix(in srgb, var(--pill-col, var(--accent)) 14%, transparent);
 }
-.pill-name { font-size: 0.78rem; line-height: 1.2; }
-.pill-arrow { font-size: 0.6rem; margin-left: auto; flex-shrink: 0; }
+.pill-name { font-size: 0.78rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pill-arrow { font-size: 0.6rem; flex-shrink: 0; margin-left: 8px; }
 .pill-arrow.up    { color: var(--signal-warm); text-shadow: 0 0 8px rgba(255, 138, 92, 0.6); }
 .pill-arrow.down  { color: var(--accent-2);    text-shadow: 0 0 8px rgba(34, 224, 238, 0.6); }
 .pill-arrow.mixed { color: var(--accent);      text-shadow: 0 0 8px rgba(139, 124, 255, 0.6); }
-.pill-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.pill-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; overflow: hidden; }
 .pill-rate {
   font-family: var(--font-mono);
   font-size: 0.56rem;
