@@ -163,7 +163,9 @@ const HOTSPOTS = [
     trend: "down",
     keyFinding: "Arctic summer sea ice has shrunk by ≈ 3.6 million km² since 1979, an area larger than India gone from the map each September.",
     whyItMatters: "Sea ice reflects 80% of sunlight back to space. As it disappears, dark ocean water absorbs that heat instead, a feedback that makes the Arctic warm 4x faster than the global average and disrupts mid-latitude weather patterns.",
-    mission: "NASA Aqua / AMSR-E · JAXA GCOM-W / AMSR2 · NSIDC passive microwave"
+    mission: "NASA Aqua / AMSR-E · JAXA GCOM-W / AMSR2 · NSIDC passive microwave",
+    image: "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/152000/152596/arctic_nsidc_202474.jpg",
+    imageAlt: "Arctic sea ice extent satellite image, March 2024 — NASA/NSIDC"
   },{
     id: "ocean-heat",
     name: "Ocean Heat",
@@ -184,6 +186,8 @@ const HOTSPOTS = [
     trend: "up",
     keyFinding: "The upper ocean has absorbed an extra 41 ZJ since 1993, roughly equivalent to five Hiroshima-scale detonations per second for 30 continuous years.",
     whyItMatters: "A warmer ocean fuels more intense hurricanes, bleaches coral reefs and melts ice shelves from below. It is also a heat time-bomb: energy stored today commits future generations to further warming, even if all emissions stopped tomorrow.",
-    mission: "NOAA NCEI · Argo Float Network · NASA Aquarius / SAC-D"
+    mission: "NOAA NCEI · Argo Float Network · NASA Aquarius / SAC-D",
+    image: "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001621/GSFC_20171208_Archive_e001621~small.jpg",
+    imageAlt: "Failed to load image"
   }
 ];
