@@ -78,9 +78,12 @@
       pill.style.setProperty("--pill-col", hex(spot.color));
       pill.innerHTML =
         `<span class="pill-icon">${spot.icon}</span>` +
-        `<span class="pill-text"><span class="pill-name">${spot.name}</span><span class="pill-rate">${shortRate(spot.rate)}</span></span>` +
-        `<canvas class="pill-spark" width="52" height="22" aria-hidden="true"></canvas>` +
-        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>`;
+        `<span class="pill-name">${spot.name}</span>` +
+        `<span class="pill-arrow ${spot.trend}">${trendArrow(spot.trend)}</span>` +
+        `<span class="pill-bottom">` +
+          `<span class="pill-rate">${shortRate(spot.rate)}</span>` +
+          `<canvas class="pill-spark" width="44" height="18" aria-hidden="true"></canvas>` +
+        `</span>`;
       pill.addEventListener("click", () => {
         tourIndex = i;
         activatePill(spot, i);

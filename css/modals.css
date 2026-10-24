@@ -14,21 +14,9 @@
    earns its place (simplicity), and the glyph is pure decoration. */
 .steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-top: 40px;
-  position: relative;
-}
-.steps::before {
-  content: "";
-  position: absolute;
-  top: 26px;
-  left: 40px;
-  right: 40px;
-  height: 1px;
-  background: var(--line);
-  opacity: 0.5;
-  pointer-events: none;
+  margin-top: 36px;
 }
 .step {
   position: relative;
@@ -77,6 +65,14 @@
 .step p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
 
 /* ---------- About ---------- */
+.about-byline {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin: 6px 0 22px;
+}
+.about-byline strong { color: var(--accent-2); font-weight: 500; }
+
 .about-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
@@ -126,6 +122,9 @@
 }
 .about-facts strong { color: var(--dim); font-weight: 500; font-size: 0.72rem; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.14em; }
 .about-facts span { font-size: 0.85rem; line-height: 1.45; }
+.about-fact-team { grid-column: 1 / -1; background: rgba(34, 224, 238, 0.05) !important; border-color: rgba(34, 224, 238, 0.18) !important; }
+.about-fact-team strong { color: var(--accent-2) !important; }
+.about-fact-team span { color: #fff; font-weight: 500; }
 
 /* ---------- Popup modals (method + about) ---------- */
 .method-modal {
