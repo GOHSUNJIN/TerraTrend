@@ -209,4 +209,6 @@
   }
   /* Hide FAB when the info panel is open */
   .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
+  /* Children re-enable pointer-events by default; override for the FAB explicitly */
+  .chatbot-wrap.panel-open .chatbot-fab { pointer-events: none; }
 }

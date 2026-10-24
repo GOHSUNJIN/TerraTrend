@@ -367,10 +367,10 @@
         exploredSet.add(panelIndex);
         const counter = document.getElementById("explore-counter");
         if (counter) {
-          counter.textContent = `INVESTIGATED · ${exploredSet.size} / ${HOTSPOTS.length}`;
+          counter.textContent = `${exploredSet.size} / ${HOTSPOTS.length}`;
           if (exploredSet.size === HOTSPOTS.length) {
             counter.classList.add("all-explored");
-            counter.textContent = "ALL SIGNALS FOUND ◎";
+            counter.textContent = "◎ ALL";
             showCompletionToast();
           }
         }

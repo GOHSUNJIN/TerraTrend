@@ -386,8 +386,10 @@
       // Label floats above the dot; depthTest:true occludes it when behind the globe
       const label = makeLabelSprite(spot.name, spot.color, spot.icon);
       label.position.copy(pos.clone().normalize().multiplyScalar(0.40));
+      label.userData.hotspotIndex = i;
       anchor.add(label);
       markerLabels.push({ sprite: label, origX: label.scale.x, origY: label.scale.y, baseX: label.scale.x, baseY: label.scale.y, phase: i * 0.85 });
+      markerHitTargets.push(label);
 
       globeGroup.add(anchor);
     });
