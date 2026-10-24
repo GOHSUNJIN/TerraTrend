@@ -279,27 +279,35 @@
   z-index: 35;
   pointer-events: auto;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
-  letter-spacing: 0.2em;
-  padding: 6px 14px;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  padding: 8px 18px;
   border-radius: 999px;
-  background: rgba(8, 9, 22, 0.8);
-  border: 1px solid rgba(140, 150, 255, 0.18);
-  color: var(--text-tertiary);
+  background: rgba(8, 9, 22, 0.88);
+  border: 1px solid rgba(140, 150, 255, 0.28);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.3s;
-  opacity: 0.55;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.3s, box-shadow 0.2s;
+  opacity: 0.75;
   white-space: nowrap;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
 }
 .auto-tour-btn:hover {
   opacity: 1;
-  border-color: rgba(139, 124, 255, 0.45);
-  color: var(--text);
+  border-color: rgba(139, 124, 255, 0.55);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(139, 124, 255, 0.25);
 }
 .auto-tour-btn.active {
-  background: rgba(139, 124, 255, 0.1);
-  border-color: rgba(139, 124, 255, 0.4);
+  background: rgba(139, 124, 255, 0.14);
+  border-color: rgba(139, 124, 255, 0.5);
   color: var(--accent);
   opacity: 1;
+  box-shadow: 0 0 0 3px rgba(139, 124, 255, 0.1), 0 4px 24px rgba(139, 124, 255, 0.3);
+  animation: tourPulse 2s ease-in-out infinite;
 }
-@media (max-width: 900px) { .auto-tour-btn { bottom: 10px; font-size: 0.45rem; padding: 5px 12px; } }
+@keyframes tourPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(139, 124, 255, 0.1), 0 4px 24px rgba(139, 124, 255, 0.3); }
+  50%       { box-shadow: 0 0 0 5px rgba(139, 124, 255, 0.18), 0 4px 28px rgba(139, 124, 255, 0.45); }
+}
+@media (max-width: 900px) { .auto-tour-btn { bottom: 10px; font-size: 0.5rem; padding: 6px 14px; } }
