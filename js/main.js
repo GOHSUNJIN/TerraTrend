@@ -198,10 +198,6 @@
       if (sideRail) sideRail.classList.add("active");
       if (varSel)   varSel.hidden = false;
       if (barToggle) barToggle.classList.add("active");
-      // Start prefetching all data in background
-      if (window.TerraTrendData && typeof HOTSPOTS !== "undefined") {
-        window.TerraTrendData.prefetchAll(HOTSPOTS);
-      }
     });
   }
 

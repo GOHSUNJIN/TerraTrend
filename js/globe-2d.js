@@ -232,11 +232,14 @@ window.Globe2D = (function () {
       }
     }
 
-    /* ---------- Auto-spin loop ---------- */
-    function loop() {
+    /* ---------- Auto-spin loop (capped at 30fps) ---------- */
+    let lastFrame = 0;
+    function loop(ts) {
+      animFrame = requestAnimationFrame(loop);
+      if (ts - lastFrame < 33) return; // skip if < 33ms since last draw
+      lastFrame = ts;
       if (!dragging) rotLon += velX * 0.05;
       draw();
-      animFrame = requestAnimationFrame(loop);
     }
 
     /* ---------- Hit-test: which hotspot is near screen point? ---------- */

@@ -26,10 +26,24 @@ window.TerraTrendData = (function () {
   /* Cache so we only fetch once per id */
   const cache = {};
 
-  /* Fetch a JSON file relative to the page root */
-  async function fetchJSON(url) {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  /* Fetch with a hard timeout so a slow API never hangs the UI */
+  async function fetchWithTimeout(url, ms) {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), ms || 5000);
+    try {
+      const r = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(tid);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r;
+    } catch (e) {
+      clearTimeout(tid);
+      throw e;
+    }
+  }
+
+  /* Fetch JSON with timeout */
+  async function fetchJSON(url, ms) {
+    const r = await fetchWithTimeout(url, ms || 5000);
     return r.json();
   }
 
@@ -40,7 +54,7 @@ window.TerraTrendData = (function () {
       `?parameters=T2M&community=RE` +
       `&latitude=${lat}&longitude=${lon}` +
       `&start=${startYear}&end=${endYear}&format=JSON`;
-    const data = await fetchJSON(url);
+    const data = await fetchJSON(url, 6000);
     const raw = data?.properties?.parameter?.T2M;
     if (!raw) throw new Error("Unexpected POWER API shape");
     return Object.entries(raw)
@@ -52,7 +66,7 @@ window.TerraTrendData = (function () {
   /* ---- Live source: NOAA GML CO₂ CSV ---- */
   async function fetchNOAACO2() {
     const url = "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv";
-    const r = await fetch(url);
+    const r = await fetchWithTimeout(url, 5000);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const text = await r.text();
     const series = [];
@@ -138,14 +152,5 @@ window.TerraTrendData = (function () {
     return result;
   }
 
-  /* Prefetch all hotspots in the background after page loads */
-  function prefetchAll(hotspots) {
-    if (!hotspots || !hotspots.length) return;
-    // Stagger to avoid hammering APIs simultaneously
-    hotspots.forEach((h, i) => {
-      setTimeout(() => load(h).catch(() => {}), i * 400);
-    });
-  }
-
-  return { load, prefetchAll };
+  return { load };
 })();
