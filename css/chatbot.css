@@ -5,7 +5,7 @@
 @media (max-width: 900px) {
   .chatbot-wrap {
     top: auto;
-    bottom: 84px;   /* clear the ~68px pill dock */
+    bottom: 110px;
     right: 14px;
   }
   .chatbot-panel { display: none !important; }

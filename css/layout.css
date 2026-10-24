@@ -432,16 +432,7 @@
   .header-tool-btn { width: 30px; height: 30px; font-size: 0.82rem; }
   #rail-fullscreen { display: none; }
 
-  /* Auto-tour moves to top-right so it doesn't conflict with the bottom dock */
-  .auto-tour-btn {
-    bottom: auto;
-    top: calc(var(--appbar-h) + 10px);
-    left: auto;
-    right: 12px;
-    transform: none;
-    font-size: 0.56rem;
-    padding: 6px 14px;
-  }
+  .auto-tour-btn { display: none; }
   /* Raise toast above the bottom pill dock (~68px tall) */
   .complete-toast { bottom: 82px; }
 }
