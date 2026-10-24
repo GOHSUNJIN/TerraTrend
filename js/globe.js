@@ -652,10 +652,7 @@
     flyTo(spot.lat, spot.lon);
     spawnPing(spot.lat, spot.lon, spot.color);
     if (openPanel && window.TerraTrendUI) {
-      window.TerraTrendUI.openPanel(
-        { ...spot, significanceTone: spot.significanceTone },
-        formatLatLon(spot.lat, spot.lon)
-      );
+      window.TerraTrendUI.openPanel(spot, formatLatLon(spot.lat, spot.lon));
     }
   }
 
