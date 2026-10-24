@@ -908,7 +908,7 @@ body:not(.app-armed) { overflow: hidden; }
   opacity: 0.75;
   z-index: 2;
 }
-/* edge fade overlay — creates elegant fade-to-black on left + right */
+/* edge fade overlay - creates elegant fade-to-black on left + right */
 .ticker::after {
   content: "";
   position: absolute;
@@ -1084,7 +1084,7 @@ body:not(.app-armed) { overflow: hidden; }
   font-weight: 700;
 }
 
-/* gradient accent text — used in modal headings */
+/* gradient accent text - used in modal headings */
 .accent {
   background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
   -webkit-background-clip: text;

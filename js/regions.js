@@ -1,5 +1,5 @@
-/* ============================================================
-   TerraTrend — regional trend zones
+﻿/* ============================================================
+   TerraTrend - regional trend zones
    Each zone: lat/lon box [south, north, west, east] on the globe.
    Click inside the box → that zone's trend story opens.
    For big regions the box covers the whole area; clicking the
@@ -230,7 +230,7 @@ const REGION_ZONES = [
     bounds: [9, 16, 12, 24],
     color: 0xd4a94a,
     what: "Lake surface area & basin water storage",
-    where: "Lake Chad Basin — Chad, Niger, Nigeria, Cameroon",
+    where: "Lake Chad Basin - Chad, Niger, Nigeria, Cameroon",
     rate: "Surface area fell from 25,000 km² to ~1,500 km² since 1963",
     significance: "YES; one of the most dramatic land-change signals in satellite history",
     tone: "yes",
@@ -245,7 +245,7 @@ const REGION_ZONES = [
     bounds: [-18, 5, -80, -64],
     color: 0xb0d4ff,
     what: "Tropical glacier mass & extent",
-    where: "Peru, Bolivia & Ecuador — Quelccaya, Huascarán, Chacaltaya",
+    where: "Peru, Bolivia & Ecuador - Quelccaya, Huascarán, Chacaltaya",
     rate: "30-50% ice volume lost since 1980; Chacaltaya glacier vanished 2009",
     significance: "YES; fastest-disappearing glaciers on Earth by area fraction",
     tone: "yes",
@@ -290,7 +290,7 @@ const REGION_ZONES = [
     bounds: [5, 25, 75, 100],
     color: 0x5f8cff,
     what: "Sea surface temperature & cyclone rapid intensification",
-    where: "Bay of Bengal — Bangladesh, India & Myanmar coasts",
+    where: "Bay of Bengal - Bangladesh, India & Myanmar coasts",
     rate: "SST +0.5 °C since 1980; rapid intensification events increasing",
     significance: "YES; warming clear; link to storm intensification significant",
     tone: "yes",
@@ -310,7 +310,7 @@ const REGION_ZONES = [
     significance: "YES; consistent retreat and record sea ice losses",
     tone: "yes",
     description:
-      "Svalbard is warming faster than almost anywhere else on Earth — measurable rainfall now falls there in January, once unthinkable. NASA Landsat and ICESat-2 show glacier fronts retreating year on year while Barents Sea ice-free summers grow longer each decade, opening Arctic shipping routes that didn't exist a generation ago.",
+      "Svalbard is warming faster than almost anywhere else on Earth - measurable rainfall now falls there in January, once unthinkable. NASA Landsat and ICESat-2 show glacier fronts retreating year on year while Barents Sea ice-free summers grow longer each decade, opening Arctic shipping routes that didn't exist a generation ago.",
     source: "NASA Landsat · ICESat-2 · NSIDC"
   },
 

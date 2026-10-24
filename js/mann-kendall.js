@@ -1,15 +1,12 @@
-/* ============================================================
-   TerraTrend — Mann-Kendall trend test + Sen's slope
-   Non-parametric test used in Earth science to determine
-   whether a time series has a statistically significant
-   monotonic trend.
+﻿/* ============================================================
+   TerraTrend - Mann-Kendall trend test + Sen's slope
    Reference: Mann (1945), Kendall (1975), Sen (1968)
    ============================================================ */
 
 window.MannKendall = (function () {
   "use strict";
 
-  /* Abramowitz & Stegun approximation to the normal CDF (error < 7.5e-8) */
+  /* Abramowitz & Stegun normal CDF approximation (error < 7.5e-8) */
   function normalCDF(x) {
     const t = 1 / (1 + 0.2316419 * Math.abs(x));
     const d = 0.3989423 * Math.exp((-x * x) / 2);
@@ -18,19 +15,7 @@ window.MannKendall = (function () {
     return x >= 0 ? p : 1 - p;
   }
 
-  /**
-   * Run the Mann-Kendall test on an array of numeric values
-   * (ordered by time, one value per period).
-   *
-   * Returns:
-   *   s          – Kendall S statistic
-   *   z          – standardised Z score
-   *   pValue     – two-tailed p-value
-   *   senSlope   – Sen's slope (median pairwise slope, same units per step)
-   *   significant – true when p < 0.05
-   *   confidence  – human-readable confidence string (">99%", ">95%", …)
-   *   trend       – "up" | "down" | "flat"
-   */
+  // Returns { s, z, pValue, senSlope, significant, confidence, trend }
   function test(values) {
     const n = values.length;
     if (n < 4) {
@@ -47,17 +32,12 @@ window.MannKendall = (function () {
       }
     }
 
-    // Variance of S (no ties correction — adequate for continuous data)
-    const varS = (n * (n - 1) * (2 * n + 5)) / 18;
-
-    // Continuity-corrected Z
+    const varS = (n * (n - 1) * (2 * n + 5)) / 18; // variance of S, no ties correction
     const z = s > 0 ? (s - 1) / Math.sqrt(varS)
-            : s < 0 ? (s + 1) / Math.sqrt(varS)
+            : s < 0 ? (s + 1) / Math.sqrt(varS)    // continuity correction
             : 0;
-
     const pValue = 2 * (1 - normalCDF(Math.abs(z)));
 
-    // Sen's slope: median of all pairwise slopes
     const slopes = [];
     for (let i = 0; i < n - 1; i++) {
       for (let j = i + 1; j < n; j++) {

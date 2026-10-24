@@ -1,4 +1,4 @@
-/* TerraTrend — splash.css
+﻿/* TerraTrend - splash.css
    Splash screen and launch button */
 
 /* ---------- Splash screen (LAUNCH gate) ---------- */
@@ -193,6 +193,7 @@
   .splash-topbar { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 28px; }
   .splash-hero { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
   .splash-orbital { width: 100px; height: 100px; }
+  .splash-title { font-size: clamp(2.4rem, 14vw, 5rem); }
   .splash-bottom { flex-direction: column; gap: 24px; }
   .splash-cta { align-items: flex-start; }
   .splash-hint { text-align: left !important; }

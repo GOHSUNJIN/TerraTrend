@@ -1,4 +1,4 @@
-/* TerraTrend — modals.css
+﻿/* TerraTrend - modals.css
    Method/about modals, steps, about-grid and accessibility */
 
 /* gradient text for about section headline */
@@ -10,7 +10,7 @@
 }
 
 /* ---------- Steps: numbered timeline ---------- */
-/* NOTE: use a number, not color, to carry the ordinal — one thing
+/* NOTE: use a number, not color, to carry the ordinal - one thing
    earns its place (simplicity), and the glyph is pure decoration. */
 .steps {
   display: grid;
@@ -29,7 +29,7 @@
   transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
   overflow: hidden;
 }
-/* subtle top hairline instead of a gradient glow — restrained, one accent */
+/* subtle top hairline instead of a gradient glow - restrained, one accent */
 .step::before {
   content: "";
   position: absolute;
@@ -187,4 +187,10 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   .about-grid { grid-template-columns: 1fr; gap: 30px; }
+}
+@media (max-width: 600px) {
+  .method-card { padding: 20px 16px 24px; }
+  .steps { grid-template-columns: 1fr; gap: 12px; }
+  .about-facts { grid-template-columns: 1fr; }
+  .about-grid { gap: 20px; }
 }

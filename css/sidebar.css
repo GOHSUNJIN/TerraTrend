@@ -1,4 +1,4 @@
-/* TerraTrend — sidebar.css
+﻿/* TerraTrend - sidebar.css
    Variable selector sidebar and pills */
 
 /* ---------- Variable sidebar (left panel) ---------- */
@@ -31,13 +31,13 @@
 }
 .var-sidebar-label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
-  color: var(--text-tertiary);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  color: var(--text-secondary);
   margin-bottom: 16px;
   padding: 0 6px;
   display: block;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 .var-selector-pills {
   display: flex;
@@ -98,7 +98,7 @@
 .pill-rate {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.46rem;
+  font-size: 0.54rem;
   letter-spacing: 0.05em;
   color: var(--text-tertiary);
   overflow: hidden;
@@ -109,8 +109,8 @@
 }
 .var-pill:hover .pill-rate,
 .var-pill.active .pill-rate {
-  max-height: 18px;
-  opacity: 0.65;
+  max-height: 20px;
+  opacity: 0.8;
   margin-top: 3px;
 }
 .pill-spark { display: none; }
@@ -138,7 +138,7 @@
 }
 .explore-counter {
   font-family: var(--font-mono);
-  font-size: 0.52rem;
+  font-size: 0.6rem;
   letter-spacing: 0.2em;
   color: var(--accent-2);
   display: block;
@@ -191,12 +191,21 @@
     gap: 6px;
     padding-bottom: 2px;
     -webkit-overflow-scrolling: touch;
+    justify-content: center;
   }
   .var-selector-pills::-webkit-scrollbar { display: none; }
-  .var-pill { padding: 5px 10px; border-radius: 999px; font-size: 0.72rem; flex-shrink: 0; }
-  .pill-text { display: none; }
-  .var-sidebar-label { display: none; }
-  .pill-spark { display: none; }
-  .pill-arrow { display: none; }
+  /* Icon-only pills: hide text, collapse grid to single icon column */
+  .var-pill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .pill-name,
+  .var-sidebar-label,
+  .pill-spark,
+  .pill-arrow,
   .explore-tracker { display: none; }
 }

@@ -1,4 +1,4 @@
-/* TerraTrend — globe.css
+﻿/* TerraTrend - globe.css
    Globe canvas, tooltip and fallback */
 
 /* ---------- 3D canvas: full-bleed app stage ---------- */
@@ -8,7 +8,7 @@
   width: 100vw;
   height: 100vh;
   /* z 0 (not -1): at -1 the <body> paints ABOVE the canvas and swallows every
-     click — the marker clicks never reached the globe. Content layers below
+     click - the marker clicks never reached the globe. Content layers below
      carry z-index 1 so they still stack over the globe. */
   z-index: 0;
   cursor: grab;

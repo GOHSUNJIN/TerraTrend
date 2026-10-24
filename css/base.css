@@ -1,4 +1,4 @@
-/* TerraTrend — base.css
+﻿/* TerraTrend - base.css
    CSS variables, fonts, resets and global utilities */
 
 /* Self-hosted fonts (faster than fonts.googleapis.com: same-origin,
@@ -76,7 +76,7 @@
   --focus-ring: 0 0 0 3px rgba(139, 124, 255, 0.35), 0 0 18px rgba(139, 124, 255, 0.25);
   --tonic: #15172e;            /* raised surfaces over the globe */
 
-  /* Variables used across modules — defined here to prevent silent bugs */
+  /* Variables used across modules - defined here to prevent silent bugs */
   --panel: rgba(8, 9, 22, 0.88);
   --panel-solid: rgba(5, 6, 18, 0.99);
   --muted: #b3b8d8;
@@ -111,7 +111,7 @@ body:not(.app-armed) { overflow: hidden; }
 /* ---------- Utilities ---------- */
 .mono { font-family: var(--font-mono); }
 
-/* gradient accent text — used in modal headings */
+/* gradient accent text - used in modal headings */
 .accent {
   background: linear-gradient(92deg, var(--grad-a), var(--grad-b), var(--grad-c));
   -webkit-background-clip: text;

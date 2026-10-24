@@ -1,10 +1,10 @@
-/* TerraTrend — layout.css
+﻿/* TerraTrend - layout.css
    Background, header, app structure and footer */
 
 /* ---------- Space background + animated aurora ---------- */
 .space-bg { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
 
-/* Stars: single static layer — moving starfields at 60fps waste compositor budget.
+/* Stars: single static layer - moving starfields at 60fps waste compositor budget.
    The globe rotation already gives the feeling of movement. */
 .space-bg::before {
   content: "";
@@ -85,7 +85,7 @@
   height: var(--appbar-h);
   background: linear-gradient(to bottom, rgba(4, 6, 14, 0.94) 0%, rgba(4, 6, 14, 0.88) 70%, rgba(4, 6, 14, 0));
   box-shadow: inset 0 -1px 0 var(--line);
-  /* No backdrop-filter on header — it's full-width and forces GPU framebuffer
+  /* No backdrop-filter on header - it's full-width and forces GPU framebuffer
      readback every frame, which is the single biggest layout-phase perf killer */
   transition: background 0.3s, box-shadow 0.3s;
 }
@@ -236,6 +236,7 @@
 @media (max-width: 680px) {
   .site-footer { flex-direction: column; align-items: center; padding: 20px 24px; gap: 8px; }
   .footer-desc, .footer-note { text-align: center; }
+  .footer-note { font-size: 0.62rem; }
 }
 
 /* ---------- Onboarding hint (post-launch) ---------- */
@@ -377,13 +378,14 @@
 }
 .scroll-hint-label {
   font-family: var(--font-mono);
-  font-size: 0.42rem;
-  letter-spacing: 0.3em;
-  color: rgba(140, 150, 255, 0.35);
+  font-size: 0.52rem;
+  letter-spacing: 0.24em;
+  color: rgba(140, 150, 255, 0.55);
 }
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(5px); }
 }
 
-@media (max-width: 900px) { .auto-tour-btn { bottom: 40px; font-size: 0.5rem; padding: 6px 14px; } }
+@media (max-width: 900px) { .auto-tour-btn { bottom: 40px; font-size: 0.56rem; padding: 6px 14px; } }
+@media (max-width: 500px) { .complete-toast { white-space: normal; max-width: calc(100vw - 32px); } }

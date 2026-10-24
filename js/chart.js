@@ -1,4 +1,4 @@
-/* TerraTrend — chart.js
+﻿/* TerraTrend - chart.js
    Interactive trend-series chart rendered on a <canvas> element.
    Exposes window.TerraTrendChart = { drawChart, fmtVal, bindChartHover }. */
 

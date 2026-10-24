@@ -1,4 +1,4 @@
-# TerraTrend — Earth System Trend Detective
+﻿# TerraTrend - Earth System Trend Detective
 
 NASA Space Apps 2026 landing page. An interactive 3D Earth revealing
 significant trends in NASA Earth-system data, pinned to real locations on
@@ -21,13 +21,13 @@ the globe and opened as public “case files.”
 - **Static site, no build step.** Plain HTML + CSS + vanilla JS. `node_modules/`
   is not required.
 - **Files**
-  - `index.html` — document shell, views, modals.
-  - `css/style.css` — Apple-inspired design tokens, dark neon-glow theme,
+  - `index.html` - document shell, views, modals.
+  - `css/style.css` - Apple-inspired design tokens, dark neon-glow theme,
     responsive layout.
-  - `js/data.js` — the **case-file dataset** (`HOTSPOTS`).
-  - `js/regions.js` — **regional trend zones** (`REGION_ZONES`) + fallbacks.
-  - `js/globe.js` — Three.js 3D globe, markers, drag rotation, click-to-scan.
-  - `js/main.js` — UI wiring: cards, panel, dots, modals, ticker, reveals.
+  - `js/data.js` - the **case-file dataset** (`HOTSPOTS`).
+  - `js/regions.js` - **regional trend zones** (`REGION_ZONES`) + fallbacks.
+  - `js/globe.js` - Three.js 3D globe, markers, drag rotation, click-to-scan.
+  - `js/main.js` - UI wiring: cards, panel, dots, modals, ticker, reveals.
 - **Asset loading order** (all `defer`): Three.js → `data.js` → `regions.js`
   → `globe.js` → `main.js`.
 
@@ -55,7 +55,7 @@ Each zone: `id`, `name`, `icon`, `bounds` (south/north/west/east), `color`,
 boxes so a specific region matches before a broad ocean box.
 
 ### Fallbacks
-`FALLBACK_TEMPLATES` — latitude-matching templates that activate when no zone
+`FALLBACK_TEMPLATES` - latitude-matching templates that activate when no zone
 bounds contain the scan point. The last entry is the catch-all.
 
 ## Runtime behaviour
@@ -149,7 +149,7 @@ bounds contain the scan point. The last entry is the catch-all.
 ## Known limitations
 
 - The TREND FILES section is disabled: `index.html` no longer contains the
-  `#hotspots-section`, and `main.js` no longer mounts hotspot cards — so the
+  `#hotspots-section`, and `main.js` no longer mounts hotspot cards - so the
   trends section is intentionally hidden and inert.
 - The side-rail method/about buttons no longer carry the `?` glyph; they are
   `!` and `?` respectively (per the user’s final request).

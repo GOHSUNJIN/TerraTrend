@@ -1,5 +1,5 @@
-/* ============================================================
-   TerraTrend — 3D interactive Earth (Three.js r160, global build)
+﻿/* ============================================================
+   TerraTrend - 3D interactive Earth (Three.js r160, global build)
    - Auto-spins, drag to rotate, inertia, tilt clamped
    - Pre-pinned hotspot markers (HOTSPOTS) with hover tooltips
    - CLICK ANYWHERE: converts the 3D point to lat/lon, finds the
@@ -84,7 +84,7 @@
   }
 
   // Interrupted GPU contexts (tab throttling, driver resets) otherwise just
-  // freeze the globe — surface it and offer a reload instead.
+  // freeze the globe - surface it and offer a reload instead.
   canvas.addEventListener("webglcontextlost", function (e) {
     e.preventDefault();
     startFallback2D();
@@ -141,7 +141,7 @@
     () => {
       buildEarth(fallbackTexture);
       textureReady = true;
-      loaderLabel.textContent = "OFFLINE MODE — STYLIZED EARTH";
+      loaderLabel.textContent = "OFFLINE MODE - STYLIZED EARTH";
       setTimeout(() => loaderLabel.remove(), 2500);
     }
   );
@@ -545,7 +545,7 @@
     const rect = canvas.getBoundingClientRect();
     pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    // subtle camera parallax target — makes the scene feel more 3D
+    // subtle camera parallax target - makes the scene feel more 3D
     parallax.tx = pointer.x * 0.26;
     parallax.ty = pointer.y * 0.16;
   });
@@ -762,7 +762,7 @@
 
     globeGroup.rotation.x += (targetRotationX - globeGroup.rotation.x) * Math.min(1, 0.08 * s);
 
-    // Parallax camera drift — only update lookAt when it actually changed
+    // Parallax camera drift - only update lookAt when it actually changed
     const px = parallax.x + (parallax.tx - parallax.x) * Math.min(1, 0.035 * s);
     const py = parallax.y + (parallax.ty - parallax.y) * Math.min(1, 0.035 * s);
     if (Math.abs(px - parallax.x) > 0.0001 || Math.abs(py - parallax.y) > 0.0001) {

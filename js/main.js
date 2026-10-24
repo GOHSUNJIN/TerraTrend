@@ -1,7 +1,5 @@
-/* ============================================================
-   TerraTrend — UI wiring
-   Variable selector · real data via TerraTrendData ·
-   Mann-Kendall significance display · info panel · modals
+﻿/* ============================================================
+   TerraTrend - UI wiring
    ============================================================ */
 
 (function () {
@@ -273,8 +271,8 @@
     }
     if (mkEls.plain) {
       mkEls.plain.textContent = mk.significant
-        ? `This trend is statistically real — not random noise (${mk.confidence} confidence).`
-        : `This trend is not statistically confirmed — could be natural variation.`;
+        ? `This trend is statistically real - not random noise (${mk.confidence} confidence).`
+        : `This trend is not statistically confirmed - could be natural variation.`;
     }
   }
 
@@ -311,15 +309,14 @@
     async openPanel(spot, coords) {
       if (!panel) return;
 
-      // Update page title
-      document.title = spot.name + " — TerraTrend";
+      document.title = spot.name + " - TerraTrend";
 
       // Fill static data immediately
       const whatLabel = (spot.what || spot.name).replace(/\s*\(.*?\)\s*/g, "").toUpperCase();
       els.kicker.textContent  = whatLabel;
       els.title.textContent   = spot.icon + "  " + spot.name;
       els.tagline.textContent = spot.tagline || "";
-      els.rate.textContent    = "—";
+      els.rate.textContent    = "-";
       els.rate.classList.add("loading");
       els.desc.textContent    = spot.description;
       els.coords.textContent  = coords || "PINNED HOTSPOT";
@@ -344,7 +341,6 @@
       }
       if (els.chartDelta) els.chartDelta.hidden = true;
 
-      // Mutual exclusivity: close chatbot if open
       const chatPanelEl = document.getElementById("chatbot-panel");
       if (chatPanelEl) chatPanelEl.hidden = true;
 
@@ -354,7 +350,6 @@
       panel.classList.add("visible");
       setTimeout(() => els.close?.focus(), 350);
 
-      // Stagger-reveal each panel section
       const panelBody = panel.querySelector(".panel-body");
       if (panelBody) {
         panelBody.classList.remove("entering");
@@ -384,7 +379,7 @@
         const pill = pillWrap?.querySelectorAll(".var-pill")[panelIndex];
         if (pill) pill.classList.add("viewed");
       }
-      if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "—";
+      if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "-";
       if (prevBtn) prevBtn.disabled = panelIndex < 0;
       if (nextBtn) nextBtn.disabled = panelIndex < 0;
 

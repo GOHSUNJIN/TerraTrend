@@ -1,5 +1,5 @@
-/* ============================================================
-   TerraTrend — Canvas 2D orthographic globe fallback
+﻿/* ============================================================
+   TerraTrend - Canvas 2D orthographic globe fallback
    Used when WebGL is unavailable (hardware acceleration off).
    Fetches world-atlas TopoJSON from jsDelivr, decodes it in
    pure JS (no topojson library), renders an orthographic

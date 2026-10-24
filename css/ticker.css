@@ -1,4 +1,4 @@
-/* TerraTrend — ticker.css
+﻿/* TerraTrend - ticker.css
    Marquee ticker strip */
 
 /* ---------- Marquee ticker (neon signals strip) ---------- */
@@ -18,7 +18,7 @@
   opacity: 0.75;
   z-index: 2;
 }
-/* edge fade overlay — creates elegant fade-to-black on left + right */
+/* edge fade overlay - creates elegant fade-to-black on left + right */
 .ticker::after {
   content: "";
   position: absolute;

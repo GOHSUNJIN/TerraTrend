@@ -1,4 +1,4 @@
-/* TerraTrend — panel.css (redesigned) */
+﻿/* TerraTrend - panel.css (redesigned) */
 
 /* ── Panel shell ─────────────────────────────────────────── */
 .info-panel {
@@ -95,8 +95,8 @@
 /* ── Banner typography ───────────────────────────────────── */
 .panel-kicker {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.22em;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
   color: var(--accent-2);
   text-shadow: 0 0 12px rgba(34, 224, 238, 0.5);
 }
@@ -110,7 +110,7 @@
 }
 .panel-tagline {
   font-size: 0.77rem;
-  color: rgba(195, 205, 235, 0.72);
+  color: rgba(195, 205, 235, 0.88);
   line-height: 1.4;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
 }
@@ -147,8 +147,8 @@
   padding: 3px 9px;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 0.49rem;
-  letter-spacing: 0.16em;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
   font-weight: 500;
   border: 1px solid transparent;
   transition: background 0.3s, border-color 0.3s, color 0.3s;
@@ -171,9 +171,9 @@
   border-bottom: 1px solid rgba(140, 150, 255, 0.1);
 }
 .panel-meta-item {
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   line-height: 1.55;
 }
 .panel-meta-sep { color: rgba(140, 150, 255, 0.3); font-size: 0.62rem; }
@@ -192,8 +192,8 @@
 .panel-finding strong {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.53rem;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
   color: var(--accent);
   margin-bottom: 7px;
 }
@@ -207,9 +207,9 @@
   margin-bottom: 7px;
 }
 .panel-chart-title {
-  font-size: 0.53rem;
-  letter-spacing: 0.22em;
-  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--text-tertiary);
 }
 #panel-chart {
   display: block;
@@ -220,9 +220,9 @@
   border-radius: 6px;
 }
 .chart-delta {
-  font-size: 0.58rem;
-  letter-spacing: 0.06em;
-  color: var(--text-tertiary);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
   margin-top: 7px;
   padding-left: 44px;
 }
@@ -254,9 +254,9 @@
   background: rgba(0, 0, 0, 0.2);
 }
 .mk-label {
-  font-size: 0.52rem;
-  letter-spacing: 0.2em;
-  color: var(--text-tertiary);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
   margin-bottom: 9px;
 }
 .mk-status-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
@@ -269,7 +269,7 @@
 }
 .mk-badge {
   font-family: var(--font-mono);
-  font-size: 0.49rem;
+  font-size: 0.58rem;
   letter-spacing: 0.16em;
   padding: 3px 9px;
   border-radius: 999px;
@@ -277,7 +277,7 @@
 }
 .mk-badge.sig-yes { background: rgba(34, 224, 100, 0.12); color: #34e064; border: 1px solid rgba(34, 224, 100, 0.3); }
 .mk-badge.sig-no  { background: rgba(255, 138, 92, 0.1);  color: var(--signal-warm); border: 1px solid rgba(255, 138, 92, 0.3); }
-.mk-stats-line { font-size: 0.6rem; letter-spacing: 0.05em; color: var(--text-tertiary); line-height: 1.65; }
+.mk-stats-line { font-size: 0.64rem; letter-spacing: 0.04em; color: var(--text-secondary); line-height: 1.65; }
 .mk-plain {
   font-size: 0.74rem;
   line-height: 1.55;
@@ -304,7 +304,7 @@
 .why-matters strong {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.53rem;
+  font-size: 0.62rem;
   letter-spacing: 0.2em;
   color: var(--accent-2);
   margin-bottom: 7px;
@@ -312,7 +312,7 @@
 
 /* ── Description · source · mission ─────────────────────── */
 .panel-desc   { font-size: 0.81rem; color: var(--text-secondary); line-height: 1.68; }
-.panel-source { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--accent); opacity: 0.8; word-break: break-word; line-height: 1.6; }
+.panel-source { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--accent); word-break: break-word; line-height: 1.6; }
 .panel-source a {
   color: var(--accent-2);
   text-decoration: none;
@@ -321,7 +321,7 @@
   transition: color 0.2s, border-color 0.2s;
 }
 .panel-source a:hover { color: #fff; border-color: var(--accent-2); }
-.mission-tag  { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-tertiary); line-height: 1.45; }
+.mission-tag  { font-size: 0.64rem; letter-spacing: 0.06em; color: var(--text-secondary); line-height: 1.55; }
 
 /* ── Navigation bar (pinned to bottom) ───────────────────── */
 .panel-nav {
@@ -410,4 +410,5 @@
   .panel-banner { height: 130px; }
   .panel-body { padding: 13px 14px 16px; gap: 12px; }
   .panel-nav-btn { width: 40px; height: 38px; }
+  .panel-close { width: 36px; height: 36px; }
 }

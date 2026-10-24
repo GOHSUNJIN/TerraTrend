@@ -1,5 +1,5 @@
-/* ============================================================
-   TerraTrend — data layer
+﻿/* ============================================================
+   TerraTrend - data layer
    Live sources (CORS-enabled, no auth required):
      CO₂         → NOAA GML Mauna Loa annual CSV
      Temperature  → Open-Meteo ERA5 reanalysis (any lat/lon)
@@ -166,7 +166,7 @@ window.TerraTrendData = (function () {
     return result;
   }
 
-  /* Instant curated load — called first so the panel opens without waiting */
+  /* Instant curated load - called first so the panel opens without waiting */
   async function loadCurated(hotspot) {
     try {
       const fb = await curated(hotspot.id);

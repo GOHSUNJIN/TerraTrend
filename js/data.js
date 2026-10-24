@@ -1,5 +1,5 @@
-/* ============================================================
-   TerraTrend — hotspot dataset
+﻿/* ============================================================
+   TerraTrend - hotspot dataset
    Each entry is a "case file" pinned to a real-world location.
    lat/lon place the marker on the 3D globe.
    ============================================================ */
@@ -28,7 +28,7 @@ const HOTSPOTS = [
     whyItMatters: "Every centimetre pushes storm surge further inland. A 1 m rise by 2100 (a mid-range projection) would permanently flood the homes of 150 million people and cost trillions in infrastructure.",
     mission: "NASA/CNES TOPEX · Jason-1/2/3 · Sentinel-6 Michael Freilich",
     image: "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005611/seaLevelRise_2025.png",
-    imageAlt: "Global mean sea level rise 1993–2025 — NASA SVS"
+    imageAlt: "Global mean sea level rise 1993–2025 - NASA SVS"
   },{
     id: "greenland-ice",
     name: "Greenland Ice Loss",
@@ -76,7 +76,7 @@ const HOTSPOTS = [
     whyItMatters: "CO₂ traps outgoing infrared radiation, creating the energy imbalance that drives every other trend on this globe. The current growth rate is three times faster than in the 1960s and CO₂ persists in the atmosphere for centuries.",
     mission: "NASA OCO-2 (2014-) · OCO-3 (ISS, 2019-) · NOAA GML Mauna Loa",
     image: "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005115/TotalCO2_Comp_1920x1920p30_00080_print.jpg",
-    imageAlt: "Earth enveloped in CO₂ — NASA GEOS model 2021"
+    imageAlt: "Earth enveloped in CO₂ - NASA GEOS model 2021"
   },{
     id: "temp-anomaly",
     name: "Warming Anomaly",
@@ -100,7 +100,7 @@ const HOTSPOTS = [
     whyItMatters: "The Paris Agreement target of 1.5 °C is now years, not decades, away. Beyond it, coral bleaching, permafrost thaw and ice-sheet instability accelerate sharply and some effects become locked in for centuries.",
     mission: "NASA GISS GISTEMP v4 · NOAA GlobalTemp · AIRS (Aqua satellite)",
     image: "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005207/2023GISTEMP_Map.00899_print.jpg",
-    imageAlt: "Global temperature anomalies 2023 — NASA GISTEMP"
+    imageAlt: "Global temperature anomalies 2023 - NASA GISTEMP"
   },{
     id: "wildfire",
     name: "Wildfire Intensity",
@@ -124,7 +124,7 @@ const HOTSPOTS = [
     whyItMatters: "Wildfires release decades of stored carbon in days, blanket cities in toxic smoke and create a feedback: burned land absorbs more heat, drying vegetation further and raising risk for the next season.",
     mission: "NASA Terra / Aqua MODIS · Suomi-NPP / NOAA-20 VIIRS",
     image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/151000/151965/amazonfires_tmo_2023284.jpg",
-    imageAlt: "Smoke blankets the Amazon near Manaus, October 2023 — NASA MODIS"
+    imageAlt: "Smoke blankets the Amazon near Manaus, October 2023 - NASA MODIS"
   },{
     id: "groundwater",
     name: "Groundwater Decline",
@@ -172,7 +172,7 @@ const HOTSPOTS = [
     whyItMatters: "Sea ice reflects 80% of sunlight back to space. As it disappears, dark ocean water absorbs that heat instead, a feedback that makes the Arctic warm 4x faster than the global average and disrupts mid-latitude weather patterns.",
     mission: "NASA Aqua / AMSR-E · JAXA GCOM-W / AMSR2 · NSIDC passive microwave",
     image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/153000/153457/arctic_nsidc_20240911.jpg",
-    imageAlt: "Arctic sea ice September 2024 minimum vs 1981–2010 median — NASA/NSIDC"
+    imageAlt: "Arctic sea ice September 2024 minimum vs 1981–2010 median - NASA/NSIDC"
   },{
     id: "ocean-heat",
     name: "Ocean Heat",
@@ -196,6 +196,6 @@ const HOTSPOTS = [
     whyItMatters: "A warmer ocean fuels more intense hurricanes, bleaches coral reefs and melts ice shelves from below. It is also a heat time-bomb: energy stored today commits future generations to further warming, even if all emissions stopped tomorrow.",
     mission: "NOAA NCEI · Argo Float Network · NASA Aquarius / SAC-D",
     image: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/151000/151743/ssta_mur_2023233.jpg",
-    imageAlt: "Global sea surface temperature anomaly, August 2023 — NASA MUR SST"
+    imageAlt: "Global sea surface temperature anomaly, August 2023 - NASA MUR SST"
   }
 ];

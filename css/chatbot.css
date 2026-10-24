@@ -1,4 +1,4 @@
-/* TerraTrend — chatbot.css
+﻿/* TerraTrend - chatbot.css
    AI chatbot FAB and panel */
 
 /* ---------- AI Chatbot (FAB + panel) ---------- */
@@ -48,7 +48,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  width: 320px;
+  width: min(320px, calc(100vw - 40px));
   background: rgba(5, 6, 20, 0.98);
   border: 1px solid rgba(140, 150, 255, 0.2);
   border-radius: 18px;
@@ -99,10 +99,10 @@
 }
 .chatbot-status {
   font-family: var(--font-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.14em;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
   color: var(--accent);
-  opacity: 0.65;
+  opacity: 0.8;
   margin-top: 1px;
 }
 
@@ -147,10 +147,10 @@
 }
 .chat-coming-soon {
   font-family: var(--font-mono);
-  font-size: 0.54rem;
-  letter-spacing: 0.18em;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
   color: var(--accent);
-  opacity: 0.55;
+  opacity: 0.7;
   display: block;
   margin-top: 6px;
 }
