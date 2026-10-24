@@ -352,6 +352,7 @@
 
       const panelBody = panel.querySelector(".panel-body");
       if (panelBody) {
+        panelBody.scrollTop = 0;
         panelBody.classList.remove("entering");
         void panelBody.offsetWidth;
         panelBody.classList.add("entering");
