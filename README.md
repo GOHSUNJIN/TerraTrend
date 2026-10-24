@@ -1,6 +1,6 @@
 # TerraTrend - Earth System Trend Detective
 
-**NASA Space Apps Challenge 2026** — *Be an Earth System Trend Detective*
+**NASA Space Apps Challenge 2026** | *Be an Earth System Trend Detective*
 
 > Select a variable. Spin the globe. Discover what is changing, where, by how much and whether it is statistically significant.
 
@@ -18,7 +18,7 @@
 | Developer | Goh Sun Jin | [linkedin.com/in/gohsunjin](https://www.linkedin.com/in/gohsunjin) |
 | Developer | Prabhakaran Ritish | [linkedin.com/in/prabhakaran-ritish-45286921a](https://www.linkedin.com/in/prabhakaran-ritish-45286921a) |
 
-*The Data Detectives — NASA Space Apps 2026*
+*The Data Detectives · NASA Space Apps 2026*
 
 ---
 
@@ -33,7 +33,7 @@ The *Be an Earth System Trend Detective* challenge asks teams to use NASA data t
 | **How much** is it changing? | Sen's slope gives the rate of change per year in real units (mm, ppm, Gt, ZJ) |
 | **Is it statistically significant?** | Mann-Kendall non-parametric test reports S, Z, p-value and confidence level; only trends with p < 0.05 are marked significant |
 
-> **Why Mann-Kendall?** Unlike linear regression, Mann-Kendall is rank-based and robust to non-normal distributions and outliers — making it the standard method used by Earth scientists to detect monotonic trends in climate time series.
+> **Why Mann-Kendall?** Unlike linear regression, Mann-Kendall is rank-based and robust to non-normal distributions and outliers. It is the standard method used by Earth scientists to detect monotonic trends in climate time series.
 
 **NASA missions and datasets used:** GRACE-FO · Jason-3 / Sentinel-6 · OCO-2 / OCO-3 · GISS GISTEMP v4 · Terra / Aqua MODIS · NSIDC passive microwave · ICESat-2 · AIRS (Aqua) · NOAA GML Mauna Loa · NOAA NCEI / Argo Float Network
 
@@ -43,7 +43,7 @@ The *Be an Earth System Trend Detective* challenge asks teams to use NASA data t
 
 TerraTrend turns decades of satellite measurements into detective stories that anyone can follow.
 
-Every trend on this globe represents a real, measured change in an Earth system — changes that affect food security, coastal infrastructure, freshwater supply and weather patterns for billions of people. By surfacing the *key finding*, the *why it matters* narrative and the full statistical output for each variable, the app bridges the gap between raw NASA data archives and public understanding.
+Every trend on this globe represents a real, measured change in an Earth system: changes that affect food security, coastal infrastructure, freshwater supply and weather patterns for billions of people. By surfacing the *key finding*, the *why it matters* narrative and the full statistical output for each variable, the app bridges the gap between raw NASA data archives and public understanding.
 
 The target audience is anyone curious about what the data actually says: students, educators, journalists and policymakers who need to understand the science without reading technical papers.
 
@@ -56,8 +56,12 @@ The target audience is anyone curious about what the data actually says: student
   <img src="docs/screenshots/globe.png" alt="Interactive 3D globe with hotspot labels" width="48%" />
 </p>
 <p align="center">
-  <img src="docs/screenshots/panel-open.png" alt="Case file panel with trend chart and Mann-Kendall statistics" width="48%" />
-  <img src="docs/screenshots/mobile-panel.png" alt="Mobile view with panel open" width="22%" />
+  <img src="docs/screenshots/panel-open.png" alt="Case file panel with trend chart and Mann-Kendall statistics" width="96%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/mobile-globe.png" alt="Mobile globe view" width="24%" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/mobile-panel.png" alt="Mobile panel open" width="24%" />
 </p>
 
 ---
