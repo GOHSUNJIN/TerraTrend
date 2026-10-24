@@ -213,7 +213,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0 44px 6px 8px;
+    padding: 0 44px 6px 44px;
     min-height: 18px;
     opacity: 0.9;
     transition: color 0.3s ease;
