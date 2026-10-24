@@ -198,7 +198,7 @@
 @media (max-width: 900px) {
   .chatbot-wrap {
     top: auto;
-    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(90px + env(safe-area-inset-bottom, 0px));
     right: 14px;
   }
   /* Hide slide-up panel on mobile — FAB only */

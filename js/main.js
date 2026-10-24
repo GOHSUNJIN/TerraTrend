@@ -191,6 +191,11 @@
       p.classList.toggle("active", i === idx);
       p.setAttribute("aria-selected", i === idx ? "true" : "false");
     });
+    const strip = document.getElementById("mobile-var-strip");
+    if (strip) {
+      strip.textContent = spot.name;
+      strip.style.color = hex(spot.color);
+    }
   }
 
   // ---------- Modals ----------
