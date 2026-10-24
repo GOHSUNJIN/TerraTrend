@@ -77,7 +77,7 @@
       if (varSel) varSel.hidden = false;
       if (headerTools) headerTools.hidden = false;
       const chatWrap = document.getElementById("chatbot-wrap");
-      if (chatWrap) chatWrap.hidden = false;
+      if (chatWrap && window.innerWidth > 900) chatWrap.hidden = false;
       const tourBtnEl = document.getElementById("auto-tour-btn");
       if (tourBtnEl) tourBtnEl.hidden = false;
 
