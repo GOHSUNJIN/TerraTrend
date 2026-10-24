@@ -373,6 +373,44 @@
 .panel-body.entering > *:nth-child(7) { animation-delay: 330ms; }
 .panel-body.entering > *:nth-child(8) { animation-delay: 385ms; }
 
+/* ── Loading spinner ─────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-wheel {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(139, 124, 255, 0.18);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+.chart-spinner {
+  position: absolute;
+  top: 24px; /* clears the chart-header title */
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 5, 14, 0.55);
+  border-radius: 6px;
+  z-index: 2;
+}
+.mk-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  border: 1px solid rgba(140, 150, 255, 0.12);
+  border-left: 3px solid rgba(139, 124, 255, 0.35);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--text-tertiary);
+}
+
 /* ── Rate loading skeleton ───────────────────────────────── */
 @keyframes shimmer {
   0%   { background-position: -200px 0; }

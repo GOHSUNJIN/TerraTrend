@@ -188,6 +188,8 @@
       strip.textContent = spot.name;
       strip.style.color = hex(spot.color);
     }
+    const sidebar = document.getElementById("var-selector");
+    if (sidebar) sidebar.style.setProperty("--spot-col", hex(spot.color));
   }
 
   // ---------- Modals ----------
@@ -386,8 +388,17 @@
 
       const col = hex(spot.color);
 
+      const chartLoading = document.getElementById("chart-loading");
+      const mkLoading    = document.getElementById("mk-loading");
+
+      function hideSpinners() {
+        if (chartLoading) chartLoading.hidden = true;
+        if (mkLoading)    mkLoading.hidden    = true;
+      }
+
       function applyData(data, upgrading) {
         if (!data) return;
+        hideSpinners();
         els.rate.classList.remove("loading");
         if (data.mkResult?.senSlope !== undefined) {
           const s = data.mkResult.senSlope;
@@ -420,12 +431,16 @@
 
       if (window.TerraTrendData && panelIndex >= 0) {
         if (mkBlock) mkBlock.hidden = true;
+        if (chartLoading) chartLoading.hidden = false;
+        if (mkLoading)    mkLoading.hidden    = false;
 
         // Step 1: show curated data instantly (no waiting)
         const fast = await window.TerraTrendData.loadCurated(spot);
         if (fast) {
           applyData(fast, false);
           if (dataBadge) { dataBadge.hidden = false; dataBadgeLabel.textContent = "CHECKING…"; dataBadge.className = "data-badge loading"; }
+        } else {
+          hideSpinners();
         }
 
         // Step 2: try live source in background, upgrade if it succeeds
@@ -433,10 +448,12 @@
           if (live?.isLive) applyData(live, true);
           else if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
         }).catch(() => {
+          hideSpinners();
           if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
         });
       } else {
         // Region panel or no data layer: show static values immediately, no loading state
+        hideSpinners();
         els.rate.classList.remove("loading");
         els.rate.textContent = spot.rate || "";
         if (mkBlock) mkBlock.hidden = true;

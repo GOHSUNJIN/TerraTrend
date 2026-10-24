@@ -170,6 +170,9 @@
               <div class="chart-header">
                 <p class="panel-chart-title mono" id="chart-title">TREND SERIES</p>
               </div>
+              <div class="chart-spinner" id="chart-loading" hidden aria-hidden="true">
+                <span class="loading-wheel"></span>
+              </div>
               <canvas id="panel-chart" width="356" height="200"
                 aria-label="Trend time series chart" role="img"></canvas>
               <div class="chart-tip mono" id="chart-tip" hidden></div>
@@ -177,6 +180,10 @@
             </div>
 
             <!-- Mann-Kendall significance block -->
+            <div class="mk-loading" id="mk-loading" hidden aria-hidden="true">
+              <span class="loading-wheel"></span>
+              <span>COMPUTING SIGNIFICANCE</span>
+            </div>
             <div class="mk-block" id="mk-block" hidden>
               <p class="mk-label mono">MANN-KENDALL SIGNIFICANCE TEST</p>
               <div class="mk-status-row">
@@ -200,6 +207,16 @@
           </div>
         </div>
 
+
+        <!-- Panel navigation bar (pinned outside scroll so always visible) -->
+        <div class="panel-nav">
+          <button class="panel-nav-btn" id="panel-prev" aria-label="Previous variable">‹</button>
+          <span class="panel-nav-count mono" id="panel-nav-count"></span>
+          <button class="panel-nav-btn panel-share-btn" id="panel-share" title="Copy link" aria-label="Copy link to this variable">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button class="panel-nav-btn" id="panel-next" aria-label="Next variable">›</button>
+        </div>
 
         <!-- Elements referenced by JS but not displayed -->
         <div id="panel-what-where" hidden><span id="panel-what"></span><span id="panel-where"></span></div>

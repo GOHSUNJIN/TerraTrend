@@ -197,6 +197,11 @@
   /* No drag handle: this is a dock, not a sheet */
   .var-sidebar::before { display: none; }
 
+  /* Top border tints to match the active variable, linking dock to the floating panel */
+  .var-sidebar {
+    border-top: 1px solid color-mix(in srgb, var(--spot-col, rgba(140, 150, 255, 0.18)) 60%, rgba(140, 150, 255, 0.18));
+  }
+
   /* Active variable name strip: shows full name in the variable's own color */
   .mobile-var-strip {
     display: block;
@@ -265,18 +270,28 @@
   .pill-arrow,
   .pill-rate { display: none; }
 
-  /* Compact progress strip above the pill row */
+  /* Counter floats in the top-right corner so it doesn't add to dock height */
   .explore-tracker {
-    margin-top: 6px;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    margin: 0;
     padding: 0;
     background: transparent;
     border: none;
   }
   .explore-bar { display: none; }
   .explore-counter {
-    font-size: 0.5rem;
-    letter-spacing: 0.18em;
-    margin-bottom: 0;
-    opacity: 0.7;
+    font-size: 0.48rem;
+    letter-spacing: 0.16em;
+    margin: 0;
+    opacity: 0.6;
+    text-align: right;
+  }
+
+  /* Tighten pills on very narrow phones (< 360px) */
+  @media (max-width: 360px) {
+    .var-pill { height: 44px; border-radius: 10px; }
+    .pill-icon { font-size: 1.1rem; width: 28px; height: 28px; border-radius: 8px; }
   }
 }
