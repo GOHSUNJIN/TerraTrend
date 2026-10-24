@@ -418,7 +418,7 @@
         }
       }
 
-      if (window.TerraTrendData) {
+      if (window.TerraTrendData && panelIndex >= 0) {
         if (mkBlock) mkBlock.hidden = true;
 
         // Step 1: show curated data instantly (no waiting)
@@ -436,11 +436,15 @@
           if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
         });
       } else {
-        els.rate.textContent   = spot.rate;
+        // Region panel or no data layer: show static values immediately, no loading state
+        els.rate.classList.remove("loading");
+        els.rate.textContent = spot.rate || "";
+        if (mkBlock) mkBlock.hidden = true;
+        if (dataBadge) dataBadge.hidden = true;
         if (spot.sourceUrl) {
           els.source.innerHTML = `DATA: <a href="${spot.sourceUrl}" target="_blank" rel="noopener noreferrer">${spot.source}</a>`;
         } else {
-          els.source.textContent = "DATA: " + spot.source;
+          els.source.textContent = spot.source ? "DATA: " + spot.source : "";
         }
       }
     },

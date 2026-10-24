@@ -464,4 +464,9 @@
   .panel-body { padding: 12px 14px 16px; gap: 12px; }
   .panel-close { width: 36px; height: 36px; }
   .panel-nav-btn { width: 40px; height: 38px; }
+
+  /* Rate in the meta row is covered by the MK block below; hide the
+     skeleton so it doesn't show as a mystery rectangle while loading */
+  #panel-rate,
+  .panel-meta-sep { display: none; }
 }

@@ -197,17 +197,16 @@
 /* MUST be last so it wins over the base bottom/top/right above  */
 @media (max-width: 900px) {
   .chatbot-wrap {
-    top: auto;
-    bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+    top: calc(var(--appbar-h) + 10px);
+    bottom: calc(120px + env(safe-area-inset-bottom, 0px));
     right: 14px;
   }
-  /* Give panel a usable fixed height on mobile so it can open */
+  /* Panel fills the full wrap height and stretches to near-full width */
   .chatbot-panel {
-    flex: none;
-    height: min(380px, calc(100dvh - 220px - env(safe-area-inset-bottom, 0px)));
+    flex: 1;
+    height: auto;
+    width: calc(100vw - 28px);
   }
-  /* Hide the disabled input so it doesn't look broken */
-  .chatbot-input-row { display: none; }
   /* Hide FAB when the info panel is open */
   .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
 }
