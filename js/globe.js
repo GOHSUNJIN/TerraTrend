@@ -592,6 +592,7 @@
         id: region.id || region.name,
         name: region.name,
         icon: region.icon || "📍",
+        color: region.color || 0x4f8cff,
         tagline: region.tagline || "",
         what: region.what,
         where: region.where,
