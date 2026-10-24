@@ -179,29 +179,34 @@
     transform: none;
     width: 100%;
     border-radius: 0;
-    padding: 8px 12px 6px;
+    padding: 6px 12px 6px;
     border-left: none;
     border-right: none;
     border-top: none;
+    border-bottom: 1px solid rgba(140, 150, 255, 0.2);
     animation: none;
+    max-height: none;
   }
   .var-selector-pills {
     flex-direction: row;
     overflow-x: auto;
-    gap: 6px;
+    gap: 4px;
     padding-bottom: 2px;
     -webkit-overflow-scrolling: touch;
-    justify-content: center;
+    /* no justify-content:center — center+overflow clips items on both edges */
   }
   .var-selector-pills::-webkit-scrollbar { display: none; }
-  /* Icon-only pills: hide text, collapse grid to single icon column */
+  /* Icon-only compact pills — always show border so pills are visible */
   .var-pill {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 6px 8px;
+    padding: 5px 7px;
     border-radius: 999px;
     flex-shrink: 0;
+    min-width: 0;
+    border-color: rgba(140, 150, 255, 0.22);
+    background: rgba(255, 255, 255, 0.05);
   }
   .pill-name,
   .var-sidebar-label,

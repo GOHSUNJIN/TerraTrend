@@ -218,7 +218,7 @@
         `
       })
     );
-    scene.add(atmosphere);
+    globeGroup.add(atmosphere);
   }
 
   // ---------- Coordinates helpers ----------
