@@ -43,7 +43,7 @@ The *Be an Earth System Trend Detective* challenge asks teams to use NASA data t
 
 TerraTrend turns decades of satellite measurements into detective stories that anyone can follow.
 
-Every trend on this globe represents a real, measured change in an Earth system: changes that affect food security, coastal infrastructure, freshwater supply and weather patterns for billions of people. By surfacing the *key finding*, the *why it matters* narrative and the full statistical output for each variable, the app bridges the gap between raw NASA data archives and public understanding.
+Every trend on this globe represents a real, measured change in an Earth system. These changes affect food security, coastal infrastructure, freshwater supply and weather patterns for billions of people. By surfacing the key finding, the why-it-matters narrative and the full statistical output for each variable, the app bridges the gap between raw NASA data archives and public understanding.
 
 The target audience is anyone curious about what the data actually says: students, educators, journalists and policymakers who need to understand the science without reading technical papers.
 
@@ -81,7 +81,7 @@ The target audience is anyone curious about what the data actually says: student
 
 | Variable | NASA / Partner Mission | Live API | Record |
 |----------|----------------------|---------|--------|
-| Rising Seas | NASA/CNES Jason-3, Sentinel-6 | none | 1993-2023 |
+| Rising Seas | NASA/CNES Jason-3 / Sentinel-6 | none | 1993-2023 |
 | Greenland Ice Loss | NASA GRACE-FO | Open-Meteo ERA5 | 2000-2023 |
 | CO2 Accumulation | NOAA GML / NASA OCO-2 | NOAA GML CSV | 1960-2023 |
 | Warming Anomaly | NASA GISS GISTEMP v4 | Open-Meteo ERA5 | 1960-2023 |
@@ -94,25 +94,42 @@ The target audience is anyone curious about what the data actually says: student
 
 ## Key Features
 
-- **3D interactive globe** - WebGL globe with pulsing hotspot labels; clicking any label or marker opens its case file
-- **Statistical significance** - Mann-Kendall test with S, Z, p-value and Sen's slope; plain-language interpretation alongside the numbers
-- **Two-stage data loading** - archived JSON opens the panel instantly while a live API upgrade runs silently in the background
-- **Case file panel** - NASA mission photograph, key finding callout, "Why It Matters" narrative, interactive trend chart and full source attribution
-- **42 regional surface zones** - click anywhere on the globe to surface a local trend story for that coordinate
-- **Explore tracker** - progress counter across all 8 variables with a completion moment when all are investigated
-- **Responsive** - full mobile support with icon dock, floating panel and touch navigation
-- **Earth AI assistant** *(work in progress)* - chatbot slot wired and ready for Claude API integration to explain trends in plain language
+- **3D interactive globe** WebGL globe with pulsing hotspot labels; clicking any label or marker opens its case file
+- **Statistical significance** Mann-Kendall test with S, Z, p-value and Sen's slope; plain-language interpretation alongside the numbers
+- **Two-stage data loading** Archived JSON opens the panel instantly while a live API upgrade runs silently in the background
+- **Case file panel** NASA mission photograph, key finding callout, a Why It Matters narrative, interactive trend chart and full source attribution
+- **42 regional surface zones** Click anywhere on the globe to surface a local trend story for that coordinate
+- **Explore tracker** Progress counter across all 8 variables with a completion moment when all are investigated
+- **Terra AI assistant** Ask Terra about any variable, region or trend calculation; powered by Claude via the Anthropic API
+- **Responsive** Full mobile support with icon dock, floating panel and touch navigation
+
+---
+
+## Terra AI Assistant
+
+Terra is the built-in AI guide powered by Claude (Haiku). It knows every variable, region and methodology in the app.
+
+Terra can:
+- Explain what any of the 8 variables means and why it matters
+- Surface key facts for any of the 42 regional zones
+- Walk through how Mann-Kendall and Sen's slope work in plain language
+- Answer questions in the context of whatever case file you last opened
+
+Terra will not invent statistics or measurements. If it is not sure, it says so.
+
+To chat with Terra: click the purple circle button in the bottom-right corner of the globe view.
 
 ---
 
 ## Technology
 
-- **Three.js r160** - 3D WebGL globe, self-hosted to avoid CDN blocking
-- **Canvas 2D fallback** - automatic degradation when WebGL is unavailable
-- **Mann-Kendall test** - implemented from scratch in `mann-kendall.js` (Mann 1945, Sen 1968); no external stats library
-- **Open-Meteo ERA5** - free, CORS-enabled reanalysis API (no key required)
-- **NOAA GML** - live Mauna Loa CO2 CSV
-- **Vanilla JS** - zero build step, zero runtime dependencies beyond Three.js
+- **Three.js r160** 3D WebGL globe, self-hosted to avoid CDN blocking
+- **Canvas 2D fallback** Automatic degradation when WebGL is unavailable
+- **Mann-Kendall test** Implemented from scratch in `mann-kendall.js` (Mann 1945, Sen 1968); no external stats library
+- **Open-Meteo ERA5** Free CORS-enabled reanalysis API (no key required)
+- **NOAA GML** Live Mauna Loa CO2 CSV
+- **Anthropic Claude** Powers the Terra AI assistant via a Vercel serverless function proxy
+- **Vanilla JS** Zero build step, zero runtime dependencies beyond Three.js
 
 ---
 
@@ -129,15 +146,17 @@ python3 -m http.server 8090
 npx serve .
 ```
 
-> Live API calls (NOAA, Open-Meteo) require a server context. Archived fallback data works without one.
+> Live API calls (NOAA and Open-Meteo) require a server context. Archived fallback data works without one.
+
+To enable the Terra AI assistant locally, add `ANTHROPIC_API_KEY` as an environment variable in your Vercel project settings under Settings > Environment Variables.
 
 ---
 
 ## What's Next
 
-- **Earth AI assistant** - Claude API integration to answer questions about any trend in plain language *(in progress)*
-- **Animation playback** - scrub through years to watch trends evolve spatially
-- **Custom dataset upload** - bring your own CSV and run Mann-Kendall on the spot
+- **Animation playback** Scrub through years to watch trends evolve spatially
+- **Custom dataset upload** Bring your own CSV and run Mann-Kendall on the spot
+- **Expanded regions** More zone coverage for Central Asia and the Pacific Islands
 
 ---
 

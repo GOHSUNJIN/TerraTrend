@@ -535,8 +535,6 @@
     });
   }
 
-  // Chatbot FAB and panel are handled by js/chatbot.js
-
   // ---------- Ticker ----------
   const tickerTrack = document.getElementById("ticker-track");
   if (tickerTrack && typeof HOTSPOTS !== "undefined") {

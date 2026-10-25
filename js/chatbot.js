@@ -1,13 +1,20 @@
 /* TerraTrend - chatbot.js
-   Earth AI assistant powered by Claude via /api/chat */
+   Terra assistant powered by Claude via /api/chat */
 (function () {
   'use strict';
 
   var WELCOME_KEY = 'tt_ai_greeted';
   var WELCOME_MSG =
-    "Hey! I'm Earth AI, your guide to TerraTrend's climate data. " +
+    "Hey! I'm Terra, your guide to TerraTrend's climate data. " +
     "Ask me about any of the 8 variables on the globe, what's happening in a specific region " +
     "or how the statistics work. What are you curious about?";
+
+  var SUGGESTIONS = [
+    'What is happening to sea levels?',
+    'Which region is most at risk?',
+    'How are trends calculated?',
+    'Tell me about Greenland ice loss'
+  ];
 
   var fab      = document.getElementById('chatbot-fab');
   var panel    = document.getElementById('chatbot-panel');
@@ -47,6 +54,7 @@
     if (!localStorage.getItem(WELCOME_KEY)) {
       localStorage.setItem(WELCOME_KEY, '1');
       addMsg('ai', WELCOME_MSG);
+      addSuggestions();
     }
     inputEl.focus();
   });
@@ -134,6 +142,24 @@
     thread.appendChild(row);
     thread.scrollTop = thread.scrollHeight;
     return row;
+  }
+
+  function addSuggestions() {
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-suggestions';
+    SUGGESTIONS.forEach(function (q) {
+      var btn = document.createElement('button');
+      btn.className = 'chat-suggestion-btn';
+      btn.textContent = q;
+      btn.addEventListener('click', function () {
+        wrap.remove();
+        inputEl.value = q;
+        send();
+      });
+      wrap.appendChild(btn);
+    });
+    thread.appendChild(wrap);
+    thread.scrollTop = thread.scrollHeight;
   }
 
   function safe(str) {
