@@ -477,6 +477,14 @@
   let targetRotationX = 0.35;
   const MAX_TILT = 1.1;
 
+  // Zoom state
+  let zoomBase   = CAMERA_Z;
+  let zoomTarget = CAMERA_Z;
+  const ZOOM_NEAR = 0.45;
+  const ZOOM_FAR  = 1.85;
+  let pinchDist0 = 0;
+  let pinchZoom0 = CAMERA_Z;
+
   canvas.addEventListener("pointerdown", (e) => {
     dragState.active = true;
     dragState.lastX = e.clientX;
@@ -510,6 +518,44 @@
     dragState.active = false;
     canvas.classList.remove("grabbing");
   });
+
+  // Scroll to zoom (desktop)
+  canvas.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    zoomTarget = THREE.MathUtils.clamp(
+      zoomTarget + e.deltaY * 0.012,
+      zoomBase * ZOOM_NEAR,
+      zoomBase * ZOOM_FAR
+    );
+    flagUserActivity();
+  }, { passive: false });
+
+  // Pinch to zoom (mobile)
+  canvas.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 2) return;
+    e.preventDefault();
+    pinchDist0 = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    pinchZoom0 = zoomTarget;
+    dragState.active = false;
+  }, { passive: false });
+
+  canvas.addEventListener("touchmove", (e) => {
+    if (e.touches.length !== 2) return;
+    e.preventDefault();
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    zoomTarget = THREE.MathUtils.clamp(
+      pinchZoom0 * (pinchDist0 / dist),
+      zoomBase * ZOOM_NEAR,
+      zoomBase * ZOOM_FAR
+    );
+    flagUserActivity();
+  }, { passive: false });
 
   function flagUserActivity() {
     userInteracting = true;
@@ -602,7 +648,8 @@
         significance: region.significance,
         significanceTone: region.tone || region.significanceTone || "mixed",
         description: region.description,
-        source: region.source
+        source: region.source,
+        sourceUrl: region.sourceUrl
       },
       formatLatLon(lat, lon)
     );
@@ -702,15 +749,18 @@
       globeGroup.position.y = -0.2;
       const scale = Math.min(1.12, Math.max(0.95, w / 1440));
       globeGroup.scale.setScalar(scale);
+      zoomBase = CAMERA_Z; zoomTarget = CAMERA_Z;
       camera.position.z = CAMERA_Z;
     } else if (w > 640) {
       globeGroup.position.set(0, 0.35, 0);
       globeGroup.scale.setScalar(0.85);
+      zoomBase = CAMERA_Z; zoomTarget = CAMERA_Z;
       camera.position.z = CAMERA_Z;
     } else {
       // Narrow portrait phones: pull camera back so globe fits in the horizontal FOV
       globeGroup.position.set(0, 0.6, 0);
       globeGroup.scale.setScalar(0.62);
+      zoomBase = 9.5; zoomTarget = 9.5;
       camera.position.z = 9.5;
     }
 
@@ -807,6 +857,11 @@
     if (highlightMesh) {
       highlightMesh.material.opacity = 0.7 + Math.sin(t * 1.6) * 0.3;
       highlightMesh.scale.setScalar(1 + Math.sin(t * 1.1) * 0.09);
+    }
+
+    // Smooth zoom lerp
+    if (Math.abs(camera.position.z - zoomTarget) > 0.001) {
+      camera.position.z += (zoomTarget - camera.position.z) * Math.min(1, 0.1 * s);
     }
 
     renderer.render(scene, camera);

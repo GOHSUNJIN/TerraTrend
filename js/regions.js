@@ -674,6 +674,22 @@ const REGION_ZONES = [
       "The Red Sea is one of the hottest and saltiest seas on Earth and it is warming faster than almost any other body of water. Its corals evolved under extreme heat and were once considered resilient, yet mass bleaching events have now become regular. The warming signal here carries almost no confounding natural variability, making it a clean detective case.",
     source: "NASA MUR SST · MODIS · Landsat",
     sourceUrl: "https://podaac.jpl.nasa.gov/"
+  },
+  {
+    id: "singapore",
+    name: "Singapore Urban Heat Island",
+    icon: "🏙️",
+    bounds: [0.5, 2.0, 102.8, 105.0],
+    color: 0xff6b6b,
+    what: "Urban heat island intensity & coastal sea level rise",
+    where: "Singapore island and Strait of Malacca",
+    rate: "Night temperatures rising 0.25 °C/decade; sea level up 3.5 mm/yr in the strait",
+    significance: "YES; one of the most studied urban heat islands in tropical Asia",
+    tone: "yes",
+    description:
+      "Singapore is a living laboratory for the urban heat island effect in the tropics. Dense urban surfaces absorb heat the surrounding ocean never stores, pushing nighttime temperatures up faster than regional background warming. The island sits just 1-3 metres above sea level: Jason-3 satellite altimetry records sea level in the Strait of Malacca rising at 3.5 mm per year. NASA Landsat time series captures how land cover shifted from mangrove to urban over five decades, replacing natural cooling with impervious surfaces.",
+    source: "NASA Landsat · GISTEMP · Jason-3 · MODIS LST",
+    sourceUrl: "https://earthobservatory.nasa.gov/"
   }
 ];
 

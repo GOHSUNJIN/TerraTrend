@@ -29,7 +29,7 @@ The *Be an Earth System Trend Detective* challenge asks teams to use NASA data t
 | Question | How TerraTrend answers it |
 |----------|--------------------------|
 | **What** is changing? | 8 Earth science variables from NASA and NOAA missions, each with a plain-language case file |
-| **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 41 clickable regional zones surface local stories |
+| **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 42 clickable regional zones surface local stories |
 | **How much** is it changing? | Sen's slope gives the rate of change per year in real units (mm, ppm, Gt, ZJ) |
 | **Is it statistically significant?** | Mann-Kendall non-parametric test reports S, Z, p-value and confidence level; only trends with p < 0.05 are marked significant |
 
@@ -98,7 +98,7 @@ The target audience is anyone curious about what the data actually says: student
 - **Statistical significance** - Mann-Kendall test with S, Z, p-value and Sen's slope; plain-language interpretation alongside the numbers
 - **Two-stage data loading** - archived JSON opens the panel instantly while a live API upgrade runs silently in the background
 - **Case file panel** - NASA mission photograph, key finding callout, "Why It Matters" narrative, interactive trend chart and full source attribution
-- **33 regional surface zones** - click anywhere on the globe to surface a local trend story for that coordinate
+- **42 regional surface zones** - click anywhere on the globe to surface a local trend story for that coordinate
 - **Explore tracker** - progress counter across all 8 variables with a completion moment when all are investigated
 - **Responsive** - full mobile support with icon dock, floating panel and touch navigation
 - **Earth AI assistant** *(work in progress)* - chatbot slot wired and ready for Claude API integration to explain trends in plain language
