@@ -129,8 +129,13 @@
   }
 
   function safe(str) {
+    // Strip any markdown the model sneaks in before HTML-escaping
+    var plain = str
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/`(.*?)`/g, '$1');
     var d = document.createElement('div');
-    d.textContent = str;
+    d.textContent = plain;
     return d.innerHTML.replace(/\n/g, '<br>');
   }
 })();
