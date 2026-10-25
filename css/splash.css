@@ -180,7 +180,7 @@
 }
 .splash-title span { /* inline; gradient spans the full word */ }
 .splash-lede {
-  color: var(--text-secondary);
+  color: var(--text);
   max-width: 42ch;
   line-height: 1.72;
   font-size: var(--text-base);

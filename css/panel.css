@@ -5,7 +5,7 @@
   position: absolute;
   top: calc(var(--appbar-h) + 14px);
   right: 16px;
-  width: min(400px, 94%);
+  width: min(460px, 94%);
   background: rgba(4, 5, 16, 0.98);
   border: 1px solid rgba(140, 150, 255, 0.18);
   border-radius: 20px;
@@ -432,6 +432,9 @@
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
+@media (min-width: 1400px) {
+  .info-panel { width: 520px; }
+}
 @media (max-width: 1024px) {
   .info-panel {
     top: auto;
