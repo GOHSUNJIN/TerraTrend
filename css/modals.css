@@ -72,6 +72,8 @@
   margin: 6px 0 22px;
 }
 .about-byline strong { color: var(--accent-2); font-weight: 500; }
+.byline-sep  { display: inline; }
+.byline-team { display: inline; }
 
 .about-grid {
   display: grid;
@@ -200,4 +202,6 @@ body.modal-open { overflow: hidden; } /* no page scroll behind an open popup */
   .steps { grid-template-columns: 1fr; gap: 12px; }
   .about-facts { grid-template-columns: 1fr; }
   .about-grid { gap: 20px; }
+  .byline-sep  { display: none; }
+  .byline-team { display: block; }
 }
