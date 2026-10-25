@@ -3,7 +3,6 @@
 (function () {
   'use strict';
 
-  var WELCOME_KEY = 'tt_ai_greeted';
   var WELCOME_MSG =
     "Hey! I'm Terra, your guide to TerraTrend's climate data. " +
     "Ask me about any of the 8 variables on the globe, what's happening in a specific region " +
@@ -51,8 +50,7 @@
     if (window.TerraTrendUI && window.TerraTrendUI.closePanel) {
       window.TerraTrendUI.closePanel();
     }
-    if (!localStorage.getItem(WELCOME_KEY)) {
-      localStorage.setItem(WELCOME_KEY, '1');
+    if (history.length === 0) {
       addMsg('ai', WELCOME_MSG);
       addSuggestions();
     }
