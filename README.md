@@ -148,7 +148,7 @@ npx serve .
 
 > Live API calls (NOAA and Open-Meteo) require a server context. Archived fallback data works without one.
 
-To enable the Terra AI assistant locally, add `ANTHROPIC_API_KEY` as an environment variable in your Vercel project settings under Settings > Environment Variables.
+Terra's AI assistant requires the `/api/chat` serverless function. To run it locally, install the Vercel CLI (`npm i -g vercel`), then run `vercel env pull` to pull your environment variables and `vercel dev` instead of the Python or Node server above.
 
 ---
 
