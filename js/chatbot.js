@@ -29,9 +29,17 @@
   var history = [];
   var busy    = false;
 
+  function closeChat() {
+    panel.classList.add('closing');
+    setTimeout(function () {
+      panel.hidden = true;
+      panel.classList.remove('closing');
+    }, 210);
+  }
+
   // ---- Open / close ----
   fab.addEventListener('click', function () {
-    if (!panel.hidden) { panel.hidden = true; return; }
+    if (!panel.hidden) { closeChat(); return; }
     panel.hidden = false;
     if (window.TerraTrendUI && window.TerraTrendUI.closePanel) {
       window.TerraTrendUI.closePanel();
@@ -44,7 +52,7 @@
   });
 
   if (closeBtn) {
-    closeBtn.addEventListener('click', function () { panel.hidden = true; });
+    closeBtn.addEventListener('click', closeChat);
   }
 
   // ---- Send ----

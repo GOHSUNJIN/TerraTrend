@@ -67,6 +67,13 @@
   from { opacity: 0; transform: translateX(16px) scale(0.97); }
   to   { opacity: 1; transform: translateX(0) scale(1); }
 }
+.chatbot-panel.closing {
+  animation: chatSlideOut 0.21s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+@keyframes chatSlideOut {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(16px) scale(0.97); }
+}
 .chatbot-panel[hidden] { display: none; }
 
 /* Panel header with avatar */
