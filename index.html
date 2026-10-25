@@ -321,18 +321,11 @@
         <button class="panel-close" id="chatbot-close" aria-label="Close chat">×</button>
       </div>
       <!-- Messages -->
-      <div class="chatbot-messages" id="chatbot-messages">
-        <div class="chat-msg chat-msg-ai">
-          <div class="chat-bubble">
-            Hi! I can answer questions about Earth science trends, climate data and what the Mann-Kendall statistics mean for the variable you are viewing.
-            <span class="chat-coming-soon">AI ASSISTANT · COMING SOON</span>
-          </div>
-        </div>
-      </div>
+      <div class="chatbot-messages" id="chatbot-messages"></div>
       <!-- Input -->
       <div class="chatbot-input-row">
-        <input class="chatbot-input" type="text" placeholder="Ask about climate trends..." disabled aria-label="Chat input" />
-        <button class="chatbot-send" disabled aria-label="Send">
+        <input class="chatbot-input" type="text" placeholder="Ask about climate trends..." aria-label="Chat input" />
+        <button class="chatbot-send" aria-label="Send">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
@@ -367,6 +360,7 @@
   <script defer src="js/globe-2d.js"></script>
   <script defer src="js/globe.js"></script>
   <script defer src="js/main.js"></script>
+  <script defer src="js/chatbot.js"></script>
 
   <!-- Mobile landscape lock: prompts users on phones to rotate to portrait -->
   <div class="rotate-prompt" aria-hidden="true">

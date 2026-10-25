@@ -173,29 +173,57 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(140, 150, 255, 0.18);
   border-radius: 999px;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   font-family: var(--font-display);
   font-size: 0.78rem;
   padding: 8px 14px;
   outline: none;
-  cursor: not-allowed;
-  transition: border-color 0.2s;
+  cursor: text;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
+.chatbot-input:focus {
+  border-color: rgba(139, 124, 255, 0.45);
+  box-shadow: 0 0 0 2px rgba(139, 124, 255, 0.1);
+}
+.chatbot-input:disabled { cursor: not-allowed; opacity: 0.5; }
 .chatbot-send {
   width: 34px;
   height: 34px;
   border-radius: 50%;
   background: rgba(139, 124, 255, 0.12);
   border: 1px solid rgba(139, 124, 255, 0.25);
-  color: var(--text-tertiary);
+  color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: not-allowed;
+  cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
+.chatbot-send:not(:disabled):hover {
+  background: rgba(139, 124, 255, 0.22);
+  border-color: rgba(139, 124, 255, 0.55);
+  box-shadow: 0 0 14px -4px rgba(139, 124, 255, 0.5);
+}
+.chatbot-send:disabled { cursor: not-allowed; opacity: 0.4; }
 .chatbot-send svg { stroke: currentColor; }
+
+/* Thinking dots (shown while waiting for API response) */
+.chat-thinking { min-height: 36px; display: flex; align-items: center; }
+.thinking-dots { display: inline-flex; gap: 5px; align-items: center; padding: 2px 0; }
+.thinking-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(139, 124, 255, 0.65);
+  animation: ttDotBounce 1.3s ease-in-out infinite;
+}
+.thinking-dots span:nth-child(2) { animation-delay: 0.18s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes ttDotBounce {
+  0%, 60%, 100% { transform: translateY(0);    opacity: 0.35; }
+  30%            { transform: translateY(-6px); opacity: 1;    }
+}
 
 /* Mobile: FAB floats above the dock; panel slides up when opened */
 /* MUST be last so it wins over the base bottom/top/right above  */

@@ -305,6 +305,7 @@
   window.TerraTrendUI = {
     async openPanel(spot, coords) {
       if (!panel) return;
+      window.TerraTrendUI.lastViewedSpot = spot;
 
       document.title = spot.name + " - TerraTrend";
 
@@ -534,18 +535,7 @@
     });
   }
 
-  // ---------- Chatbot FAB (placeholder) ----------
-  const chatFab   = document.getElementById("chatbot-fab");
-  const chatPanel = document.getElementById("chatbot-panel");
-  const chatClose = document.getElementById("chatbot-close");
-  if (chatFab && chatPanel) {
-    chatFab.addEventListener("click", () => {
-      const willOpen = chatPanel.hidden;
-      chatPanel.hidden = !chatPanel.hidden;
-      if (willOpen) window.TerraTrendUI.closePanel(); // mutual exclusivity
-    });
-    if (chatClose) chatClose.addEventListener("click", () => { chatPanel.hidden = true; });
-  }
+  // Chatbot FAB and panel are handled by js/chatbot.js
 
   // ---------- Ticker ----------
   const tickerTrack = document.getElementById("ticker-track");
