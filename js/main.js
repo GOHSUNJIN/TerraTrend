@@ -54,7 +54,7 @@
     sessionStorage.setItem("tt-hinted", "1");
     const hint = document.createElement("div");
     hint.className = "onboard-hint";
-    hint.innerHTML = '<span class="onboard-arrow">←</span><span>Pick a variable</span>';
+    hint.innerHTML = '<span class="onboard-arrow">←</span><span>PICK A VARIABLE</span>';
     document.body.appendChild(hint);
     requestAnimationFrame(() => requestAnimationFrame(() => hint.classList.add("visible")));
     const dismiss = () => {
@@ -411,7 +411,7 @@
         }
         setDataBadge(data.isLive, data.source);
         renderMK(data.mkResult, col);
-        if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend series";
+        if (chartTitleEl) chartTitleEl.textContent = data.label || "Trend Series";
         if (data.series?.length > 0) {
           drawChart(data.series, col, data.unit);
           if (els.chartDelta && data.series.length >= 2) {

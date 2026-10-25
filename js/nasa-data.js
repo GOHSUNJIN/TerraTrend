@@ -135,14 +135,14 @@ window.TerraTrendData = (function () {
         live = await liveOpenMeteo(
           hotspot.lat, hotspot.lon,
           "temperature_2m_mean",
-          "Greenland surface temp (°C)", "°C",
+          "Greenland Surface Temp (°C)", "°C",
           "ECMWF ERA5 reanalysis - Greenland"
         );
       } else if (id === "wildfire") {
         live = await liveOpenMeteo(
           hotspot.lat, hotspot.lon,
           "precipitation_sum",
-          "Amazon precipitation (mm/yr)", "mm",
+          "Amazon Precipitation (mm/yr)", "mm",
           "ECMWF ERA5 reanalysis - Amazon basin"
         );
       }

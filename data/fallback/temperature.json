@@ -1,6 +1,6 @@
 {
   "unit": "°C anomaly",
-  "label": "Temp. anomaly (°C)",
+  "label": "Temperature Anomaly (°C)",
   "source": "NASA GISS Surface Temperature Analysis (GISTEMP v4)",
   "series": [
     {"year":1960,"value":-0.01},{"year":1961,"value":0.06},

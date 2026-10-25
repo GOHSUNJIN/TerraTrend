@@ -1,6 +1,6 @@
 {
   "unit": "index",
-  "label": "Fire Radiative Power index",
+  "label": "Fire Radiative Power Index",
   "source": "NASA MODIS / VIIRS Active Fire Products (Amazon & boreal regions)",
   "series": [
     {"year":2000,"value":100},{"year":2001,"value":108},
