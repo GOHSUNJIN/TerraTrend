@@ -31,7 +31,7 @@
 
   // ---- Open / close ----
   fab.addEventListener('click', function () {
-    if (!panel.hidden) return;
+    if (!panel.hidden) { panel.hidden = true; return; }
     panel.hidden = false;
     if (window.TerraTrendUI && window.TerraTrendUI.closePanel) {
       window.TerraTrendUI.closePanel();
