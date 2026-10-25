@@ -252,6 +252,7 @@
   const markerHitTargets = [];
   const markerGlows = [];
   const markerLabels = [];
+  const markerAnchors = [];
 
   // Canvas-text label sprite that floats above a marker
   function makeLabelSprite(text, hexColor, icon) {
@@ -391,6 +392,7 @@
       markerLabels.push({ sprite: label, origX: label.scale.x, origY: label.scale.y, baseX: label.scale.x, baseY: label.scale.y, phase: i * 0.85 });
       markerHitTargets.push(label);
 
+      markerAnchors.push(anchor);
       globeGroup.add(anchor);
     });
   }
@@ -484,6 +486,11 @@
   const ZOOM_FAR  = 1.85;
   let pinchDist0 = 0;
   let pinchZoom0 = CAMERA_Z;
+
+  // Pre-allocated vectors for back-face culling (re-used every frame, no GC)
+  const _camLocal    = new THREE.Vector3();
+  const _anchorNorm  = new THREE.Vector3();
+  const _toCam       = new THREE.Vector3();
 
   canvas.addEventListener("pointerdown", (e) => {
     dragState.active = true;
@@ -858,6 +865,15 @@
       highlightMesh.material.opacity = 0.7 + Math.sin(t * 1.6) * 0.3;
       highlightMesh.scale.setScalar(1 + Math.sin(t * 1.1) * 0.09);
     }
+
+    // Back-face cull: hide markers that are on the far side of the globe
+    _camLocal.setFromMatrixPosition(camera.matrixWorld);
+    globeGroup.worldToLocal(_camLocal);
+    markerAnchors.forEach((anchor) => {
+      _anchorNorm.copy(anchor.position).normalize();
+      _toCam.subVectors(_camLocal, anchor.position);
+      anchor.visible = _anchorNorm.dot(_toCam) > 0;
+    });
 
     // Smooth zoom lerp
     if (Math.abs(camera.position.z - zoomTarget) > 0.001) {
