@@ -356,9 +356,9 @@
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.pause();
 
       panelIndex = HOTSPOTS.indexOf(spot);
-      // Hide chatbot FAB only for variable hotspot panels; keep it visible for region panels
+      // Desktop: hide FAB for hotspot panels only; mobile: hide for any open panel
       const chatWrapEl = document.getElementById("chatbot-wrap");
-      if (panelIndex >= 0) {
+      if (panelIndex >= 0 || window.innerWidth <= 900) {
         chatWrapEl?.classList.add("panel-open");
       } else {
         chatWrapEl?.classList.remove("panel-open");
