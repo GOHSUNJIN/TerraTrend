@@ -384,6 +384,7 @@
 
       const col = hex(spot.color);
 
+      const chartWrap    = panel.querySelector(".panel-chart-wrap");
       const chartLoading = document.getElementById("chart-loading");
       const mkLoading    = document.getElementById("mk-loading");
 
@@ -426,6 +427,7 @@
       }
 
       if (window.TerraTrendData && panelIndex >= 0) {
+        if (chartWrap)    chartWrap.hidden    = false;
         if (mkBlock) mkBlock.hidden = true;
         if (chartLoading) chartLoading.hidden = false;
         if (mkLoading)    mkLoading.hidden    = false;
@@ -448,7 +450,8 @@
           if (dataBadge) { dataBadge.className = "data-badge archived"; dataBadgeLabel.textContent = "ARCHIVED DATA"; }
         });
       } else {
-        // Region panel or no data layer: show static values immediately, no loading state
+        // Region panel or no data layer: hide chart area, show static values immediately
+        if (chartWrap) chartWrap.hidden = true;
         hideSpinners();
         els.rate.classList.remove("loading");
         els.rate.textContent = spot.rate || "";
