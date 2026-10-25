@@ -314,6 +314,98 @@ const REGION_ZONES = [
     source: "NASA Landsat · ICESat-2 · NSIDC"
   },
 
+  // ---------- AFRICA & SOUTHEAST ASIA ----------
+  {
+    id: "congo-rainforest",
+    name: "Congo Rainforest",
+    icon: "🌿",
+    bounds: [-5, 5, 14, 32],
+    color: 0x2db87a,
+    what: "Forest cover & carbon storage",
+    where: "Congo Basin: DRC, Republic of Congo, Cameroon",
+    rate: "Deforestation accelerating; canopy height loss now detectable from orbit",
+    significance: "YES; consistent loss signal in GEDI canopy height data",
+    tone: "yes",
+    description:
+      "The Congo Basin is the world's second-largest tropical forest and one of Earth's most important carbon stores. Unlike the Amazon it remained relatively stable through the 1990s, but GEDI and MODIS now show accelerating forest loss and degradation driven by smallholder agriculture and charcoal production.",
+    source: "NASA GEDI · MODIS · Landsat"
+  },
+  {
+    id: "horn-of-africa",
+    name: "Horn of Africa Drought",
+    icon: "☀️",
+    bounds: [0, 12, 38, 51],
+    color: 0xe07850,
+    what: "Rainfall deficit & terrestrial water storage",
+    where: "Ethiopia, Somalia, Kenya, Djibouti",
+    rate: "5 consecutive failed rainy seasons 2020-2022; worst drought in 40 years",
+    significance: "YES; GRACE-FO detects sustained multi-year water storage loss",
+    tone: "yes",
+    description:
+      "The Horn of Africa experienced five consecutive failed rainy seasons between 2020 and 2022, the worst drought in four decades. GRACE-FO recorded sustained water storage losses across the region while GPM rainfall data confirmed the exceptional deficit. Climate change is shifting the Indian Ocean Dipole, suppressing rains that hundreds of millions depend on.",
+    source: "NASA GRACE-FO · GPM · MODIS NDVI"
+  },
+  {
+    id: "east-africa-lakes",
+    name: "East African Lakes",
+    icon: "🏞️",
+    bounds: [-12, 5, 28, 42],
+    color: 0x35b5a5,
+    what: "Lake water levels & basin hydrology",
+    where: "Lake Victoria, Turkana, Tanganyika, Malawi",
+    rate: "Lake Victoria rose 1.2 m in 2019-2020; Lake Turkana in multi-year decline",
+    significance: "MIXED; extremes intensifying against a variable background",
+    tone: "mixed",
+    description:
+      "East Africa's rift lakes are powerful climate recorders. Lake Victoria surged to its highest level in decades in 2020 after exceptional rainfall, flooding shoreline communities, while Lake Turkana faces a long-term freshwater squeeze. Landsat and GRACE-FO capture these opposite stories within the same basin.",
+    source: "NASA Landsat · GRACE-FO · GPM"
+  },
+  {
+    id: "indonesia-fires",
+    name: "Indonesian Peatland Fires",
+    icon: "🔥",
+    bounds: [-8, 6, 95, 120],
+    color: 0xff7043,
+    what: "Peat fire carbon emissions & deforestation",
+    where: "Borneo (Kalimantan) & Sumatra, Indonesia",
+    rate: "2015 fire season released more CO₂ than Germany emits in a year",
+    significance: "YES; extreme fire years are traceable in global CO₂ anomalies",
+    tone: "yes",
+    description:
+      "Indonesia's tropical peatlands store centuries of carbon. When drained for palm oil and pulp plantations then ignited, they burn underground for months. The 2015 event was among the largest single-year carbon emission events in modern records, detected globally by NASA's OCO-2 satellite as a clear CO₂ anomaly over the region.",
+    source: "NASA MODIS · VIIRS · OCO-2"
+  },
+  {
+    id: "mekong-basin",
+    name: "Mekong River Basin",
+    icon: "🏔️",
+    bounds: [10, 25, 98, 108],
+    color: 0x4fd1c5,
+    what: "River discharge & delta sediment flux",
+    where: "China, Myanmar, Laos, Thailand, Cambodia, Vietnam",
+    rate: "River hit record lows in 2019-2020; delta subsiding 1-2 cm/yr",
+    significance: "YES; dam cascade signal measurable in downstream hydrology",
+    tone: "yes",
+    description:
+      "The Mekong feeds 70 million people but a cascade of upstream dams combined with drought pushed the river to record lows in 2019-2020. Satellite altimetry from Jason-3 shows the downstream discharge deficit while Landsat maps the shrinking delta, which is simultaneously sinking from groundwater extraction.",
+    source: "NASA Landsat · Jason-3 · GRACE-FO"
+  },
+  {
+    id: "yangtze-basin",
+    name: "Yangtze River Basin",
+    icon: "🌧️",
+    bounds: [24, 33, 98, 122],
+    color: 0x5f8cff,
+    what: "Flood and drought extremes & reservoir hydrology",
+    where: "Central & eastern China: Three Gorges to Shanghai",
+    rate: "Record floods in 2020; record drought in 2022 in the same basin",
+    significance: "MIXED; extremes intensifying with a long-term trend emerging",
+    tone: "mixed",
+    description:
+      "The Yangtze basin showcased the climate paradox in back-to-back years: catastrophic flooding in 2020 then a severe drought in 2022 that dried the river to its lowest level in recorded history. GRACE-FO, GPM and Landsat together tell the story of a basin swinging between extremes as the monsoon system intensifies.",
+    source: "NASA GRACE-FO · GPM · Landsat · Jason-3"
+  },
+
   // ---------- OCEAN ZONES ----------
   {
     id: "west-pacific-sea-level",
@@ -389,6 +481,36 @@ const REGION_ZONES = [
     description:
       "Reefs live near their thermal limit: just 1 °C above normal summer maximum for weeks triggers mass bleaching. The warming trend here is unmistakable against the year-to-year ENSO cycle, a trend both real and significant.",
     source: "NASA MODIS SST · GPM"
+  },
+  {
+    id: "mediterranean-warming",
+    name: "Mediterranean Sea",
+    icon: "🌊",
+    bounds: [30, 46, -6, 37],
+    color: 0x46c8ff,
+    what: "Sea surface temperature & marine heatwaves",
+    where: "Mediterranean Sea: Spain to Turkey, Morocco to Italy",
+    rate: "Warming at 0.4 °C per decade, nearly double the global ocean average",
+    significance: "YES; most consistent marine warming signal in the Northern Hemisphere",
+    tone: "yes",
+    description:
+      "The Mediterranean is one of the fastest-warming bodies of water on Earth, enclosed by land that amplifies heat. Marine heatwaves have become near-annual events since 2015, bleaching Posidonia seagrass meadows and pushing fish species northward. NASA MUR SST records make the warming trend unmistakable across the full satellite record.",
+    source: "NASA MUR SST · MODIS · Copernicus Marine Service"
+  },
+  {
+    id: "red-sea",
+    name: "Red Sea Warming",
+    icon: "🌡️",
+    bounds: [12, 28, 32, 44],
+    color: 0xff5e8a,
+    what: "Sea surface temperature & coral bleaching",
+    where: "Red Sea: Egypt, Saudi Arabia, Yemen, Eritrea coasts",
+    rate: "0.45 °C per decade; among the fastest-warming seas on Earth",
+    significance: "YES; strong monotonic warming across the full satellite record",
+    tone: "yes",
+    description:
+      "The Red Sea is one of the hottest and saltiest seas on Earth and it is warming faster than almost any other body of water. Its corals evolved under extreme heat and were once considered resilient, yet mass bleaching events have now become regular. The warming signal here carries almost no confounding natural variability, making it a clean detective case.",
+    source: "NASA MUR SST · MODIS · Landsat"
   }
 ];
 
