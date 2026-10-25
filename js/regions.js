@@ -406,6 +406,128 @@ const REGION_ZONES = [
     source: "NASA GRACE-FO · GPM · Landsat · Jason-3"
   },
 
+  // ---------- ASIA & SOUTHEAST ASIA ----------
+  {
+    id: "bangladesh-delta",
+    name: "Bangladesh & Ganges Delta",
+    icon: "🌊",
+    bounds: [20, 27, 86, 93],
+    color: 0x2fa8ff,
+    what: "Delta subsidence & sea level rise",
+    where: "Ganges-Brahmaputra-Meghna delta, Bangladesh",
+    rate: "Land sinking 1-2 cm/yr while sea level rises; combined exposure accelerating",
+    significance: "YES; combined signal clear in satellite altimetry and InSAR",
+    tone: "yes",
+    description:
+      "The Ganges-Brahmaputra delta is home to 170 million people on land that is sinking under its own weight while the sea rises around it. Groundwater extraction and sediment compaction drive subsidence of 1-2 cm per year, measured by InSAR and GRACE-FO, while Jason-3 tracks the rising sea. The combined threat places Bangladesh among the most acute climate risk signals on Earth.",
+    source: "NASA GRACE-FO · Jason-3 · Sentinel-1 InSAR"
+  },
+  {
+    id: "pakistan-floods",
+    name: "Pakistan Monsoon Extremes",
+    icon: "🌧️",
+    bounds: [24, 37, 60, 73],
+    color: 0x5f8cff,
+    what: "Monsoon extremes & glacial melt flooding",
+    where: "Indus River basin, Pakistan",
+    rate: "2022 floods submerged one third of the country; a 1-in-1,000-year rainfall event",
+    significance: "YES; rainfall totals outside the entire historical envelope",
+    tone: "yes",
+    description:
+      "In 2022 Pakistan experienced one of the worst climate disasters ever recorded: a supercharged monsoon combined with accelerated Himalayan glacial melt submerged a third of the country and affected 33 million people. GPM measured rainfall totals 400% above normal while MODIS mapped floodwater extent week by week as the disaster unfolded.",
+    source: "NASA GPM · MODIS · GRACE-FO"
+  },
+  {
+    id: "himalayan-glacial-lakes",
+    name: "Himalayan Glacial Lakes",
+    icon: "🏔️",
+    bounds: [26, 36, 83, 97],
+    color: 0xa8d8ff,
+    what: "Glacial lake formation & outburst flood risk",
+    where: "Nepal, Bhutan, northeastern India",
+    rate: "Number of glacial lakes grew 53% between 1990 and 2018",
+    significance: "YES; lake expansion confirmed by Landsat 30-year time series",
+    tone: "yes",
+    description:
+      "As Himalayan glaciers retreat they leave behind lakes dammed by unstable ice and debris moraine. The number of glacial lakes in the Hindu Kush-Himalayan region grew 53% between 1990 and 2018 according to Landsat analysis. When these dams fail, glacial lake outburst floods can race down valleys in minutes, destroying villages and infrastructure far below.",
+    source: "NASA Landsat · ICESat-2 · GRACE-FO"
+  },
+  {
+    id: "philippines-typhoons",
+    name: "Philippines Super Typhoons",
+    icon: "🌀",
+    bounds: [5, 22, 115, 132],
+    color: 0x46c2ff,
+    what: "Typhoon rapid intensification & sea surface temperature",
+    where: "Philippine Sea & Luzon Strait",
+    rate: "Rapid intensification events increasing on a warming Philippine Sea",
+    significance: "YES; SST warming trend directly drives intensification risk",
+    tone: "yes",
+    description:
+      "The Philippines sits in the world's most active typhoon basin. As sea surface temperatures rise, typhoons can undergo rapid intensification, gaining Category 4 or 5 strength within 24 hours of landfall. Super Typhoon Haiyan (2013) and Goni (2020) both rapidly intensified over anomalously warm water. NASA GPM tracks rainfall rates inside storms while MODIS monitors the warm ocean pool beneath them.",
+    source: "NASA GPM · MODIS SST · Jason-3"
+  },
+  {
+    id: "vietnam-mekong-delta",
+    name: "Vietnam Mekong Delta",
+    icon: "🌾",
+    bounds: [8, 16, 100, 110],
+    color: 0x35d07f,
+    what: "Delta subsidence & saltwater intrusion",
+    where: "Mekong Delta, southern Vietnam",
+    rate: "Sinking 1-3 cm/yr; saltwater intrusion worsening with each dry season",
+    significance: "YES; subsidence and sea level rise signal combined in satellite data",
+    tone: "yes",
+    description:
+      "The Mekong Delta feeds 20% of Vietnam's population but is sinking faster than sea level is rising. Groundwater extraction compacts the delta at 1-3 cm per year while upstream dams trap the sediment that once replenished it naturally. GRACE-FO and Sentinel-1 InSAR reveal the subsidence and the reduced sediment load is visible in Landsat water clarity trends.",
+    source: "NASA GRACE-FO · Landsat · Sentinel-1 InSAR"
+  },
+  {
+    id: "mongolia-steppe",
+    name: "Mongolia Steppe & Dzud",
+    icon: "🐑",
+    bounds: [38, 52, 92, 120],
+    color: 0xffd166,
+    what: "Grassland degradation & extreme winter drought",
+    where: "Mongolian steppe and Gobi Desert fringe",
+    rate: "Dzud frequency doubling; NDVI shows persistent grassland browning",
+    significance: "YES; vegetation decline and dzud trend both significant",
+    tone: "yes",
+    description:
+      "Mongolia's vast steppe is caught between summer drought and catastrophic winter dzuds: a uniquely Mongolian disaster where summer drought leaves animals too thin to survive a harsh winter, causing mass livestock mortality. MODIS NDVI shows the steppe browning decade by decade while land surface temperatures measured from orbit confirm the amplified warming at these latitudes.",
+    source: "NASA MODIS NDVI · GISTEMP · GRACE-FO"
+  },
+  {
+    id: "japan-seas",
+    name: "Japan & Korea Seas",
+    icon: "🌊",
+    bounds: [25, 45, 125, 148],
+    color: 0x2fa8ff,
+    what: "Sea surface temperature & typhoon track shifts",
+    where: "Sea of Japan, East China Sea, Philippine Sea near Japan",
+    rate: "Sea of Japan warming at twice the global ocean average",
+    significance: "YES; one of the fastest-warming regional seas in the world",
+    tone: "yes",
+    description:
+      "The Sea of Japan is warming at roughly twice the global ocean average, driving changes in fisheries, typhoon tracks and the timing of seasonal marine events. NASA MUR SST data shows a consistent warming trend since the 1980s that has pushed warm-water fish species northward and lengthened the season of marine heatwaves around the Japanese and Korean archipelagos.",
+    source: "NASA MUR SST · MODIS · GPM"
+  },
+  {
+    id: "indian-ocean-dipole",
+    name: "Indian Ocean Dipole",
+    icon: "🌡️",
+    bounds: [-10, 15, 52, 80],
+    color: 0xff8c42,
+    what: "Sea surface temperature gradient & precipitation anomalies",
+    where: "Western Indian Ocean: Arabian Sea to Tanzania coast",
+    rate: "Positive IOD events intensifying; 2019 event was the strongest in 60 years",
+    significance: "YES; clear warming bias in the western pole across the satellite record",
+    tone: "yes",
+    description:
+      "The Indian Ocean Dipole is a seesaw of warm and cool water that drives rainfall across Africa, Asia and Australia. A positive IOD warms the western Indian Ocean and cools the east, bringing floods to East Africa and drought to Australia exactly as happened in 2019. NASA Argo floats and satellite SST data show the western pole warming faster than the east, potentially locking the IOD in a persistently more positive state.",
+    source: "NASA MUR SST · Argo Float Network · Jason-3"
+  },
+
   // ---------- OCEAN ZONES ----------
   {
     id: "west-pacific-sea-level",

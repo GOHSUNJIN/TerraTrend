@@ -29,7 +29,7 @@ The *Be an Earth System Trend Detective* challenge asks teams to use NASA data t
 | Question | How TerraTrend answers it |
 |----------|--------------------------|
 | **What** is changing? | 8 Earth science variables from NASA and NOAA missions, each with a plain-language case file |
-| **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 33 clickable regional zones surface local stories |
+| **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 41 clickable regional zones surface local stories |
 | **How much** is it changing? | Sen's slope gives the rate of change per year in real units (mm, ppm, Gt, ZJ) |
 | **Is it statistically significant?** | Mann-Kendall non-parametric test reports S, Z, p-value and confidence level; only trends with p < 0.05 are marked significant |
 
