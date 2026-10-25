@@ -354,9 +354,15 @@
       }
 
       if (window.TerraTrendGlobeControl) window.TerraTrendGlobeControl.pause();
-      document.getElementById("chatbot-wrap")?.classList.add("panel-open");
 
       panelIndex = HOTSPOTS.indexOf(spot);
+      // Hide chatbot FAB only for variable hotspot panels; keep it visible for region panels
+      const chatWrapEl = document.getElementById("chatbot-wrap");
+      if (panelIndex >= 0) {
+        chatWrapEl?.classList.add("panel-open");
+      } else {
+        chatWrapEl?.classList.remove("panel-open");
+      }
       if (panelIndex >= 0) {
         window.TerraTrendGlobe?.setHighlight?.(panelIndex);
         updateURL(spot.id);
