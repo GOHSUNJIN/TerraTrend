@@ -100,7 +100,7 @@ The target audience is anyone curious about what the data actually says: student
 - **Case file panel** NASA mission photograph, key finding callout, a Why It Matters narrative, interactive trend chart and full source attribution
 - **42 regional surface zones** Click anywhere on the globe to surface a local trend story for that coordinate
 - **Explore tracker** Progress counter across all 8 variables with a completion moment when all are investigated
-- **Terra AI assistant** Ask Terra about any variable, region or trend calculation; powered by Claude via the Anthropic API
+- **Terra AI assistant** Ask Terra about any variable, region or trend calculation; Terra embeds navigation chips inline when directing you to a specific panel; powered by Claude via the Anthropic API
 - **Responsive** Full mobile support with icon dock, floating panel and touch navigation
 
 ---
@@ -114,8 +114,11 @@ Terra can:
 - Surface key facts for any of the 42 regional zones
 - Walk through how Mann-Kendall and Sen's slope work in plain language
 - Answer questions in the context of whatever case file you last opened
+- Embed navigation chips in its reply when directing you to a specific panel; clicking a chip flies the globe to that location and opens the panel
 
 Terra will not invent statistics or measurements. If it is not sure, it says so.
+
+**Bot icon visibility:** The Terra button appears on region panels on desktop, giving you quick access to ask follow-up questions. It is hidden on desktop when a variable (hotspot) panel is open, and hidden on mobile in all panel contexts to keep the screen clear.
 
 To chat with Terra: click the purple circle button in the bottom-right corner of the globe view.
 
