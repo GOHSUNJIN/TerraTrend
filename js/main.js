@@ -305,6 +305,7 @@
   window.TerraTrendUI = {
     async openPanel(spot, coords) {
       if (!panel) return;
+      stopAutoTour();
       window.TerraTrendUI.lastViewedSpot = spot;
 
       document.title = spot.name + " - TerraTrend";
@@ -381,6 +382,9 @@
         if (barFill) barFill.style.width = (exploredSet.size / HOTSPOTS.length * 100) + "%";
         const pill = pillWrap?.querySelectorAll(".var-pill")[panelIndex];
         if (pill) pill.classList.add("viewed");
+      } else {
+        window.TerraTrendGlobe?.clearHighlight?.();
+        updateURL(null);
       }
       if (navCount) navCount.textContent = panelIndex >= 0 ? (panelIndex + 1) + " / " + HOTSPOTS.length : "-";
       if (prevBtn) prevBtn.disabled = panelIndex < 0;
