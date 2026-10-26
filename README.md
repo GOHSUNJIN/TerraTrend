@@ -26,7 +26,7 @@
 
 The *Be an Earth System Trend Detective* challenge asks teams to use NASA data to answer four questions about a changing Earth:
 
-| Question | How TerraTrend answers it |
+| Question | How TerraTrend Answers It |
 |----------|--------------------------|
 | **What** is changing? | 8 Earth science variables from NASA and NOAA missions, each with a plain-language case file |
 | **Where** is it happening? | Every trend is pinned to its measurement location on a 3D globe; 42 clickable regional zones surface local stories |
@@ -68,7 +68,7 @@ The target audience is anyone curious about what the data actually says: student
 
 ## How We Catch a Trend
 
-| Step | What happens |
+| Step | What Happens |
 |------|-------------|
 | **01 Select** | Choose one of eight Earth science variables measured by NASA missions or Earth system models |
 | **02 Fetch** | Live data pulled from NOAA GML and Open-Meteo ERA5 APIs; curated real-measurement archives used as instant fallback |
@@ -81,14 +81,14 @@ The target audience is anyone curious about what the data actually says: student
 
 | Variable | NASA / Partner Mission | Live API | Record |
 |----------|----------------------|---------|--------|
-| Rising Seas | NASA/CNES Jason-3 / Sentinel-6 | none | 1993-2023 |
+| Rising Seas | NASA/CNES Jason-3 / Sentinel-6 | None | 1993-2023 |
 | Greenland Ice Loss | NASA GRACE-FO | Open-Meteo ERA5 | 2000-2023 |
-| CO2 Accumulation | NOAA GML / NASA OCO-2 | NOAA GML CSV | 1960-2023 |
+| CO₂ Accumulation | NOAA GML / NASA OCO-2 | NOAA GML CSV | 1960-2023 |
 | Warming Anomaly | NASA GISS GISTEMP v4 | Open-Meteo ERA5 | 1960-2023 |
 | Wildfire Intensity | NASA Terra/Aqua MODIS | Open-Meteo ERA5 | 2000-2023 |
-| Groundwater Decline | NASA GRACE-FO TWS | none | 2002-2023 |
-| Arctic Sea Ice | NASA/NSIDC passive microwave | none | 1979-2023 |
-| Ocean Heat | NOAA NCEI / Argo Float Network | none | 1993-2023 |
+| Groundwater Decline | NASA GRACE-FO TWS | None | 2002-2023 |
+| Arctic Sea Ice | NASA/NSIDC passive microwave | None | 1979-2023 |
+| Ocean Heat | NOAA NCEI / Argo Float Network | None | 1993-2023 |
 
 ---
 
@@ -100,7 +100,7 @@ The target audience is anyone curious about what the data actually says: student
 - **Case file panel** NASA mission photograph, key finding callout, a Why It Matters narrative, interactive trend chart and full source attribution
 - **42 regional surface zones** Click anywhere on the globe to surface a local trend story for that coordinate
 - **Explore tracker** Progress counter across all 8 variables with a completion moment when all are investigated
-- **Terra AI assistant** Ask Terra about any variable, region or trend calculation; Terra embeds navigation chips inline when directing you to a specific panel; powered by Claude via the Anthropic API
+- **Terra AI Assistant** Ask Terra about any variable, region or trend calculation; Terra embeds navigation chips inline when directing you to a specific panel; powered by Claude via the Anthropic API
 - **Responsive** Full mobile support with icon dock, floating panel and touch navigation
 
 ---
@@ -118,7 +118,7 @@ Terra can:
 
 Terra will not invent statistics or measurements. If it is not sure, it says so.
 
-**Bot icon visibility:** The Terra button appears on region panels on desktop, giving you quick access to ask follow-up questions. It is hidden on desktop when a variable (hotspot) panel is open, and hidden on mobile in all panel contexts to keep the screen clear.
+**Bot Icon Visibility:** The Terra button appears on region panels on desktop, giving you quick access to ask follow-up questions. It is hidden on desktop when a variable (hotspot) panel is open, and hidden on mobile in all panel contexts to keep the screen clear.
 
 To chat with Terra: click the purple circle button in the bottom-right corner of the globe view.
 
