@@ -34,6 +34,7 @@
   // Conversation history (sent to /api/chat each request)
   var history = [];
   var busy    = false;
+  var greeted = false;
 
   function closeChat() {
     panel.classList.add('closing');
@@ -50,7 +51,8 @@
     if (window.TerraTrendUI && window.TerraTrendUI.closePanel) {
       window.TerraTrendUI.closePanel();
     }
-    if (history.length === 0) {
+    if (!greeted) {
+      greeted = true;
       addMsg('ai', WELCOME_MSG);
       addSuggestions();
     }
