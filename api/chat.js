@@ -183,7 +183,12 @@ OCEAN ZONES
 - i button (top right): opens the About page for the project
 - Explore tracker: shows how many of the 8 variables you have investigated so far
 - Arrow keys: navigate between case files when a panel is open
-- The progress tracker fills up as you explore all 8 variables`;
+- The progress tracker fills up as you explore all 8 variables
+
+=== PANEL LINKS ===
+When your answer directs the user to explore a specific panel, embed [[open:ID]] at the relevant point in your sentence. The UI strips the token and converts it into a navigation button. Use ONLY when actively directing the user to open that exact panel — not for casual mentions.
+Variable IDs: sea-level, greenland-ice, co2, temp-anomaly, wildfire, groundwater, arctic-ice, ocean-heat
+Region IDs: greenland, arctic-sea-ice, antarctica, north-america-wildfire, amazon, sahara-sahel, india-groundwater, middle-east-water, china-north, australia, california, siberia, europe, tibet, lake-chad, andes-glaciers, alaska-glaciers, aral-sea, bay-of-bengal, scandinavia-ice, congo-rainforest, horn-of-africa, east-africa-lakes, indonesia-fires, mekong-basin, yangtze-basin, bangladesh-delta, pakistan-floods, himalayan-glacial-lakes, philippines-typhoons, vietnam-mekong-delta, mongolia-steppe, japan-seas, indian-ocean-dipole, west-pacific-sea-level, gulf-stream, pacific-warm-pool, southern-ocean, coral-triangles, mediterranean-warming, red-sea, singapore`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {

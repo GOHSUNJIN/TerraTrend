@@ -102,9 +102,10 @@
         }
         var reply = (data.content && data.content[0] && data.content[0].text)
           || "I didn't get a response. Please try again.";
-        history.push({ role: 'assistant', content: reply });
-        addMsg('ai', reply);
-        addPanelLinks(reply);
+        var parsed = extractPanelRefs(reply);
+        history.push({ role: 'assistant', content: parsed.clean });
+        addMsg('ai', parsed.clean);
+        addPanelLinks(parsed.refs);
       })
       .catch(function () {
         thinkEl.remove();
@@ -163,30 +164,40 @@
     thread.scrollTop = thread.scrollHeight;
   }
 
-  function addPanelLinks(text) {
-    if (typeof HOTSPOTS === 'undefined') return;
-    var lower = text.toLowerCase();
-    var matches = HOTSPOTS.filter(function (spot) {
-      var name = spot.name.toLowerCase();
-      if (lower.indexOf(name) !== -1) return true;
-      if (spot.id === 'co2'        && /\bco2\b/.test(lower)) return true;
-      if (spot.id === 'sea-level'  && /\bsea.?level/.test(lower)) return true;
-      if (spot.id === 'groundwater'&& /\bgroundwater\b/.test(lower)) return true;
-      return false;
+  function extractPanelRefs(text) {
+    var refs = [], seen = {};
+    var clean = text.replace(/\[\[open:([a-z0-9-]+)\]\]/g, function (_, id) {
+      if (!seen[id]) { seen[id] = true; refs.push(id); }
+      return '';
     });
-    if (!matches.length) return;
+    return { clean: clean.trim(), refs: refs };
+  }
+
+  function addPanelLinks(ids) {
+    if (!ids.length) return;
+    var panels = ids.map(function (id) {
+      var p = (typeof HOTSPOTS     !== 'undefined' && HOTSPOTS.find(function (s) { return s.id === id; }))
+           || (typeof REGION_ZONES !== 'undefined' && REGION_ZONES.find(function (r) { return r.id === id; }));
+      return p ? { id: id, panel: p } : null;
+    }).filter(Boolean);
+    if (!panels.length) return;
+
     var row = document.createElement('div');
     row.className = 'chat-panel-links';
-    matches.forEach(function (spot) {
+    panels.forEach(function (item) {
       var btn = document.createElement('button');
       btn.className = 'chat-panel-link-btn';
-      btn.textContent = spot.icon + ' ' + spot.name;
+      btn.textContent = item.panel.icon + ' ' + item.panel.name;
       btn.addEventListener('click', function () {
-        var idx = HOTSPOTS.indexOf(spot);
-        if (window.TerraTrendGlobe && idx >= 0) {
+        var idx = typeof HOTSPOTS !== 'undefined' ? HOTSPOTS.indexOf(item.panel) : -1;
+        if (idx >= 0 && window.TerraTrendGlobe) {
           window.TerraTrendGlobe.selectHotspot(idx, true);
-        } else if (window.TerraTrendUI) {
-          window.TerraTrendUI.openPanel(spot);
+        } else if (window.TerraTrendUI && item.panel.bounds) {
+          var b = item.panel.bounds;
+          var lat = (b[0] + b[1]) / 2, lon = (b[2] + b[3]) / 2;
+          var coords = Math.abs(lat).toFixed(1) + '°' + (lat >= 0 ? 'N' : 'S') +
+                       ', ' + Math.abs(lon).toFixed(1) + '°' + (lon >= 0 ? 'E' : 'W');
+          window.TerraTrendUI.openPanel(item.panel, coords);
         }
       });
       row.appendChild(btn);
