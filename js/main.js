@@ -571,7 +571,7 @@
   window.addEventListener("resize", () => {
     const chatWrapEl = document.getElementById("chatbot-wrap");
     if (!chatWrapEl || !panel || !panel.classList.contains("visible")) return;
-    if (window.innerWidth <= 900) {
+    if (panelIndex >= 0 || window.innerWidth <= 900) {
       chatWrapEl.classList.add("panel-open");
     } else {
       chatWrapEl.classList.remove("panel-open");

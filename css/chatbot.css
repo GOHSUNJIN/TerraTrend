@@ -18,7 +18,9 @@
 }
 .chatbot-wrap > * { pointer-events: auto; }
 
-/* panel-open hiding is mobile-only — see @media block below */
+/* Hide FAB when a variable/hotspot panel is open (all screens) or any panel on mobile */
+.chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
+.chatbot-wrap.panel-open .chatbot-fab { pointer-events: none; }
 
 /* The floating chat button */
 .chatbot-fab {
@@ -270,7 +272,5 @@
     height: auto;
     width: calc(100vw - 28px);
   }
-  /* Hide chatbot FAB when info panel is open on mobile */
-  .chatbot-wrap.panel-open { opacity: 0 !important; pointer-events: none !important; }
-  .chatbot-wrap.panel-open .chatbot-fab { pointer-events: none; }
+  /* (panel-open hiding handled globally above) */
 }
