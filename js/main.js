@@ -567,5 +567,16 @@
   );
   document.querySelectorAll(".step, .about-facts div").forEach(el => revealObs.observe(el));
 
+  // Re-sync chatbot FAB visibility when viewport changes (e.g. DevTools device toggle)
+  window.addEventListener("resize", () => {
+    const chatWrapEl = document.getElementById("chatbot-wrap");
+    if (!chatWrapEl || !panel || !panel.classList.contains("visible")) return;
+    if (window.innerWidth <= 900) {
+      chatWrapEl.classList.add("panel-open");
+    } else {
+      chatWrapEl.classList.remove("panel-open");
+    }
+  });
+
   bindChartHover();
 })();
