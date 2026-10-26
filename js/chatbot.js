@@ -104,6 +104,7 @@
           || "I didn't get a response. Please try again.";
         history.push({ role: 'assistant', content: reply });
         addMsg('ai', reply);
+        addPanelLinks(reply);
       })
       .catch(function () {
         thinkEl.remove();
@@ -159,6 +160,38 @@
       wrap.appendChild(btn);
     });
     thread.appendChild(wrap);
+    thread.scrollTop = thread.scrollHeight;
+  }
+
+  function addPanelLinks(text) {
+    if (typeof HOTSPOTS === 'undefined') return;
+    var lower = text.toLowerCase();
+    var matches = HOTSPOTS.filter(function (spot) {
+      var name = spot.name.toLowerCase();
+      if (lower.indexOf(name) !== -1) return true;
+      if (spot.id === 'co2'        && /\bco2\b/.test(lower)) return true;
+      if (spot.id === 'sea-level'  && /\bsea.?level/.test(lower)) return true;
+      if (spot.id === 'groundwater'&& /\bgroundwater\b/.test(lower)) return true;
+      return false;
+    });
+    if (!matches.length) return;
+    var row = document.createElement('div');
+    row.className = 'chat-panel-links';
+    matches.forEach(function (spot) {
+      var btn = document.createElement('button');
+      btn.className = 'chat-panel-link-btn';
+      btn.textContent = spot.icon + ' ' + spot.name;
+      btn.addEventListener('click', function () {
+        var idx = HOTSPOTS.indexOf(spot);
+        if (window.TerraTrendGlobe && idx >= 0) {
+          window.TerraTrendGlobe.selectHotspot(idx, true);
+        } else if (window.TerraTrendUI) {
+          window.TerraTrendUI.openPanel(spot);
+        }
+      });
+      row.appendChild(btn);
+    });
+    thread.appendChild(row);
     thread.scrollTop = thread.scrollHeight;
   }
 

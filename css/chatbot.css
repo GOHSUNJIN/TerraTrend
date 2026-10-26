@@ -258,6 +258,32 @@
   30%            { transform: translateY(-6px); opacity: 1;    }
 }
 
+/* Panel link chips — injected below AI replies that mention a hotspot */
+.chat-panel-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 2px 0 2px 4px;
+}
+.chat-panel-link-btn {
+  background: transparent;
+  border: 1px solid rgba(139, 124, 255, 0.3);
+  border-radius: 999px;
+  color: rgba(180, 170, 255, 0.85);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  white-space: nowrap;
+}
+.chat-panel-link-btn:hover {
+  background: rgba(139, 124, 255, 0.14);
+  border-color: rgba(139, 124, 255, 0.65);
+  color: #fff;
+}
+
 /* Mobile: FAB floats above the dock; panel slides up when opened */
 /* MUST be last so it wins over the base bottom/top/right above  */
 @media (max-width: 900px) {
