@@ -5,7 +5,7 @@
 > Select a variable. Spin the globe. Discover what is changing, where, by how much and whether it is statistically significant.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-terratrend2.vercel.app-8b7cff?style=flat-square)](https://terratrend2.vercel.app)
-[![Video Demo](https://img.shields.io/badge/Video%20Demo-YouTube-ff0000?style=flat-square&logo=youtube)](https://youtu.be/PLACEHOLDER)
+[![Video Demo](https://img.shields.io/badge/Video%20Demo-YouTube-ff0000?style=flat-square&logo=youtube)](https://youtu.be/C1k4xFS08KM)
 [![NASA Space Apps](https://img.shields.io/badge/NASA%20Space%20Apps-2026-22e0ee?style=flat-square)](https://www.spaceappschallenge.org/)
 [![Stack](https://img.shields.io/badge/Stack-Vanilla%20JS%20%2B%20Three.js-ff6fb5?style=flat-square)](#technology)
 
